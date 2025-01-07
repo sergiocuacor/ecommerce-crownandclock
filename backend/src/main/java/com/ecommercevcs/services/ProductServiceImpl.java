@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -43,6 +45,15 @@ public class ProductServiceImpl implements IProductService {
 		
 		return this.productRepository.save(productUpdated.get());
 	}
+
+	@Override
+	public Page<ProductEntity> pageProducts(Pageable pageable) {
+		
+		return this.productRepository.findAll(pageable);
+		 
+	}
+	
+	
 
 	
 }
