@@ -3,6 +3,9 @@ package com.ecommercevcs.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,5 +44,10 @@ public class ProductController {
 	@PutMapping("/{id}")
 	public ProductEntity update(@RequestBody ProductEntity product, @PathVariable Long id) {
 		return this.productService.update(product, id);
+	}
+	
+	@GetMapping("/page")
+	public Page<?> pageProduct(@PageableDefault(page = 0, size = 4, sort = "name") Pageable pageable) {
+	    return this.productService.pageProducts(pageable);
 	}
 }
