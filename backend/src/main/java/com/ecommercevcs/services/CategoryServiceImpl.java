@@ -10,12 +10,16 @@ import org.springframework.stereotype.Service;
 import com.ecommercevcs.entities.CategoryEntity;
 import com.ecommercevcs.entities.ProductEntity;
 import com.ecommercevcs.repositories.CategoryRepositoryJPA;
+import com.ecommercevcs.repositories.ProductRepositoryJPA;
 
 @Service
 public class CategoryServiceImpl implements ICategoryService {
 	
 	@Autowired
 	CategoryRepositoryJPA categoryRepository;
+	
+	@Autowired
+	ProductRepositoryJPA productRepository;
 
 	@Override
 	public List<CategoryEntity> findAll() {
@@ -57,9 +61,10 @@ public class CategoryServiceImpl implements ICategoryService {
 		
 		if(category.isPresent()) {
 			category.get().addProduct(product);
-			this.categoryRepository.save(category.get());
+			 this.categoryRepository.save(category.get());
 		}
-		return product;
+		
+		return this.productRepository.findByName(product.getName());
 	}
 
 }

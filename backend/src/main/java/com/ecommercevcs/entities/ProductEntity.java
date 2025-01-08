@@ -3,6 +3,7 @@ package com.ecommercevcs.entities;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
@@ -29,12 +30,13 @@ public class ProductEntity {
 	@NotNull
 	private Integer stock;
 	
+	
 	@ManyToOne
 	@JoinColumn(name = "category_id", nullable = true)
 	@JsonBackReference
 	private CategoryEntity category;
 	
-	
+	@JsonIgnore
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JsonManagedReference
 	private List<OrderDetailsEntity> orderDetails;
@@ -82,6 +84,9 @@ public class ProductEntity {
 
 	public void setCategory(CategoryEntity category) {
 		this.category = category;
+	}
+	public String getIdCategory() {
+		return "" + this.category.getId();
 	}
 	
 

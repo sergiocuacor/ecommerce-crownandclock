@@ -1,6 +1,7 @@
 package com.ecommercevcs.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -22,6 +23,7 @@ public class OrderDetailsEntity {
 	@JoinColumn(name = "order_id", nullable = false)
 	@JsonBackReference
 	private OrderEntity order;
+	
 	
 	@ManyToOne
 	@JoinColumn(name = "product_id", nullable = false)
