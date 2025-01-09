@@ -46,8 +46,7 @@ INSERT INTO products (name, description, price, category_id, stock) VALUES
 ('Silver Necklace', 'A simple silver necklace', 149.99, 2, 75),
 ('Silver Bracelet', 'A delicate silver bracelet', 99.99, 3, 100),
 ('Gem-encrusted Bracelet', 'Bracelet with rubies and diamonds', 499.99, 3, 15),
-('Gold Earrings', 'Elegant gold earrings', 129.99, 4, 60),
-('Diamond Earrings', 'Earrings with diamond studs', 599.99, 4, 30);
+('Gold Earrings', 'Elegant gold earrings', 129.99, 4, 60);
 
 
     
