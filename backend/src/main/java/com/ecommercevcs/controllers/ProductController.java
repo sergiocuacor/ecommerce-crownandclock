@@ -27,6 +27,11 @@ public class ProductController {
 	IProductService productService;
 	
 	@GetMapping
+	public Page<?> pageProduct(@PageableDefault(page = 0, size = 4, sort = "name") Pageable pageable) {
+	    return this.productService.pageProducts(pageable);
+	}
+	
+	@GetMapping("/all")
 	public List<ProductEntity> findAll() {
 		return this.productService.findAll();
 	}
@@ -46,8 +51,5 @@ public class ProductController {
 		return this.productService.update(product, id);
 	}
 	
-	@GetMapping("/page")
-	public Page<?> pageProduct(@PageableDefault(page = 0, size = 4, sort = "name") Pageable pageable) {
-	    return this.productService.pageProducts(pageable);
-	}
+	
 }

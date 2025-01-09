@@ -8,5 +8,6 @@ import com.ecommercevcs.entities.ProductEntity;
 @Repository
 public interface ProductRepositoryJPA extends JpaRepository<ProductEntity, Long> {
 	
+	 ProductEntity findByName(String name);
 
 }

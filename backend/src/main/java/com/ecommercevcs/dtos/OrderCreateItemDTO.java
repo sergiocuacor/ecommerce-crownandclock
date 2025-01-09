@@ -6,7 +6,20 @@ public class OrderCreateItemDTO {
 
 	private Long productId;
 	private Integer quantity;
-	private Double unitPrice;
+	
+	
+	public OrderCreateItemDTO() {
+		super();
+	}
+
+
+
+	public OrderCreateItemDTO(Long productId, Integer quantity) {
+		super();
+		this.productId = productId;
+		this.quantity = quantity;
+		
+	}
 	
 	
 	
@@ -34,30 +47,10 @@ public class OrderCreateItemDTO {
 
 
 
-	public Double getUnitPrice() {
-		return unitPrice;
-	}
+	
 
 
-
-	public void setUnitPrice(Double unitPrice) {
-		this.unitPrice = unitPrice;
-	}
-
-
-
-	public OrderCreateItemDTO() {
-		super();
-	}
-
-
-
-	public OrderCreateItemDTO(Long productId, Integer quantity, Double unitPrice) {
-		super();
-		this.productId = productId;
-		this.quantity = quantity;
-		this.unitPrice = unitPrice;
-	}
+	
 	
 	
 	

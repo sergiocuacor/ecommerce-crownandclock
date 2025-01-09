@@ -61,10 +61,9 @@ public class OrderServiceImpl implements IOrderService{
 			// esto deberia ser removeStock (hacer helper methods)
 			product.setStock(product.getStock()- orderItem.getQuantity());
 			
+			
 			orderDetails.setQuantity(orderItem.getQuantity()); 
-			if(product.getPrice() != orderItem.getUnitPrice()) {
-				new Exception("Price of product and item are different.");
-			}
+			
 			orderDetails.setUnitPrice(product.getPrice());
 
 			orderDetails.setSubTotal(product.getPrice()*orderItem.getQuantity());
