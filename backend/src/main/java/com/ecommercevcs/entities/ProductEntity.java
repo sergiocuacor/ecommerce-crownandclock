@@ -2,6 +2,7 @@ package com.ecommercevcs.entities;
 
 import java.util.List;
 
+import com.ecommercevcs.validation.IsPositiveValue;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -16,6 +17,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
@@ -25,11 +27,17 @@ public class ProductEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@NotBlank
 	private String name;
+	
+	@NotBlank
 	private String description;
+	
+	@NotNull
 	private Double price;
 	
 	@NotNull
+	@IsPositiveValue
 	private Integer stock;
 	
 	

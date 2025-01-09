@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ecommercevcs.entities.CategoryEntity;
 import com.ecommercevcs.entities.ProductEntity;
 import com.ecommercevcs.services.ICategoryService;
+import com.ecommercevcs.validation.utils.ValidationUtils;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/category")
@@ -23,6 +27,9 @@ public class CategoryController {
 	
 	@Autowired
 	ICategoryService categoryService;
+	
+	@Autowired
+	ValidationUtils validation;
 	
 	@GetMapping
 	public List<CategoryEntity> findAll() {
@@ -50,7 +57,11 @@ public class CategoryController {
 	}
 	
 	@PostMapping("/product/{id}")
-	public ProductEntity addProduct(@PathVariable Long id, @RequestBody ProductEntity product) {
-		return this.categoryService.addProduct(id, product);
+	public ResponseEntity<?> addProduct(@Valid  @RequestBody ProductEntity product, BindingResult result, @PathVariable Long id) {
+		
+		if(result.hasErrors()) {
+			return this.validation.validation(result);
+		}
+		return ResponseEntity.ok(this.categoryService.addProduct(id, product));
 	}
 }
