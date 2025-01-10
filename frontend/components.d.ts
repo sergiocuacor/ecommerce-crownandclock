@@ -12,8 +12,10 @@ declare module 'vue' {
     CustomFooterComponent: typeof import('./src/components/CustomFooterComponent.vue')['default']
     CustomNavBarComponent: typeof import('./src/components/CustomNavBarComponent.vue')['default']
     DynamicHeightDivComponent: typeof import('./src/components/utils/DynamicHeightDivComponent.vue')['default']
+    FacebookIcon: typeof import('./src/components/icons/FacebookIcon.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     IconWithNotificationComponent: typeof import('./src/components/utils/IconWithNotificationComponent.vue')['default']
+    InstagramIcon: typeof import('./src/components/icons/InstagramIcon.vue')['default']
     ItemComponent: typeof import('./src/components/ItemComponent.vue')['default']
     ItemDetailsComponent: typeof import('./src/components/ItemDetailsComponent.vue')['default']
     ItemListComponent: typeof import('./src/components/ItemListComponent.vue')['default']
@@ -25,5 +27,8 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SocialComponent: typeof import('./src/components/SocialComponent.vue')['default']
+    SocialsComponent: typeof import('./src/components/SocialsComponent.vue')['default']
+    TwitterIcon: typeof import('./src/components/icons/TwitterIcon.vue')['default']
+    TwitterXIcon: typeof import('./src/components/icons/TwitterXIcon.vue')['default']
   }
 }
