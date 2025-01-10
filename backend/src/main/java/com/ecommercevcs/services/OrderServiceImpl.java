@@ -60,12 +60,9 @@ public class OrderServiceImpl implements IOrderService{
 			orderDetails.setProduct(product);
 			// esto deberia ser removeStock (hacer helper methods)
 			
-			try {
+			
 				product.removeStock(orderItem.getQuantity());
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			
 			
 			orderDetails.setQuantity(orderItem.getQuantity()); 
 			
