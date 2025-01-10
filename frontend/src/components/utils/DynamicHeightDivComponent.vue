@@ -1,12 +1,8 @@
 <template>
     <main :style="{ height: dynamicHeight }" class="overflow-auto p-2">
         <div class="d-flex flex-column align-items-center justify-content-center h-100">
-            <div class="tw-font-mono tw-text-3xl lg:tw-text-6xl">
-                <slot name="header"></slot>
-            </div>
-            <div class="tw-font-mono tw-text-xl lg:tw-text-4xl">
-                <slot name="footer"></slot>
-            </div>
+            <slot name="header"></slot>
+            <slot name="footer"></slot>
         </div>
     </main>
 </template>
