@@ -124,6 +124,8 @@ const routes = [
     props: { social: 'twitter' },
     component: SocialsView,
     meta: {
+      mask: 'twitter',
+      url: 'https://x.com/?lang=es',
       label: 'Twitter',
       breadcrumb: [
         { label: 'Home', path: { name: 'home' } },
@@ -147,9 +149,10 @@ const routes = [
   { 
     path: '/socials/instagram',
     name: 'instagram',
-    props: { social: 'instagram' },
     component: SocialsView,
     meta: {
+      mask: 'instagram',
+      url: 'https://www.instagram.com',
       label: 'Instagram',
       breadcrumb: [        
         { label: 'Home', path: { name: 'home' } },
@@ -165,9 +168,10 @@ const routes = [
   { 
     path: '/socials/facebook',
     name: 'facebook',
-    props: { social: 'facebook' },
     component: SocialsView,
     meta: {
+      mask: 'facebook',
+      url: 'https://www.facebook.com/?locale=es_ES',
       label: 'Facebook',
       breadcrumb: [
         { label: 'Home', path: { name: 'home' } },
