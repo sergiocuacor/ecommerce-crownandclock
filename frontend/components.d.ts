@@ -8,13 +8,9 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     CarouselComponent: typeof import('./src/components/CarouselComponent.vue')['default']
-    ControlPanelComponent: typeof import('./src/components/ControlPanelComponent.vue')['default']
-    ControlPanelOffCanvasBodyComponent: typeof import('./src/components/ControlPanelOffCanvasBodyComponent.vue')['default']
-    ControlPanelOffCanvasComponent: typeof import('./src/components/ControlPanelOffCanvasComponent.vue')['default']
     CustomBreadCrumbComponent: typeof import('./src/components/CustomBreadCrumbComponent.vue')['default']
     CustomFooterComponent: typeof import('./src/components/CustomFooterComponent.vue')['default']
     CustomNavBarComponent: typeof import('./src/components/CustomNavBarComponent.vue')['default']
-    CustomOffCanvasComponent: typeof import('./src/components/CustomOffCanvasComponent.vue')['default']
     DynamicHeightDivComponent: typeof import('./src/components/utils/DynamicHeightDivComponent.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     IconWithNotificationComponent: typeof import('./src/components/utils/IconWithNotificationComponent.vue')['default']
@@ -28,5 +24,6 @@ declare module 'vue' {
     RatingComponent: typeof import('./src/components/RatingComponent.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SocialComponent: typeof import('./src/components/SocialComponent.vue')['default']
   }
 }
