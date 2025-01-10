@@ -52,8 +52,14 @@ public class ProductEntity {
 	private List<OrderDetailsEntity> orderDetails;
 	
 	
+	public void addStock(Integer quantity) {
+		this.stock += quantity;
+	}
 	
-	
+	public void removeStock(Integer quantityOrdered) {
+		
+		this.stock -= quantityOrdered;
+	}
 	
 	public ProductEntity() {
 		super();

@@ -44,7 +44,7 @@ public class OrderServiceImpl implements IOrderService{
 
 	@Override
 	@Transactional
-	public OrderEntity add(OrderCreateDTO orderCreateDTO) {
+	public OrderEntity add(OrderCreateDTO orderCreateDTO)  {
 		//Instanciamos order entity
 		OrderEntity order = new OrderEntity();
 		UserEntity user = userRepository.findById(orderCreateDTO.getUserId()).orElseThrow(()-> new EntityNotFoundException());
@@ -59,8 +59,13 @@ public class OrderServiceImpl implements IOrderService{
 			
 			orderDetails.setProduct(product);
 			// esto deberia ser removeStock (hacer helper methods)
-			product.setStock(product.getStock()- orderItem.getQuantity());
 			
+			try {
+				product.removeStock(orderItem.getQuantity());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 			orderDetails.setQuantity(orderItem.getQuantity()); 
 			
