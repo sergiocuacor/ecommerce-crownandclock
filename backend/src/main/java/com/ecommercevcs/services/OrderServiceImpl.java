@@ -61,7 +61,13 @@ public class OrderServiceImpl implements IOrderService{
 			// esto deberia ser removeStock (hacer helper methods)
 			
 			
+			
+			try {
 				product.removeStock(orderItem.getQuantity());
+			} catch(IllegalArgumentException i) {
+				throw new IllegalArgumentException("Error al procesar el pedido: "+ i.getMessage());
+			}
+			
 			
 			
 			orderDetails.setQuantity(orderItem.getQuantity()); 

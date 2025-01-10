@@ -56,8 +56,10 @@ public class ProductEntity {
 		this.stock += quantity;
 	}
 	
-	public void removeStock(Integer quantityOrdered) {
-		
+	public void removeStock(Integer quantityOrdered) throws IllegalArgumentException {
+		if (this.stock < quantityOrdered) {
+			throw new IllegalArgumentException("Insufficient stock");
+		}
 		this.stock -= quantityOrdered;
 	}
 	
