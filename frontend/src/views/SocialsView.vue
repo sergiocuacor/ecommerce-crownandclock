@@ -1,3 +1,5 @@
 <template>
-    TO DO
+
+    <SocialsComponent /> 
+
 </template>

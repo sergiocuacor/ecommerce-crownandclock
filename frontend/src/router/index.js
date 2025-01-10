@@ -2,9 +2,11 @@ import { createRouter, createWebHistory } from 'vue-router';
 import apiClient from '../services/api.js';
 import NotFoundView from '../views/NotFoundView.vue';
 import HomeView from '../views/HomeView.vue';
+import CartView from '../views/CartView.vue';
 import ItemsView from '../views/ItemsView.vue';
 import ItemView from '../views/ItemView.vue';
-import CartView from '../views/CartView.vue';
+import BrandsView from '../views/BrandsView.vue';
+import BrandView from '../views/BrandView.vue';
 import SocialsView from '../views/SocialsView.vue';
 
 const routes = [
@@ -71,6 +73,29 @@ const routes = [
       ]
     } 
   },
+  // Brands
+  { 
+    path: '/brands',
+    name: 'brands',
+    component: BrandsView, 
+    meta: { 
+      label: 'Brands', 
+      breadcrumb: [{ label: 'Home', path: { name: 'home' } }] 
+    } 
+  },
+  // Brand
+  { 
+    path: '/brands/:mask',
+    name: 'brand',
+    component: BrandView, 
+    meta: { 
+      label: 'Brand', 
+      breadcrumb: [
+        { label: 'Home', path: { name: 'home' } },
+        { label: 'Brands', path: { name: 'brands' } }
+      ] 
+    } 
+  },
   // Socials
   { 
     path: '/socials',
@@ -96,8 +121,11 @@ const routes = [
   { 
     path: '/socials/twitter',
     name: 'twitter',
-    component: SocialsView, 
+    props: { social: 'twitter' },
+    component: SocialsView,
     meta: {
+      mask: 'twitter',
+      url: 'https://x.com/?lang=es',
       label: 'Twitter',
       breadcrumb: [
         { label: 'Home', path: { name: 'home' } },
@@ -120,10 +148,11 @@ const routes = [
   // Instagram
   { 
     path: '/socials/instagram',
-    redirect: '/',
     name: 'instagram',
-    component: SocialsView, 
+    component: SocialsView,
     meta: {
+      mask: 'instagram',
+      url: 'https://www.instagram.com',
       label: 'Instagram',
       breadcrumb: [        
         { label: 'Home', path: { name: 'home' } },
@@ -138,10 +167,11 @@ const routes = [
   // Facebook
   { 
     path: '/socials/facebook',
-    redirect: '/',
     name: 'facebook',
-    component: SocialsView, 
+    component: SocialsView,
     meta: {
+      mask: 'facebook',
+      url: 'https://www.facebook.com/?locale=es_ES',
       label: 'Facebook',
       breadcrumb: [
         { label: 'Home', path: { name: 'home' } },
