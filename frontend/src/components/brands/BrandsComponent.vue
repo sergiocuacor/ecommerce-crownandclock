@@ -32,8 +32,9 @@
 </template>
 
 <script setup>
+
     import { ref, onMounted } from 'vue';
-    import apiClient from '../services/api.js';
+    import apiClient from '../../services/api.js';
 
     const brands = ref([]);
     const loading = ref(true);
