@@ -14,8 +14,11 @@ export default {
   getItems() {
     return apiClient.get('/products');
   },
+  getBrand(mask) {
+    return apiClient.get(`/brands/${mask}`);
+  },
   getBrands() {
-    return apiClient.get('/products/brands');
+    return apiClient.get('/brands');
   },
   getCategories() {
     return apiClient.get('/products/categories');
