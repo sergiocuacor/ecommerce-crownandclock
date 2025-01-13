@@ -58,7 +58,7 @@ const routes = [
       breadcrumb: [
         { label: 'Home', path: { name: 'home' } }
       ]
-    } 
+    }
   },
   // Product
   { 
@@ -85,6 +85,14 @@ const routes = [
   },
   {
     path: '/brand',
+    redirect: { name: 'brands' }
+  },
+  {
+    path: '/products/brands',
+    redirect: { name: 'brands' }
+  },
+  {
+    path: '/products/brand',
     redirect: { name: 'brands' }
   },
   // Brand
