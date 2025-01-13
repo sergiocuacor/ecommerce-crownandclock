@@ -60,18 +60,6 @@ const routes = [
       ]
     } 
   },
-  // Products on Brand
-  { 
-    path: '/products/brand/:mask',
-    name: 'products-brand',
-    component: BrandView, 
-    meta: {
-      label: 'Products',
-      breadcrumb: [
-        { label: 'Home', path: { name: 'home' } }
-      ]
-    }
-  },
   // Product
   { 
     path: '/products/:mask',
@@ -95,6 +83,10 @@ const routes = [
       breadcrumb: [{ label: 'Home', path: { name: 'home' } }] 
     } 
   },
+  {
+    path: '/brand',
+    redirect: { name: 'brands' }
+  },
   // Brand
   { 
     path: '/brands/:mask',
@@ -110,6 +102,14 @@ const routes = [
   },
   {
     path: '/brand/:mask',
+    redirect: { name: 'brand' }
+  },
+  {
+    path: '/products/brands/:mask',
+    redirect: { name: 'brand' }
+  },
+  {
+    path: '/products/brand/:mask',
     redirect: { name: 'brand' }
   },
   // Socials
