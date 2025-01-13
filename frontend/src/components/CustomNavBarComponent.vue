@@ -10,41 +10,46 @@
             <div class="collapse navbar-collapse" id="navbarContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <router-link to="/" class="nav-link active" aria-current="page">
-                            Home
+                        <router-link :to="{ name: 'home' }" class="nav-link active" aria-current="page">
+                            {{ 'Home' }}
                         </router-link>
                     </li>
                     <li class="nav-item dropdown">
-                        <router-link to="/" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            Other
+                        <router-link :to="{ name: 'home' }" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            {{ 'Other' }}
                         </router-link>
                         <ul class="dropdown-menu">
                             <li>
-                                <router-link to="/products" class="dropdown-item">
-                                    Products
+                                <router-link :to="{ name: 'products' }" class="dropdown-item">
+                                    {{ 'Products' }}
+                                </router-link>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <!-- <li>
+                                <router-link :to="{ name: 'categories' }" class="dropdown-item">
+                                    {{ 'Categories' }}
+                                </router-link>
+                            </li> -->
+                            <li>
+                                <router-link :to="{ name: 'brands' }" class="dropdown-item">
+                                    {{ 'Brands' }}
                                 </router-link>
                             </li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
                             <li>
-                                <router-link to="/categories" class="dropdown-item">
-                                    Categories
-                                </router-link>
-                            </li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li>
-                                <router-link to="/cart" class="dropdown-item">
-                                    Cart
+                                <router-link :to="{ name: 'cart' }" class="dropdown-item">
+                                    {{ 'Cart' }}
                                 </router-link>
                             </li>
                         </ul>
                     </li>
                     <li class="nav-item">
                         <router-link to="/" class="nav-link disabled" aria-disabled="true">
-                            Disabled
+                            {{ 'Disabled' }}
                         </router-link>
                     </li>
                     <li class="nav-item">
@@ -60,7 +65,7 @@
                 </ul>
                 <form class="d-flex" role="search">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
+                    <button class="btn btn-outline-success" type="submit">{{ 'Search' }}</button>
                 </form>
             </div>
         </div>
@@ -68,18 +73,14 @@
     <OffCanvasComponent :content="currentContent"/>
 </template>
 
-<script>
-    import { ref } from "vue";
+<script setup>
 
-    export default {
-        setup() {
-            let currentContent = ref("");
+    import { ref } from 'vue';
 
-            const setContent = (newContent) => {
-                currentContent.value = newContent;
-            };
+    const currentContent = ref('');
 
-            return { currentContent, setContent };
-        },
+    const setContent = (newContent) => {
+        currentContent.value = newContent;
     };
+    
 </script>
