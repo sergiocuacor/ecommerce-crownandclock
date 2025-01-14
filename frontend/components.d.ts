@@ -9,7 +9,8 @@ declare module 'vue' {
   export interface GlobalComponents {
     BrandComponent: typeof import('./src/components/brands/BrandComponent.vue')['default']
     BrandsComponent: typeof import('./src/components/brands/BrandsComponent.vue')['default']
-    BrandSelector: typeof import('./src/components/BrandSelector.vue')['default']
+    BrandSelector: typeof import('./src/components/brands/BrandSelector.vue')['default']
+    BrandSelectorComponent: typeof import('./src/components/brands/BrandSelectorComponent.vue')['default']
     CarouselComponent: typeof import('./src/components/CarouselComponent.vue')['default']
     CustomBreadCrumbComponent: typeof import('./src/components/CustomBreadCrumbComponent.vue')['default']
     CustomFooterComponent: typeof import('./src/components/CustomFooterComponent.vue')['default']

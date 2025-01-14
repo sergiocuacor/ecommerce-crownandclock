@@ -1,8 +1,17 @@
 <template>
     
     <select name="brandSelector" id="brandSelector" class="form-select" @change="handleChange">
-        <option disabled selected>{{ 'Selecciona una marca' }}</option>
-        <option v-for="brand in brands" :key="brand.id" :value="brand.id">{{ brand.name }}</option>
+        
+        <!-- COMPONENT -->
+        <option v-if="!loading && !error" disabled selected>{{ 'Selecciona una marca' }}</option>
+        <option v-if="!loading && !error" v-for="brand in brands" :key="brand.id" :value="brand.id">{{ brand.name }}</option>
+        
+        <!-- LOADING -->
+        <option disabled selected v-if="loading">{{ 'Cargando...' }}</option>
+
+        <!-- ERROR -->
+        <option disabled selected v-if="error">{{ 'Error' }}</option>
+
     </select>
     
 </template>
@@ -10,7 +19,7 @@
 <script setup>
 
     import { ref, onMounted } from 'vue';
-    import apiClient from '../services/api.js';
+    import apiClient from '../../services/api.js';
 
     const brands = ref([]);
     const loading = ref(true);
