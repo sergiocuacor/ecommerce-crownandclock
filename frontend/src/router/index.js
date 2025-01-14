@@ -58,7 +58,7 @@ const routes = [
       breadcrumb: [
         { label: 'Home', path: { name: 'home' } }
       ]
-    } 
+    }
   },
   // Product
   { 
@@ -83,6 +83,18 @@ const routes = [
       breadcrumb: [{ label: 'Home', path: { name: 'home' } }] 
     } 
   },
+  {
+    path: '/brand',
+    redirect: { name: 'brands' }
+  },
+  {
+    path: '/products/brands',
+    redirect: { name: 'brands' }
+  },
+  {
+    path: '/products/brand',
+    redirect: { name: 'brands' }
+  },
   // Brand
   { 
     path: '/brands/:mask',
@@ -95,6 +107,18 @@ const routes = [
         { label: 'Brands', path: { name: 'brands' } }
       ] 
     } 
+  },
+  {
+    path: '/brand/:mask',
+    redirect: { name: 'brand' }
+  },
+  {
+    path: '/products/brands/:mask',
+    redirect: { name: 'brand' }
+  },
+  {
+    path: '/products/brand/:mask',
+    redirect: { name: 'brand' }
   },
   // Socials
   { 

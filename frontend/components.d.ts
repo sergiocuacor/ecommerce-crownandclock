@@ -7,6 +7,9 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    BrandComponent: typeof import('./src/components/brands/BrandComponent.vue')['default']
+    BrandsComponent: typeof import('./src/components/brands/BrandsComponent.vue')['default']
+    BrandSelectorComponent: typeof import('./src/components/brands/BrandSelectorComponent.vue')['default']
     CarouselComponent: typeof import('./src/components/CarouselComponent.vue')['default']
     CustomBreadCrumbComponent: typeof import('./src/components/CustomBreadCrumbComponent.vue')['default']
     CustomFooterComponent: typeof import('./src/components/CustomFooterComponent.vue')['default']
@@ -26,7 +29,6 @@ declare module 'vue' {
     RatingComponent: typeof import('./src/components/RatingComponent.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    SocialComponent: typeof import('./src/components/SocialComponent.vue')['default']
     SocialsComponent: typeof import('./src/components/SocialsComponent.vue')['default']
     TwitterIcon: typeof import('./src/components/icons/TwitterIcon.vue')['default']
     TwitterXIcon: typeof import('./src/components/icons/TwitterXIcon.vue')['default']
