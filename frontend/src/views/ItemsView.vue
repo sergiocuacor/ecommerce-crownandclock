@@ -2,7 +2,7 @@
     <main class="container py-5">
       <section class="row py-2">
         <div class="col-6">
-          <BrandSelector @brandSelected="handleBrandSelected" />
+          <BrandSelectorComponent @brandSelected="handleBrandSelected" />
         </div>     
       </section>
       <section class="row py-2">
