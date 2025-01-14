@@ -27,14 +27,17 @@
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <!-- <li>
-                                <router-link :to="{ name: 'categories' }" class="dropdown-item">
-                                    {{ 'Categories' }}
-                                </router-link>
-                            </li> -->
-                            <li>
+                            <li> 
                                 <router-link :to="{ name: 'brands' }" class="dropdown-item">
                                     {{ 'Brands' }}
+                                </router-link>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <router-link :to="{ name: 'categories' }" class="dropdown-item">
+                                    {{ 'Categories' }}
                                 </router-link>
                             </li>
                             <li>
@@ -70,17 +73,17 @@
             </div>
         </div>
     </nav>
-    <OffCanvasComponent :content="currentContent"/>
+    <OffCanvasComponent :content="offCanvasCurrentContent"/>
 </template>
 
 <script setup>
 
     import { ref } from 'vue';
 
-    const currentContent = ref('');
+    const offCanvasCurrentContent = ref('');
 
-    const setContent = (newContent) => {
-        currentContent.value = newContent;
+    const setContent = (offCanvasNewContent) => {
+        offCanvasCurrentContent.value = offCanvasNewContent;
     };
     
 </script>
