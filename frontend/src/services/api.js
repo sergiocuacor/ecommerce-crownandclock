@@ -20,6 +20,9 @@ export default {
   getBrands() {
     return apiClient.get('/brands');
   },
+  getCategory(mask) {
+    return apiClient.get(`/categories/${mask}`);
+  },
   getCategories() {
     return apiClient.get('/products/categories');
   },
