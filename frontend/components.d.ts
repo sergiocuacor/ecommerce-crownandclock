@@ -19,6 +19,8 @@ declare module 'vue' {
     CustomFooterComponent: typeof import('./src/components/CustomFooterComponent.vue')['default']
     CustomNavBarComponent: typeof import('./src/components/CustomNavBarComponent.vue')['default']
     DynamicHeightDivComponent: typeof import('./src/components/utils/DynamicHeightDivComponent.vue')['default']
+    ElementComponent: typeof import('./src/components/utils/ElementComponent.vue')['default']
+    ErrorElementComponent: typeof import('./src/components/utils/ErrorElementComponent.vue')['default']
     FacebookIcon: typeof import('./src/components/icons/FacebookIcon.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     IconWithNotificationComponent: typeof import('./src/components/utils/IconWithNotificationComponent.vue')['default']
