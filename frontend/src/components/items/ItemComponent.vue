@@ -99,43 +99,35 @@
 
 </template>
 
-<script>
+<script setup>
+
     import { ref, onMounted } from 'vue';
     import apiClient from '../../services/api.js';
 
-    export default {
-        name: 'Item',
-        props: {
-            itemMask: {
-                type: Number,
-                required: true,
-            },
+    const props = defineProps({
+        itemMask: {
+            type: Number,
+            required: true,
         },
-        setup(props) {
-            const item = ref([]);
-            const loading = ref(true);
-            const error = ref(null);
+    });
 
-            const fetchItem = async () => {
-                try {
-                    const response = await apiClient.getItem(props.itemMask);
-                    item.value = response.data;
-                } catch (err) {
-                    error.value = 'Error al cargar el producto';
-                }
-            };
+    const item = ref([]);
+    const loading = ref(true);
+    const error = ref(null);
 
-            onMounted(async () => {
-                loading.value = true;
-                await Promise.all([fetchItem()]);
-                loading.value = false;
-            });
-
-            return {
-                item,
-                loading,
-                error,
-            };
+    const fetchItem = async () => {
+        try {
+            const response = await apiClient.getItem(props.itemMask);
+            item.value = response.data;
+        } catch (err) {
+            error.value = 'Error al cargar el producto';
         }
     };
+
+    onMounted(async () => {
+        loading.value = true;
+        await Promise.all([fetchItem()]);
+        loading.value = false;
+    });
+
 </script>

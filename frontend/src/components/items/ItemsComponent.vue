@@ -27,36 +27,28 @@
     
 </template>
 
-<script>
+<script setup>
+
     import { ref, onMounted } from 'vue';
     import apiClient from '../../services/api.js';
 
-    export default {
-        setup() {
-            const items = ref([]);
-            const loading = ref(true);
-            const error = ref(null);
+    const items = ref([]);
+    const loading = ref(true);
+    const error = ref(null);
 
-            const fetchItems = async () => {
-                try {
-                    const response = await apiClient.getItems();
-                    items.value = response.data;
-                } catch (err) {
-                    error.value = 'Error al cargar los productos';
-                }
-            };
-
-            onMounted(async () => {
-                loading.value = true;
-                await Promise.all([fetchItems()]);
-                loading.value = false;
-            });
-
-            return {
-                items,
-                loading,
-                error,
-            };
-        },
+    const fetchItems = async () => {
+        try {
+            const response = await apiClient.getItems();
+            items.value = response.data;
+        } catch (err) {
+            error.value = 'Error al cargar los productos';
+        }
     };
+
+    onMounted(async () => {
+        loading.value = true;
+        await Promise.all([fetchItems()]);
+        loading.value = false;
+    });
+
 </script>
