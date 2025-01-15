@@ -29,11 +29,8 @@
             <i class="bi bi-exclamation-diamond-fill tw-text-red-500 fs-1"></i>
         </template>
         <template #footer>
-            <div class="col text-truncate placeholder-glow">
-                <span class="placeholder">{{ 'Disponibles: ?' }}</span>
-            </div>
-            <div class="col-12 col-md-auto placeholder-glow">
-                <span class="placeholder">{{ '??????' }}</span>
+            <div class="col-12 text-truncate placeholder-glow">
+                <span class="placeholder">{{ '??????????' }}</span>
             </div>
         </template>      
     </ElementComponent>
