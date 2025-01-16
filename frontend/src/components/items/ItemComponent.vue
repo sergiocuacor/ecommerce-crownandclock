@@ -5,6 +5,9 @@
         <template #top-left>
             <RatingComponent v-if="item.rating" :itemRating="item.rating" />
         </template>
+        <template #bottom-right>
+            <CartActionsButton :item="item"/>
+        </template>
         <template #footer>
             <div class="col text-truncate">
                 {{ 'Disponibles: ' + item.rating.count }}
