@@ -6,7 +6,7 @@
             <RatingComponent v-if="item.rating" :itemRating="item.rating" />
         </template>
         <template #bottom-right>
-            <CartActionsButton :item="item"/>
+            <CartActionsButtonComponent :item="item"/>
         </template>
         <template #footer>
             <div class="col text-truncate">
