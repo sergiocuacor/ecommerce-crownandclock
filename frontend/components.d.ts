@@ -11,6 +11,7 @@ declare module 'vue' {
     BrandsComponent: typeof import('./src/components/brands/BrandsComponent.vue')['default']
     BrandSelectorComponent: typeof import('./src/components/brands/BrandSelectorComponent.vue')['default']
     CarouselComponent: typeof import('./src/components/CarouselComponent.vue')['default']
+    CartActionsButton: typeof import('./src/components/cart/CartActionsButton.vue')['default']
     CategoriesComponent: typeof import('./src/components/categories/CategoriesComponent.vue')['default']
     CategoryComponent: typeof import('./src/components/categories/CategoryComponent.vue')['default']
     CategorySelector: typeof import('./src/components/categories/CategorySelector.vue')['default']
