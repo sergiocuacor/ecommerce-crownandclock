@@ -2,7 +2,7 @@
     
     <select name="categorySelector" id="categorySelector" class="form-select" @change="handleChange">
         
-        <!-- COMPONENT -->
+        <!-- SUCCESS -->
         <option v-if="!loading && !error" disabled selected>{{ 'Selecciona una categoría' }}</option>
         <option v-if="!loading && !error" v-for="category in categories" :key="category.id" :value="category.id">{{ category.name }}</option>
         
@@ -21,14 +21,14 @@
     import { ref, onMounted } from 'vue';
     import apiClient from '../../services/api.js';
 
-    const categorys = ref([]);
+    const categories = ref([]);
     const loading = ref(true);
     const error = ref(null);
 
     const fetchCategories = async () => {
         try {
             const response = await apiClient.getCategories();
-            categorys.value = response.data;
+            categories.value = response.data;
         } catch (err) {
             error.value = 'Error al cargar las marcas';
         }
