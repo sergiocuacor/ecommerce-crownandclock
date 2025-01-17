@@ -2,7 +2,8 @@ package com.ecommercevcs.entities;
 
 import java.util.List;
 
-import com.ecommercevcs.validation.IsPositiveValue;
+import com.ecommercevcs.validation.IsPositiveValueDouble;
+import com.ecommercevcs.validation.IsPositiveValueInteger;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -33,11 +34,12 @@ public class ProductEntity {
 	@NotBlank
 	private String description;
 	
+	@IsPositiveValueDouble
 	@NotNull
 	private Double price;
 	
 	@NotNull
-	@IsPositiveValue
+	@IsPositiveValueInteger
 	private Integer stock;
 	
 	
