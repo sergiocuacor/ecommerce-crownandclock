@@ -1,5 +1,5 @@
 <template>
-    <div class="btn-group m-1" role="group" aria-label="Cart Buttons">
+    <div class="btn-group m-1" aria-label="Cart Buttons">
         <button class="btn btn-sm btn-success" @click="addToCart">
             <i class="bi bi-bag-plus-fill"></i>
         </button>
