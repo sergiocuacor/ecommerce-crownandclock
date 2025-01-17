@@ -12,6 +12,12 @@
                     <div class="tw-text-sm tw-text-gray-500 dark:tw-text-gray-400">
                         {{ item.price + '&#8364' }}
                     </div>
+                    <div class="tw-text-sm tw-text-gray-500 dark:tw-text-gray-400">
+                        {{ item.quantity + (item.quantity > 1 ? ' uds' : ' ud') }}
+                    </div>
+                    <div class="tw-text-sm tw-text-gray-500 dark:tw-text-gray-400">
+                        {{ 'Total: ' + item.price * item.quantity + '&#8364' }}
+                    </div>
                 </div>
             </div>
         </li>
