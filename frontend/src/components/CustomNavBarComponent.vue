@@ -56,12 +56,12 @@
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <button class="nav-link" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" @click="setContent('cart')" aria-controls="offcanvasNavbar" aria-label="Open Cart OffCanvas">
+                        <button class="nav-link" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" @click="utilsStore.setOffCanvasContent('cart')" aria-controls="offcanvasNavbar" aria-label="Open Cart OffCanvas">
                             <IconWithNotificationComponent icon="bi-basket-fill" notificationColor="tw-bg-green-500"/>                        
                         </button>
                     </li>
                     <li class="nav-item">
-                        <button class="nav-link" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" @click="setContent('controlPanel')" aria-controls="offcanvasNavbar" aria-label="Open Control Panel OffCanvas">
+                        <button class="nav-link" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" @click="utilsStore.setOffCanvasContent('controlPanel')" aria-controls="offcanvasNavbar" aria-label="Open Control Panel OffCanvas">
                             <IconWithNotificationComponent icon="bi-gear-fill" notificationColor="tw-bg-blue-500"/>                        
                         </button>
                     </li>
@@ -73,17 +73,13 @@
             </div>
         </div>
     </nav>
-    <OffCanvasComponent :content="offCanvasCurrentContent"/>
+    <OffCanvasComponent />
 </template>
 
 <script setup>
 
-    import { ref } from 'vue';
+    import { useUtilsStore } from '../services/utils.js';
 
-    const offCanvasCurrentContent = ref('');
-
-    const setContent = (offCanvasNewContent) => {
-        offCanvasCurrentContent.value = offCanvasNewContent;
-    };
+    const utilsStore = useUtilsStore();
     
 </script>
