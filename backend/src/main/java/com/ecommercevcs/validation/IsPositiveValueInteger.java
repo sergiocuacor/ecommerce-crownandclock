@@ -8,10 +8,10 @@ import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
 
-@Constraint(validatedBy = PositiveValueValidation.class)
+@Constraint(validatedBy = PositiveValueIntegerValidation.class)
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface IsPositiveValue {
+public @interface IsPositiveValueInteger {
 	String message() default "the value is any number less than zero!";
 
 	Class<?>[] groups() default { };
