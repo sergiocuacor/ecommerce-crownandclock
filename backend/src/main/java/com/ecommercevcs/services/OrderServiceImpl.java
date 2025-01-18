@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ecommercevcs.config.ConfigDiscount;
+import com.ecommercevcs.dtos.DiscountDTO;
 import com.ecommercevcs.dtos.OrderCreateDTO;
 import com.ecommercevcs.dtos.OrderCreateItemDTO;
 import com.ecommercevcs.entities.OrderDetailsEntity;
@@ -29,6 +31,9 @@ public class OrderServiceImpl implements IOrderService{
 	
 	@Autowired
 	ProductRepositoryJPA productRepository;
+	
+	@Autowired
+	ConfigDiscount discounts;
 	
 	@Override
 	public List<OrderEntity> findAll() {
@@ -78,14 +83,33 @@ public class OrderServiceImpl implements IOrderService{
 			totalOrder += orderDetails.getSubTotal();
 			order.addOrderDetail(orderDetails);
 		}
+		if(orderCreateDTO.getDiscount() != null) {
+			applyDiscount(orderCreateDTO, order, totalOrder);
+		}else {
+			order.setTotal(totalOrder);
+		}
 		
 		
-		order.setTotal(totalOrder);
 	
 		
 		
 		
 		return orderRepository.save(order);
+	}
+
+	private void applyDiscount(OrderCreateDTO orderCreateDTO, OrderEntity order, Double totalOrder) {
+		double discountPercetage = 0;
+		for(DiscountDTO discount : this.discounts.getDiscounts()) {
+			if(orderCreateDTO.getDiscount().equals(discount.getName())) {
+				System.out.println(orderCreateDTO.getDiscount());
+				discountPercetage = (totalOrder * discount.getDiscountPertenage()) /100;
+				System.out.println(discountPercetage);
+				Double total = totalOrder - discountPercetage;
+				System.out.println(total);
+				order.setTotal(total);
+				break;
+			}
+		}
 	}
 
 	@Override
