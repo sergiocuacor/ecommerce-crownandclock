@@ -84,18 +84,7 @@ public class OrderServiceImpl implements IOrderService{
 			order.addOrderDetail(orderDetails);
 		}
 		if(orderCreateDTO.getDiscount() != null) {
-			double discountPercetage = 0;
-			for(DiscountDTO discount : this.discounts.getDiscounts()) {
-				if(orderCreateDTO.getDiscount().equals(discount.getName())) {
-					System.out.println(orderCreateDTO.getDiscount());
-					discountPercetage = (totalOrder * discount.getDiscountPertenage()) /100;
-					System.out.println(discountPercetage);
-					Double total = totalOrder - discountPercetage;
-					System.out.println(total);
-					order.setTotal(total);
-					break;
-				}
-			}
+			applyDiscount(orderCreateDTO, order, totalOrder);
 		}else {
 			order.setTotal(totalOrder);
 		}
@@ -106,6 +95,21 @@ public class OrderServiceImpl implements IOrderService{
 		
 		
 		return orderRepository.save(order);
+	}
+
+	private void applyDiscount(OrderCreateDTO orderCreateDTO, OrderEntity order, Double totalOrder) {
+		double discountPercetage = 0;
+		for(DiscountDTO discount : this.discounts.getDiscounts()) {
+			if(orderCreateDTO.getDiscount().equals(discount.getName())) {
+				System.out.println(orderCreateDTO.getDiscount());
+				discountPercetage = (totalOrder * discount.getDiscountPertenage()) /100;
+				System.out.println(discountPercetage);
+				Double total = totalOrder - discountPercetage;
+				System.out.println(total);
+				order.setTotal(total);
+				break;
+			}
+		}
 	}
 
 	@Override
