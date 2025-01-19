@@ -34,7 +34,7 @@ public class OrderEntity {
 	    @ManyToOne(optional = false, fetch = FetchType.LAZY)
 	    @JoinColumn(name = "user_id", nullable = false)
 	    @NotNull
-	    @JsonBackReference
+	    @JsonBackReference(value="user-order")
 	    private UserEntity user;
 	    private LocalDateTime orderDate;
 	    
@@ -46,7 +46,7 @@ public class OrderEntity {
 	    private Double total;
 	    
 	    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	    @JsonManagedReference
+	    @JsonManagedReference(value="order-orderdetails")
 		private List<OrderDetailsEntity> orderDetails = new ArrayList<OrderDetailsEntity>();
 	    
 	    @PrePersist

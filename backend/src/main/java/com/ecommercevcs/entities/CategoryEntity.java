@@ -24,7 +24,7 @@ public class CategoryEntity {
 	private String description;
 	
 	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JsonManagedReference
+	@JsonManagedReference(value="product-category")
 	private List<ProductEntity> products;
 	
 	

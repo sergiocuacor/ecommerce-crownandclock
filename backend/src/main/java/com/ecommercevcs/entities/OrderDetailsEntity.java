@@ -21,13 +21,13 @@ public class OrderDetailsEntity {
 	
 	@ManyToOne
 	@JoinColumn(name = "order_id", nullable = false)
-	@JsonBackReference
+	@JsonBackReference(value="order-orderdetails")
 	private OrderEntity order;
 	
 	
 	@ManyToOne
 	@JoinColumn(name = "product_id", nullable = false)
-	@JsonBackReference
+	@JsonBackReference(value="product-orderdetails")
 	private ProductEntity product;
 	
 	@Column(nullable = false)
