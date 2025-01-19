@@ -1,37 +1,50 @@
 INSERT INTO users (name, first_name, last_name, email, phone_number, 
-                  street_address, city, state, country, postal_code) 
+                  street_address, city, state, country, postal_code, enabled) 
 VALUES 
 ('Carlos García', 'Carlos', 'García', 'carlos.garcia@example.com', '+34612345678',
-    'Calle Gran Vía 25', 'Madrid', 'Madrid', 'España', '28013'),
+    'Calle Gran Vía 25', 'Madrid', 'Madrid', 'España', '28013', true),
 
 ('María López', 'María', 'López', 'maria.lopez@example.com', '+34623456789',
-    'Avenida Diagonal 123', 'Barcelona', 'Barcelona', 'España', '08008'),
+    'Avenida Diagonal 123', 'Barcelona', 'Barcelona', 'España', '08008', true),
 
 ('Antonio Fernández', 'Antonio', 'Fernández', 'antonio.fernandez@example.com', '+34634567890',
-    'Calle Sierpes 45', 'Sevilla', 'Sevilla', 'España', '41004'),
+    'Calle Sierpes 45', 'Sevilla', 'Sevilla', 'España', '41004', true),
 
 ('Laura Martínez', 'Laura', 'Martínez', 'laura.martinez@example.com', '+34645678901',
-    'Plaza Mayor 12', 'Salamanca', 'Salamanca', 'España', '37002'),
+    'Plaza Mayor 12', 'Salamanca', 'Salamanca', 'España', '37002', true),
 
 ('Javier Rodríguez', 'Javier', 'Rodríguez', 'javier.rodriguez@example.com', '+34656789012',
-    'Calle Príncipe 78', 'Vigo', 'Pontevedra', 'España', '36202'),
+    'Calle Príncipe 78', 'Vigo', 'Pontevedra', 'España', '36202', true),
 
 ('Ana Sánchez', 'Ana', 'Sánchez', 'ana.sanchez@example.com', '+34667890123',
-    'Avenida de la Constitución 34', 'Valencia', 'Valencia', 'España', '46002'),
+    'Avenida de la Constitución 34', 'Valencia', 'Valencia', 'España', '46002', true),
 
 ('David Moreno', 'David', 'Moreno', 'david.moreno@example.com', '+34678901234',
-    'Paseo de Gracia 89', 'Barcelona', 'Barcelona', 'España', '08008'),
+    'Paseo de Gracia 89', 'Barcelona', 'Barcelona', 'España', '08008', true),
 
 ('Carmen Ruiz', 'Carmen', 'Ruiz', 'carmen.ruiz@example.com', '+34689012345',
-    'Calle Alfonso X 56', 'Murcia', 'Murcia', 'España', '30001'),
+    'Calle Alfonso X 56', 'Murcia', 'Murcia', 'España', '30001', true),
 
 ('Miguel Torres', 'Miguel', 'Torres', 'miguel.torres@example.com', '+34690123456',
-    'Plaza Nueva 23', 'Bilbao', 'Vizcaya', 'España', '48001'),
+    'Plaza Nueva 23', 'Bilbao', 'Vizcaya', 'España', '48001', true),
 
 ('Isabel Navarro', 'Isabel', 'Navarro', 'isabel.navarro@example.com', '+34601234567',
-    'Rambla Catalunya 67', 'Barcelona', 'Barcelona', 'España', '08007');
+    'Rambla Catalunya 67', 'Barcelona', 'Barcelona', 'España', '08007', true);
 
-    
+INSERT INTO roles(name) VALUES
+('ROLE_ADMIN'),
+('ROLE_USER');
+
+INSERT INTO users_roles (user_id, role_id)
+VALUES
+((SELECT id FROM users WHERE email = 'carlos.garcia@example.com'), 
+ (SELECT id FROM roles WHERE name = 'ROLE_ADMIN'));
+
+-- Asociar los demás usuarios con el rol de usuario
+INSERT INTO users_roles (user_id, role_id)
+SELECT id, (SELECT id FROM roles WHERE name = 'ROLE_USER')
+FROM users
+WHERE email != 'carlos.garcia@example.com';
     
     INSERT INTO category (name, description) VALUES 
 ('Rings', 'Gold, silver, and diamond rings'),
