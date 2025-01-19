@@ -28,55 +28,46 @@
         <!-- Controles -->
         <button class="carousel-control-prev" type="button" data-bs-target="#itemCarousel" data-bs-slide="prev">
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Anterior</span>
+          <span class="visually-hidden">{{ 'Anterior' }}</span>
         </button>
         <button class="carousel-control-next" type="button" data-bs-target="#itemCarousel" data-bs-slide="next">
           <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Siguiente</span>
+          <span class="visually-hidden">{{ 'Siguiente' }}</span>
         </button>
       </section>
   
       <section v-else>
-        <p class="text-center">Cargando imágenes...</p>
+        <p class="text-center">{{ 'Cargando imágenes...' }}</p>
       </section>
   </template>
   
-  <script>
+  <script setup>
+  
     import { ref, onMounted } from 'vue';
     import apiClient from '../services/api.js';
-
-    export default {
-      setup() {
-        const items = ref([]);
-        const loading = ref(true);
-        const error = ref(null);
-
-        const fetchItems = async () => { 
-            try {
-                const response = await apiClient.getItems();
-                items.value = getRandomItems(response.data, 3);
-            } catch (err) {
-                error.value = 'Error al cargar los productos';
-            }
-        };
-
-        const getRandomItems = (array, count) => {
-            const shuffled = [...array].sort(() => 0.5 - Math.random());
-            return shuffled.slice(0, count);
-        };
-
-        onMounted(async () => {
-            loading.value = true;
-            await Promise.all([fetchItems()]);
-            loading.value = false;
-        });
-
-        return {
-            items,
-            loading,
-            error,
-        };
-      },
+    
+    const items = ref([]);
+    const loading = ref(true);
+    const error = ref(null);
+    
+    const fetchItems = async () => {
+      try {
+        const response = await apiClient.getItems();
+        items.value = getRandomItems(response.data, 3);
+      } catch (err) {
+        error.value = 'Error al cargar los productos';
+      }
     };
-  </script>
-  
+    
+    const getRandomItems = (array, count) => {
+      const shuffled = [...array].sort(() => 0.5 - Math.random());
+      return shuffled.slice(0, count);
+    };
+    
+    onMounted(async () => {
+      loading.value = true;
+      await fetchItems();
+      loading.value = false;
+    });
+
+  </script>  
