@@ -104,12 +104,13 @@ public class OrderServiceImpl implements IOrderService{
 				System.out.println(orderCreateDTO.getDiscount());
 				discountPercetage = (totalOrder * discount.getDiscountPertenage()) /100;
 				System.out.println(discountPercetage);
-				Double total = totalOrder - discountPercetage;
-				System.out.println(total);
-				order.setTotal(total);
+				totalOrder = totalOrder - discountPercetage;
+				
 				break;
 			}
 		}
+		order.setTotal(totalOrder);
+		
 	}
 
 	@Override
