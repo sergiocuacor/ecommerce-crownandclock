@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.ecommercevcs.entities.Role;
+import com.ecommercevcs.entities.RoleEntity;
 import com.ecommercevcs.entities.UserEntity;
 import com.ecommercevcs.entities.embeddable.Address;
 import com.ecommercevcs.repositories.RoleRepository;
@@ -47,19 +47,19 @@ public class UserServiceImpl implements IUserService {
 		return userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException());
 	}
 	
-	
+	@Transactional
 	@Override
 	public UserEntity add(UserEntity user) {
 		
 		logger.debug("Inicio del add de use");
 		
-		Role roleUser = this.roleRepository.findByName("ROLE_USER").orElseThrow(() -> {
+		RoleEntity roleUser = this.roleRepository.findByName("ROLE_USER").orElseThrow(() -> {
 		    logger.error("ROLE_USER no se ha encontrado");
 		    return new RuntimeException("El rol ROLE_USER no existe en la base de datos");
 		});
 
 		
-		List<Role> listRoles = new ArrayList<Role>();
+		List<RoleEntity> listRoles = new ArrayList<RoleEntity>();
 		
 		
 		listRoles.add(roleUser);

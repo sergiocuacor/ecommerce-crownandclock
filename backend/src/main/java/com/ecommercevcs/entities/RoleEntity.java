@@ -1,8 +1,9 @@
 package com.ecommercevcs.entities;
 
 import java.util.List;
+import java.util.Objects;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
@@ -15,7 +16,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "roles")
-public class Role {
+public class RoleEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -23,19 +24,20 @@ public class Role {
 	@Column(unique = true)
 	private String name;
 	
-	@JsonBackReference
-	@JsonIgnoreProperties({"roles" ,"handler","hibernateLazyInitializer"})
+	
+	
 	@ManyToMany(mappedBy = "roles")
+	@JsonIgnoreProperties("roles")
 	private List<UserEntity> users;
 	
 	
 	
 
-	public Role() {
+	public RoleEntity() {
 		super();
 	}
 
-	public Role(Long id, String name, List<UserEntity> users) {
+	public RoleEntity(Long id, String name, List<UserEntity> users) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -64,6 +66,23 @@ public class Role {
 
 	public void setUsers(List<UserEntity> users) {
 		this.users = users;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, name, users);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RoleEntity other = (RoleEntity) obj;
+		return Objects.equals(id, other.id) && Objects.equals(name, other.name) && Objects.equals(users, other.users);
 	}
 	
 	

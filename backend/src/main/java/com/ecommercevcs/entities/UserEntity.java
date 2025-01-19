@@ -2,9 +2,11 @@ package com.ecommercevcs.entities;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 import com.ecommercevcs.entities.embeddable.Address;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -68,8 +70,8 @@ public class UserEntity {
 			fetch = FetchType.LAZY) // para que solo cargue orders cuando accedamos a ellos (mejora el rendimiento).
 	private List<OrderEntity> orderList = new ArrayList<OrderEntity>();
 	
-	@JsonManagedReference
-	@JsonIgnoreProperties({"users","handler","hibernateLazyInitializer"}) //Esto sirve para el many to many que no se cree el bucle infinito MITICO
+	 //Esto sirve para el many to many que no se cree el bucle infinito MITICO
+	@JsonIgnoreProperties({"users"}) //Esto sirve para el many to many que no se cree el bucle infinito MITICO
 	@ManyToMany
 	@JoinTable(
 			name = "users_roles",
@@ -77,7 +79,7 @@ public class UserEntity {
 			inverseJoinColumns = @JoinColumn(name="role_id"),
 			uniqueConstraints = { @UniqueConstraint(columnNames = {"user_id", "role_id"})}
 	)
-	private List<Role> roles;
+	private List<RoleEntity> roles;
 	
 	private boolean enabled;
 	
@@ -173,10 +175,10 @@ public class UserEntity {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public List<Role> getRoles() {
+	public List<RoleEntity> getRoles() {
 		return roles;
 	}
-	public void setRoles(List<Role> roles) {
+	public void setRoles(List<RoleEntity> roles) {
 		this.roles = roles;
 	}
 	public boolean isEnabled() {
@@ -184,6 +186,28 @@ public class UserEntity {
 	}
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(address, admin, email, enabled, firstName, id, lastName, name, orderList, password,
+				phoneNumber, roles);
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		UserEntity other = (UserEntity) obj;
+		return Objects.equals(address, other.address) && admin == other.admin && Objects.equals(email, other.email)
+				&& enabled == other.enabled && Objects.equals(firstName, other.firstName)
+				&& Objects.equals(id, other.id) && Objects.equals(lastName, other.lastName)
+				&& Objects.equals(name, other.name) && Objects.equals(orderList, other.orderList)
+				&& Objects.equals(password, other.password) && Objects.equals(phoneNumber, other.phoneNumber)
+				&& Objects.equals(roles, other.roles);
 	}
 	
 	
