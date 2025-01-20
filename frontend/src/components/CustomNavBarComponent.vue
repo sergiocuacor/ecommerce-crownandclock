@@ -62,7 +62,7 @@
                     </li>
                     <li class="nav-item">
                         <button class="nav-link" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" @click="utilsStore.setOffCanvasContent('controlPanel')" aria-controls="offcanvasNavbar" aria-label="Open Control Panel OffCanvas">
-                            <IconWithNotificationComponent icon="bi-gear-fill" notificationColor="tw-bg-blue-500"/>                        
+                            <IconWithNotificationComponent icon="bi-person-circle" notificationColor="tw-bg-blue-500"/>                        
                         </button>
                     </li>
                 </ul>
