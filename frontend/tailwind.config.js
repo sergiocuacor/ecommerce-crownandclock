@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: 'class', // Modo oscuro/claro
   content: [
     './index.html',
     './src/**/*.{vue,js,ts,jsx,tsx}',  // Archivos a los que Tailwind debe aplicar las clases

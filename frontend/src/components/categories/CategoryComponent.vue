@@ -1,10 +1,10 @@
 <template>
 
     <!-- SUCCESS -->
-    <ElementComponent v-if="!loading && !error" :toRoute="{ name: 'brand', params: { mask: brand.id } }" :imgSrc="brand.image" :imgAlt="`${brand.id}`">
+    <ElementComponent v-if="!loading && !error" :toRoute="{ name: 'category', params: { mask: category.id } }" :imgSrc="category.image" :imgAlt="`${category.id}`">
         <template #footer>
             <div class="col-12">
-                {{ brand.name }};
+                {{ category.name }};
             </div>
         </template>        
     </ElementComponent>
@@ -43,28 +43,28 @@
     import apiClient from '../../services/api.js';
 
     const props = defineProps({
-        brandMask: {
+        categoryMask: {
             type: Number,
             required: true
         }
     });
 
-    const brand = ref([]);
+    const category = ref([]);
     const loading = ref(true);
     const error = ref(null);
 
-    const fetchBrand = async () => {
+    const fetchCategory = async () => {
         try {
-            const response = await apiClient.getBrand(props.brandMask);
-            brand.value = response.data;
+            const response = await apiClient.getCategory(props.categoryMask);
+            category.value = response.data;
         } catch (err) {
-            error.value = 'Error al cargar el producto';
+            error.value = 'Error al cargar el categoría';
         }
     };
 
     onMounted(async () => {
         loading.value = true;
-        await Promise.all([fetchBrand()]);
+        await Promise.all([fetchCategory()]);
         loading.value = false;
     });
 

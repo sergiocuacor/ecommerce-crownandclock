@@ -1,3 +1,0 @@
-<template>
-    TO DO
-</template>
