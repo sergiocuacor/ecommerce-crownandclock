@@ -1,5 +1,6 @@
 <template>
     
+    <label for="categorySelector" class="form-label">{{ 'Categorías: ' }}</label>
     <select name="categorySelector" id="categorySelector" class="form-select" @change="handleChange">
         
         <!-- SUCCESS -->
