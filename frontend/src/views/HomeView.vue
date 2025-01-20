@@ -1,5 +1,5 @@
 <template>    
-    <main class="container py-5">
+    <main class="container tw-space-y-2">
       <CarouselComponent />     
       <ItemsComponent />
     </main>
