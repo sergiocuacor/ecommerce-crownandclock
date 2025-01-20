@@ -1,5 +1,5 @@
 <template>
-    <ul v-if="cartStore.items > 0" class="list-group list-group-flush">
+    <ul v-if="cartStore.items.length > 0" class="list-group list-group-flush">
         <li v-for="item in cartStore.items" :key="item.id" class="list-group-item">            
             <div class="tw-flex tw-items-center tw-gap-4">
                 <router-link :to="{ name: 'product', params: { mask: item.id } }" class="ratio ratio-1x1 tw-w-10 tw-h-10">
@@ -22,7 +22,11 @@
             </div>
         </li>
     </ul>
-    <p v-else>{{ 'No hay elementos' }}</p>
+    <div v-else class="tw-w-full tw-h-full tw-relative">
+        <div class="tw-absolute tw-top-1/2 tw-left-1/2 tw-transform tw--translate-x-1/2 tw--translate-y-1/2 tw-bg-gray-200 tw-px-2 tw-rounded">
+            {{ 'Vacío' }}
+        </div>
+    </div>
 </template>
 
 <script setup>
