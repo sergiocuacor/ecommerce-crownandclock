@@ -1,13 +1,13 @@
 <template>    
     <main class="container py-5">
       <section class="row py-3 g-2">
-        <div class="col-6">
+        <div class="col-12 col-md-6 col-lg-4">
           <BrandSelectorComponent @brandSelected="handleBrandSelected" />
         </div>
-        <div class="col-6">
+        <div class="col-12 col-md-6 col-lg-4">
           <CategorySelectorComponent @categorySelected="handleCategorySelected" />
         </div>
-        <div class="col-12">
+        <div class="col-12 tw-space-x-2">
           <span class="badge text-bg-primary">
             {{ 'Marca: ' + selectedBrandId }}
           </span>
