@@ -12,6 +12,7 @@ declare module 'vue' {
     BrandSelectorComponent: typeof import('./src/components/brands/BrandSelectorComponent.vue')['default']
     CarouselComponent: typeof import('./src/components/CarouselComponent.vue')['default']
     CartActionsButtonComponent: typeof import('./src/components/cart/CartActionsButtonComponent.vue')['default']
+    CartCheckoutComponent: typeof import('./src/components/cart/CartCheckoutComponent.vue')['default']
     CartItemComponent: typeof import('./src/components/cart/CartItemComponent.vue')['default']
     CartItemsComponent: typeof import('./src/components/cart/CartItemsComponent.vue')['default']
     CartOffCanvasBodyComponent: typeof import('./src/components/cart/CartOffCanvasBodyComponent.vue')['default']
