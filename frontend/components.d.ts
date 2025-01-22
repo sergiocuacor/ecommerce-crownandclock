@@ -16,6 +16,8 @@ declare module 'vue' {
     CartItemComponent: typeof import('./src/components/cart/CartItemComponent.vue')['default']
     CartItemsComponent: typeof import('./src/components/cart/CartItemsComponent.vue')['default']
     CartOffCanvasBodyComponent: typeof import('./src/components/cart/CartOffCanvasBodyComponent.vue')['default']
+    CartOffCanvasBodyItemComponent: typeof import('./src/components/cart/CartOffCanvasBodyItemComponent.vue')['default']
+    CartOffCanvasBodyItemsComponent: typeof import('./src/components/cart/CartOffCanvasBodyItemsComponent.vue')['default']
     CategoriesComponent: typeof import('./src/components/categories/CategoriesComponent.vue')['default']
     CategoryComponent: typeof import('./src/components/categories/CategoryComponent.vue')['default']
     CategorySelectorComponent: typeof import('./src/components/categories/CategorySelectorComponent.vue')['default']
