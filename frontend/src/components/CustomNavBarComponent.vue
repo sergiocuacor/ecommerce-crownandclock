@@ -1,5 +1,5 @@
 <template>
-    <nav class="navbar navbar-expand-lg fixed-top tw-bg-gray-300 lg:tw-bg-transparent lg:tw-bg-gradient-to-b lg:tw-from-gray-300">
+    <nav class="navbar navbar-expand-lg fixed-top tw-bg-gray-200 lg:tw-bg-transparent lg:tw-bg-gradient-to-b lg:tw-from-gray-200">
         <div class="container-fluid">
             <router-link to="/" class="navbar-brand">
                 <i class="bi bi-bing"></i>
@@ -67,8 +67,14 @@
                     </li>
                 </ul>
                 <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">{{ 'Search' }}</button>
+                    <div class="input-group">
+                        <input type="search" class="form-control" placeholder="Search" aria-label="Search">
+                        <span class="input-group-text tw-bg-green-700 tw-text-white">
+                            <button type="submit">
+                                <i class="bi bi-search"></i>
+                            </button>
+                        </span>
+                    </div>
                 </form>
             </div>
         </div>
