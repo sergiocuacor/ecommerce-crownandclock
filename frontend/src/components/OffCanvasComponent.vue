@@ -6,7 +6,7 @@
             </h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
-        <div class="offcanvas-body">
+        <div class="offcanvas-body tw-py-0">
             <CartOffCanvasBodyComponent v-if="utilsStore.offCanvasContent === 'cart'" />
             <UserControlPanelOffCanvasBodyComponent v-if="utilsStore.offCanvasContent === 'controlPanel'" />
         </div>
