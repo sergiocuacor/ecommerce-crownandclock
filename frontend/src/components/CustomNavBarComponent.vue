@@ -1,5 +1,5 @@
 <template>
-    <nav class="navbar navbar-expand-lg fixed-top tw-bg-gray-300 lg:tw-bg-transparent lg:tw-bg-gradient-to-b lg:tw-from-gray-300 lg:tw-from-10% lg:tw-via-gray-200 lg:tw-via-30% lg:tw-to-100%">
+    <nav class="navbar navbar-expand-lg fixed-top tw-bg-gray-300 lg:tw-bg-transparent lg:tw-bg-gradient-to-b lg:tw-from-gray-300">
         <div class="container-fluid">
             <router-link to="/" class="navbar-brand">
                 <i class="bi bi-bing"></i>
