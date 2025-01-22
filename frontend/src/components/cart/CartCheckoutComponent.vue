@@ -1,6 +1,6 @@
 <template>
 
-    <div v-if="cartStore.items.length > 0" class="tw-pt-2.5">
+    <div v-if="cartStore.items.length > 0">
         <div class="tw-text-2xl tw-text-center tw-p-5 space-y-2.5 tw-bg-gray-300 tw-border-2 tw-rounded-lg">
             {{ 'Total: ' + cartTotal + '&#8364' }}         
             <button class="btn btn-primary tw-w-full tw-mt-2.5" @click="checkout">{{ 'Pagar' }}</button>            
