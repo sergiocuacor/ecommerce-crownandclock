@@ -1,6 +1,6 @@
 <template>
   <CustomNavBarComponent/>      
   <router-view />
-  <CouponBannerComponent />
+  <!-- <CouponBannerComponent /> -->
   <CustomFooterComponent />  
 </template>

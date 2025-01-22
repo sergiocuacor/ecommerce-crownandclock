@@ -1,5 +1,5 @@
 <template>
-    <div class="btn-group m-1" aria-label="Cart Buttons">
+    <div class="btn-group">
         <button class="btn btn-sm btn-success" @click="addToCart" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">
             <i class="bi bi-bag-plus-fill"></i>
         </button>
