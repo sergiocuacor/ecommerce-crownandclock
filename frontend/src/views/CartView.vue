@@ -6,7 +6,7 @@
       {{ 'Carrito' }}
     </div>
     <CartItemsComponent />
-    <CartCheckoutComponent />
+    <CartCheckoutComponent class="tw-pt-2.5"/>
   </main>
     
   <!-- EMPTY -->    
