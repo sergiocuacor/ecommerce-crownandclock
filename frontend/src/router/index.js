@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import apiClient from '../services/api.js';
 import NotFoundView from '../views/NotFoundView.vue';
 import HomeView from '../views/HomeView.vue';
+import LoginView from '../views/LoginView.vue';
 import CartView from '../views/CartView.vue';
 import ItemsView from '../views/ItemsView.vue';
 import ItemView from '../views/ItemView.vue';
