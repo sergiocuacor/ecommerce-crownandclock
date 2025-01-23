@@ -32,6 +32,7 @@ declare module 'vue' {
     InstagramIcon: typeof import('./src/components/icons/InstagramIcon.vue')['default']
     ItemComponent: typeof import('./src/components/items/ItemComponent.vue')['default']
     ItemsComponent: typeof import('./src/components/items/ItemsComponent.vue')['default']
+    LoginFormComponent: typeof import('./src/components/users/LoginFormComponent.vue')['default']
     OffCanvasComponent: typeof import('./src/components/OffCanvasComponent.vue')['default']
     RatingComponent: typeof import('./src/components/RatingComponent.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

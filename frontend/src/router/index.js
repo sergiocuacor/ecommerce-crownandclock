@@ -36,6 +36,16 @@ const routes = [
     path: '/',
     redirect: { name: 'home' }
   },
+  // Login
+  { 
+    path: '/login',
+    name: 'login',
+    component: LoginView,
+    meta: {
+      label: 'Login',
+      breadcrumb: [{ label: 'Home', path: { name: 'home' } }]
+    } 
+  },
   // Cart
   { 
     path: '/products/cart',
