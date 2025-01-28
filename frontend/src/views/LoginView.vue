@@ -1,7 +1,11 @@
 <template>
 
-    <main class="container lg:tw-h-screen tw-pt-20 tw-pb-5">
-        <LoginFormComponent />
+    <main>
+        <VideoBackgroundComponent :videoSrc="'/video1.mp4'">
+            <template #main>
+                <LoginFormComponent />
+            </template>
+        </VideoBackgroundComponent>
     </main>
 
 </template>
