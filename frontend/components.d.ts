@@ -32,6 +32,7 @@ declare module 'vue' {
     InstagramIcon: typeof import('./src/components/icons/InstagramIcon.vue')['default']
     ItemComponent: typeof import('./src/components/items/ItemComponent.vue')['default']
     ItemsComponent: typeof import('./src/components/items/ItemsComponent.vue')['default']
+    LoginFormComponent: typeof import('./src/components/users/LoginFormComponent.vue')['default']
     OffCanvasComponent: typeof import('./src/components/OffCanvasComponent.vue')['default']
     RatingComponent: typeof import('./src/components/RatingComponent.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
@@ -40,5 +41,7 @@ declare module 'vue' {
     TwitterIcon: typeof import('./src/components/icons/TwitterIcon.vue')['default']
     TwitterXIcon: typeof import('./src/components/icons/TwitterXIcon.vue')['default']
     UserControlPanelOffCanvasBodyComponent: typeof import('./src/components/users/UserControlPanelOffCanvasBodyComponent.vue')['default']
+    VideoBackgoundComponent: typeof import('./src/components/utils/VideoBackgoundComponent.vue')['default']
+    VideoBackgroundComponent: typeof import('./src/components/utils/VideoBackgroundComponent.vue')['default']
   }
 }

@@ -65,6 +65,11 @@
                             <IconWithNotificationComponent icon="bi-person-circle" notificationColor="tw-bg-blue-500"/>                        
                         </button>
                     </li>
+                    <li class="nav-item">
+                        <router-link :to="{ name: 'login' }" class="nav-link">
+                            {{ 'Login' }}
+                        </router-link>
+                    </li>
                 </ul>
                 <form class="d-flex" role="search">
                     <div class="input-group">
