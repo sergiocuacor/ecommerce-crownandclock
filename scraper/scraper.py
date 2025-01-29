@@ -12,6 +12,8 @@ import json
 import re
 from urllib.parse import urlparse
 
+directorio_actual = os.path.dirname(os.path.realpath(__file__))
+
 chrome_options = Options()
 chrome_options.add_argument("window-size=1920x1080")
 chrome_options.add_argument("profile-directory=Default")
@@ -132,8 +134,10 @@ for index, elemento in enumerate(elementos):
 
     mask = re.sub(r'[^a-zA-Z0-9\s]', '', f"{nombre.text} {desc.text}").lower().replace(' ', '-')
 
+    carpeta_imagenes = os.path.join(directorio_actual, f"images/{mask}")
+
     for index_img, img_url in enumerate(imagenes):
-        descargar_imagen(img_url, f"images/{mask}", f"image{index_img}")
+        descargar_imagen(img_url, carpeta_imagenes, f"image{index_img}")
 
     datos_reloj = {
 
@@ -146,7 +150,9 @@ for index, elemento in enumerate(elementos):
     }
 
     lista_relojes.append(datos_reloj)
+
+carpeta_json = os.path.join(directorio_actual, 'richard-mille.json')
     
-guardar_json(lista_relojes, 'richard-mille.json')
+guardar_json(lista_relojes, carpeta_json)
     
 driver.quit()
