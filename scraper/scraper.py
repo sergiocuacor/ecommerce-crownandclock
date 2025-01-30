@@ -99,53 +99,67 @@ def guardar_json(data, archivo):
     except Exception as e:
         print(f"Error al guardar el archivo JSON: {e}")
 
+pages = [
+    {
+        "name": "Collections",
+        "url": "https://www.richardmille.com/collections"
+    },
+    {
+        "name": "Historical Models",
+        "url": "https://www.richardmille.com/historical-models"
+    }
+]
 
-driver.get("https://www.richardmille.com/collections")
+for page in pages:
 
-time.sleep(random.randint(2, 10))
+    driver.get(page['url'])
 
-clase_elemento = "product-item__content"
-    
-time.sleep(random.randint(1, 2))
+    print(f"Scrapeando {page['name']} URL: {page['url']}")
 
-lista_relojes = []
+    time.sleep(random.randint(2, 10))
 
-elementos = driver.find_elements(By.CLASS_NAME, clase_elemento)
-
-for index, elemento in enumerate(elementos):
-
+    clase_elemento = "product-item__content"
+        
     time.sleep(random.randint(1, 2))
 
-    driver.execute_script("arguments[0].scrollIntoView(true);", elemento)
+    lista_relojes = []
 
-    nombre = elemento.find_element(By.CLASS_NAME, "product-item__title")
-    desc = elemento.find_element(By.CLASS_NAME, "product-item__text")
+    elementos = driver.find_elements(By.CLASS_NAME, clase_elemento)
 
-    imagenes = obtener_imagenes(elemento)
+    for index, elemento in enumerate(elementos):
 
-    print(f"Título del producto {index + 1}: {nombre.text} {desc.text}")
+        time.sleep(random.randint(1, 2))
 
-    mask = re.sub(r'[^a-zA-Z0-9\s]', '', f"{nombre.text} {desc.text}").lower().replace(' ', '-')
+        driver.execute_script("arguments[0].scrollIntoView(true);", elemento)
 
-    carpeta_imagenes = os.path.join(directorio_actual, f"images/{mask}")
+        nombre = elemento.find_element(By.CLASS_NAME, "product-item__title")
+        desc = elemento.find_element(By.CLASS_NAME, "product-item__text")
 
-    for index_img, img_url in enumerate(imagenes):
-        descargar_imagen(img_url, carpeta_imagenes, f"image{index_img}")
+        imagenes = obtener_imagenes(elemento)
 
-    datos_reloj = {
+        print(f"Título del producto {index + 1}: {nombre.text} {desc.text}")
 
-        "name": f"{nombre.text} {desc.text}",
-        "mask": mask,
-        "brand": "Richard Mille",
-        "brand-mask": "richard-mille",
-        "img_urls": imagenes
+        mask = re.sub(r'[^a-zA-Z0-9\s]', '', f"{nombre.text} {desc.text}").lower().replace(' ', '-')
 
-    }
+        carpeta_imagenes = os.path.join(directorio_actual, f"images/{mask}")
 
-    lista_relojes.append(datos_reloj)
+        for index_img, img_url in enumerate(imagenes):
+            descargar_imagen(img_url, carpeta_imagenes, f"image{index_img}")
 
-carpeta_json = os.path.join(directorio_actual, 'richard-mille.json')
-    
-guardar_json(lista_relojes, carpeta_json)
-    
+        datos_reloj = {
+
+            "name": f"{nombre.text} {desc.text}",
+            "mask": mask,
+            "brand": "Richard Mille",
+            "brand-mask": "richard-mille",
+            "img_urls": imagenes
+
+        }
+
+        lista_relojes.append(datos_reloj)
+
+    carpeta_json = os.path.join(directorio_actual, 'richard-mille.json')
+        
+    guardar_json(lista_relojes, carpeta_json)
+        
 driver.quit()
