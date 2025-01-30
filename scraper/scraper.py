@@ -60,14 +60,7 @@ def descargar_imagen(url, carpeta_destino, nombre_imagen):
         
         extension = obtener_extension(tipo_mime)
         
-        nombre_archivo_base = os.path.basename(urlparse(url).path)
-        
-        if not nombre_archivo_base:
-            nombre_archivo_base = nombre_imagen
-        
-        nombre_archivo_base_sin_extension = os.path.splitext(nombre_archivo_base)[0]
-        
-        nombre_archivo = nombre_archivo_base_sin_extension + extension
+        nombre_archivo = nombre_imagen + extension
         
         if not os.path.exists(carpeta_destino):
             os.makedirs(carpeta_destino)
