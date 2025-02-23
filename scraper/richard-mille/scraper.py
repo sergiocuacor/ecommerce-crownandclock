@@ -104,10 +104,10 @@ pages = [
         "name": "Collections",
         "url": "https://www.richardmille.com/collections"
     },
-    {
-        "name": "Historical Models",
-        "url": "https://www.richardmille.com/historical-models"
-    }
+    # {
+    #     "name": "Historical Models",
+    #     "url": "https://www.richardmille.com/historical-models"
+    # }
 ]
 
 for page in pages:
@@ -147,12 +147,12 @@ for page in pages:
             descargar_imagen(img_url, carpeta_imagenes, f"image{index_img}")
 
         datos_reloj = {
-
-            "name": f"{nombre.text} {desc.text}",
-            "mask": mask,
+            
             "brand": "Richard Mille",
-            "brand-mask": "richard-mille",
-            "img_urls": imagenes
+            "brand_mask": "richard-mille",
+            "name": f"{nombre.text} {desc.text}",
+            "mask": mask,            
+            "image_urls": imagenes
 
         }
 
