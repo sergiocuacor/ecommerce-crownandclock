@@ -45,12 +45,12 @@ public class ProductEntity {
 	
 	@ManyToOne
 	@JoinColumn(name = "category_id", nullable = true)
-	@JsonBackReference
+	@JsonBackReference(value="product-category")
 	private CategoryEntity category;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JsonManagedReference
+	@JsonManagedReference(value="product-orderdetails")
 	private List<OrderDetailsEntity> orderDetails;
 	
 	

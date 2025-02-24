@@ -2,11 +2,14 @@ import { createRouter, createWebHistory } from 'vue-router';
 import apiClient from '../services/api.js';
 import NotFoundView from '../views/NotFoundView.vue';
 import HomeView from '../views/HomeView.vue';
+import LoginView from '../views/LoginView.vue';
 import CartView from '../views/CartView.vue';
 import ItemsView from '../views/ItemsView.vue';
 import ItemView from '../views/ItemView.vue';
 import BrandsView from '../views/BrandsView.vue';
 import BrandView from '../views/BrandView.vue';
+import CategoriesView from '../views/CategoriesView.vue';
+import CategoryView from '../views/CategoryView.vue';
 import SocialsView from '../views/SocialsView.vue';
 
 const routes = [
@@ -33,6 +36,16 @@ const routes = [
   { 
     path: '/',
     redirect: { name: 'home' }
+  },
+  // Login
+  { 
+    path: '/login',
+    name: 'login',
+    component: LoginView,
+    meta: {
+      label: 'Login',
+      breadcrumb: [{ label: 'Home', path: { name: 'home' } }]
+    } 
   },
   // Cart
   { 
@@ -119,6 +132,53 @@ const routes = [
   {
     path: '/products/brand/:mask',
     redirect: { name: 'brand' }
+  },
+  // Categories
+  { 
+    path: '/categories',
+    name: 'categories',
+    component: CategoriesView,
+    meta: { 
+      label: 'Categories', 
+      breadcrumb: [{ label: 'Home', path: { name: 'home' } }] 
+    } 
+  },
+  {
+    path: '/category',
+    redirect: { name: 'categories' }
+  },
+  {
+    path: '/products/categories',
+    redirect: { name: 'categories' }
+  },
+  {
+    path: '/products/category',
+    redirect: { name: 'categories' }
+  },
+  // Category
+  { 
+    path: '/categories/:mask',
+    name: 'category',
+    component: CategoryView, 
+    meta: { 
+      label: 'Category', 
+      breadcrumb: [
+        { label: 'Home', path: { name: 'home' } },
+        { label: 'Categories', path: { name: 'categories' } }
+      ] 
+    } 
+  },
+  {
+    path: '/category/:mask',
+    redirect: { name: 'category' }
+  },
+  {
+    path: '/products/categories/:mask',
+    redirect: { name: 'category' }
+  },
+  {
+    path: '/products/category/:mask',
+    redirect: { name: 'category' }
   },
   // Socials
   { 

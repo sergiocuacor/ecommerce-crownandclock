@@ -1,5 +1,6 @@
 <template>
     
+    <label for="brandSelector" class="form-label">{{ 'Marcas: ' }}</label>
     <select name="brandSelector" id="brandSelector" class="form-select" @change="handleChange">
         
         <!-- COMPONENT -->

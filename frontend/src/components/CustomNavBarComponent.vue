@@ -1,7 +1,7 @@
 <template>
-    <nav class="navbar navbar-expand-lg fixed-top tw-bg-gray-300 lg:tw-bg-transparent lg:tw-bg-gradient-to-b lg:tw-from-gray-300 lg:tw-from-10% lg:tw-via-gray-200 lg:tw-via-30% lg:tw-to-100%">
+    <nav class="navbar navbar-expand-lg fixed-top tw-bg-gray-200 lg:tw-bg-transparent lg:tw-bg-gradient-to-b lg:tw-from-gray-200">
         <div class="container-fluid">
-            <router-link to="/" class="navbar-brand">
+            <router-link :to="{ name: 'home' }" class="navbar-brand">
                 <i class="bi bi-bing"></i>
             </router-link>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -27,14 +27,17 @@
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <!-- <li>
-                                <router-link :to="{ name: 'categories' }" class="dropdown-item">
-                                    {{ 'Categories' }}
-                                </router-link>
-                            </li> -->
-                            <li>
+                            <li> 
                                 <router-link :to="{ name: 'brands' }" class="dropdown-item">
                                     {{ 'Brands' }}
+                                </router-link>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <router-link :to="{ name: 'categories' }" class="dropdown-item">
+                                    {{ 'Categories' }}
                                 </router-link>
                             </li>
                             <li>
@@ -53,34 +56,41 @@
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <button class="nav-link" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" @click="setContent('cart')" aria-controls="offcanvasNavbar" aria-label="Open Cart OffCanvas">
+                        <button class="nav-link" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" @click="utilsStore.setOffCanvasContent('cart')" aria-controls="offcanvasNavbar" aria-label="Open Cart OffCanvas">
                             <IconWithNotificationComponent icon="bi-basket-fill" notificationColor="tw-bg-green-500"/>                        
                         </button>
                     </li>
                     <li class="nav-item">
-                        <button class="nav-link" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" @click="setContent('controlPanel')" aria-controls="offcanvasNavbar" aria-label="Open Control Panel OffCanvas">
-                            <IconWithNotificationComponent icon="bi-gear-fill" notificationColor="tw-bg-blue-500"/>                        
+                        <button class="nav-link" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" @click="utilsStore.setOffCanvasContent('controlPanel')" aria-controls="offcanvasNavbar" aria-label="Open Control Panel OffCanvas">
+                            <IconWithNotificationComponent icon="bi-person-circle" notificationColor="tw-bg-blue-500"/>                        
                         </button>
+                    </li>
+                    <li class="nav-item">
+                        <router-link :to="{ name: 'login' }" class="nav-link">
+                            {{ 'Login' }}
+                        </router-link>
                     </li>
                 </ul>
                 <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">{{ 'Search' }}</button>
+                    <div class="input-group">
+                        <input type="search" class="form-control" placeholder="Search" aria-label="Search">
+                        <span class="input-group-text tw-bg-green-700 tw-text-white">
+                            <button type="submit">
+                                <i class="bi bi-search"></i>
+                            </button>
+                        </span>
+                    </div>
                 </form>
             </div>
         </div>
     </nav>
-    <OffCanvasComponent :content="currentContent"/>
+    <OffCanvasComponent />
 </template>
 
 <script setup>
 
-    import { ref } from 'vue';
+    import { useUtilsStore } from '../services/utils.js';
 
-    const currentContent = ref('');
-
-    const setContent = (newContent) => {
-        currentContent.value = newContent;
-    };
+    const utilsStore = useUtilsStore();
     
 </script>

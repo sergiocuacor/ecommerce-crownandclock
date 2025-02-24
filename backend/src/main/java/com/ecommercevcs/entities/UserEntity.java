@@ -64,7 +64,7 @@ public class UserEntity {
 	@Embedded // Para incrustar las propiedades de address en la tabla users.
 	private Address address;
 
-	@JsonManagedReference // JsonManaged nos permitirá ver la orderList en el JSON cuando hagamos peticiones GET
+	@JsonManagedReference(value="user-order") // JsonManaged nos permitirá ver la orderList en el JSON cuando hagamos peticiones GET
 	@OneToMany(mappedBy = "user",
 			cascade = CascadeType.ALL,
 			fetch = FetchType.LAZY) // para que solo cargue orders cuando accedamos a ellos (mejora el rendimiento).
