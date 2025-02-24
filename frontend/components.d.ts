@@ -40,8 +40,8 @@ declare module 'vue' {
     SocialsComponent: typeof import('./src/components/SocialsComponent.vue')['default']
     TwitterIcon: typeof import('./src/components/icons/TwitterIcon.vue')['default']
     TwitterXIcon: typeof import('./src/components/icons/TwitterXIcon.vue')['default']
+    TwoImageElementComponent: typeof import('./src/components/utils/TwoImageElementComponent.vue')['default']
     UserControlPanelOffCanvasBodyComponent: typeof import('./src/components/users/UserControlPanelOffCanvasBodyComponent.vue')['default']
-    VideoBackgoundComponent: typeof import('./src/components/utils/VideoBackgoundComponent.vue')['default']
     VideoBackgroundComponent: typeof import('./src/components/utils/VideoBackgroundComponent.vue')['default']
   }
 }
