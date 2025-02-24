@@ -8,7 +8,7 @@
             <router-link v-if="toRoute" :to="toRoute" class="ratio ratio-1x1">
                 <img class="object-fit-contain p-4" :src="imgSrc" :alt="imgAlt" loading="lazy" />
             </router-link>
-            <div v-else="toRoute" class="ratio ratio-1x1">
+            <div v-else class="ratio ratio-1x1">
                 
             </div>
 
