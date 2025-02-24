@@ -46,13 +46,13 @@ SELECT id, (SELECT id FROM roles WHERE name = 'ROLE_USER')
 FROM users
 WHERE email != 'carlos.garcia@example.com';
     
-    INSERT INTO category (name, description) VALUES 
+    INSERT INTO brand (name, description) VALUES 
 ('Rings', 'Gold, silver, and diamond rings'),
 ('Necklaces', 'Necklaces in gold, silver, and precious stones'),
 ('Bracelets', 'Gold, silver, and gem-encrusted bracelets'),
 ('Earrings', 'Variety of earrings: studs, hoops, and dangly');
     
-INSERT INTO products (name, description, price, category_id, stock) VALUES
+INSERT INTO products (name, description, price, brand_id, stock) VALUES
 ('Gold Ring', 'A beautiful gold ring', 199.99, 1, 50),
 ('Diamond Ring', 'An elegant diamond ring', 999.99, 1, 25),
 ('Gold Necklace', 'Gold necklace with a pendant', 299.99, 2, 40),

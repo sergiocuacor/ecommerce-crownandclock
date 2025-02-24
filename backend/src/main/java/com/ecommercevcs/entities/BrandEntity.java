@@ -14,8 +14,8 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "category")
-public class CategoryEntity {
+@Table(name = "brand")
+public class BrandEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -23,12 +23,12 @@ public class CategoryEntity {
 	private String name;
 	private String description;
 	
-	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JsonManagedReference(value="product-category")
+	@OneToMany(mappedBy = "brand", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JsonManagedReference(value="product-brand")
 	private List<ProductEntity> products;
 	
 	
-	public CategoryEntity() {
+	public BrandEntity() {
 		super();
 	}
 
@@ -64,7 +64,7 @@ public class CategoryEntity {
 		this.products = products;
 	}
 	public void addProduct(ProductEntity product) {
-		product.setCategory(this);
+		product.setBrand(this);
 		this.products.add(product);
 	}
 	
