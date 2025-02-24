@@ -41,6 +41,16 @@ public class ProductEntity {
 	@NotNull
 	@IsPositiveValueInteger
 	private Integer stock;
+	
+	@NotBlank
+	private String mask;
+	
+	@NotBlank
+	private String urlImage1;
+	
+	private String urlImage2;
+	
+	
 
 	@ManyToOne
 	@JoinColumn(name = "brand_id", nullable = true)
@@ -131,5 +141,31 @@ public class ProductEntity {
 		this.orderDetails.add(orderDetail);
 		orderDetail.setProduct(this);
 	}
+
+	public String getMask() {
+		return mask;
+	}
+
+	public void setMask(String mask) {
+		this.mask = mask;
+	}
+
+	public String getUrlImage1() {
+		return urlImage1;
+	}
+
+	public void setUrlImage1(String urlImage1) {
+		this.urlImage1 = urlImage1;
+	}
+
+	public String getUrlImage2() {
+		return urlImage2;
+	}
+
+	public void setUrlImage2(String urlImage2) {
+		this.urlImage2 = urlImage2;
+	}
+	
+	
 
 }
