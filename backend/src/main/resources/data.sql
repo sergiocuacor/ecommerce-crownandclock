@@ -12,6 +12,11 @@ INSERT INTO brand (name, description) VALUES
 ('Vacheron Constantin', 'High-end Swiss watchmaking since 1755');
 
 
+
+INSERT INTO roles (name) VALUES 
+('ROLE_USER'),
+('ROLE_ADMIN');
+
 ## Audemars-piguet
 INSERT INTO products (name, description, price, stock, mask, brand_id) VALUES
 ('26470ST Royal Oak Offshore', 'Emblemático Royal Oak Offshore con caja de acero inoxidable de 42mm, cronógrafo automático y esfera "Méga Tapisserie". Resistente al agua hasta 100m y brazalete integrado de acero.', 34500.00, 3, 'audemars-piguet-26470st-royal-oak-offshore', 1),
@@ -499,3 +504,4 @@ INSERT INTO products (name, description, price, stock, mask, brand_id) VALUES
 ('SPB151 Prospex Captain Willard', 'SPB151 Prospex Captain Willard', 53000, 8, 'seiko-spb151-prospex-captain-willard', 9),
 
 ('SSK001 5 Sports GMT', 'SSK001 5 Sports GMT', 37000, 16, 'seiko-ssk001-5-sports-gmt', 9);
+
