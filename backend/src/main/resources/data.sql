@@ -12,3 +12,6 @@ INSERT INTO brand (name, description) VALUES
 ('Vacheron Constantin', 'High-end Swiss watchmaking since 1755');
 
 
+INSERT INTO roles (name) VALUES 
+('ROLE_USER'),
+('ROLE_ADMIN');
