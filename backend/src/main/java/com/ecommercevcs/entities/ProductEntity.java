@@ -45,10 +45,7 @@ public class ProductEntity {
 	@NotBlank
 	private String mask;
 	
-	@NotBlank
-	private String urlImage1;
 	
-	private String urlImage2;
 	
 	
 
@@ -150,21 +147,6 @@ public class ProductEntity {
 		this.mask = mask;
 	}
 
-	public String getUrlImage1() {
-		return urlImage1;
-	}
-
-	public void setUrlImage1(String urlImage1) {
-		this.urlImage1 = urlImage1;
-	}
-
-	public String getUrlImage2() {
-		return urlImage2;
-	}
-
-	public void setUrlImage2(String urlImage2) {
-		this.urlImage2 = urlImage2;
-	}
 	
 	
 
