@@ -28,6 +28,7 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import jakarta.persistence.UniqueConstraint;
+import jakarta.validation.constraints.Email;
 
 @Entity
 @Table(name = "users")
@@ -53,9 +54,11 @@ public class UserEntity {
 	
 	private String lastName;
 	
+	@Email
 	@Column(unique = true)
 	private String email;
 	
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private String password; //Encriptada
 	
 	private String phoneNumber;

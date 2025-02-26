@@ -1,0 +1,44 @@
+package com.ecommercevcs.services;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.ecommercevcs.entities.RoleEntity;
+import com.ecommercevcs.entities.UserEntity;
+import com.ecommercevcs.repositories.UserRepository;
+
+@Service
+public class UserDetailsServiceImpl implements org.springframework.security.core.userdetails.UserDetailsService {
+	
+	@Autowired
+	private UserRepository userRepository;
+	
+	@Transactional(readOnly = true)
+	@Override
+	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+		
+		Optional<UserEntity> userOptional = userRepository.findByEmail(email);
+		if(!userOptional.isPresent()) {
+			throw new UsernameNotFoundException("The email " + email + " doesn't exist");
+		}
+		UserEntity user = userOptional.orElseThrow();
+		
+		List<GrantedAuthority> authorities = user.getRoles().stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
+		
+		
+		
+		userOptional.ifPresent(null);
+		return null;
+	}
+
+}
