@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -33,12 +34,15 @@ public class UserDetailsServiceImpl implements org.springframework.security.core
 		}
 		UserEntity user = userOptional.orElseThrow();
 		
-		List<GrantedAuthority> authorities = user.getRoles().stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
+		List<GrantedAuthority> authorities = user.getRoles().stream().map(role -> new SimpleGrantedAuthority(role.getName()))
+				.collect(Collectors.toList());
 		
 		
-		
-		userOptional.ifPresent(null);
-		return null;
+		return new User(user.getEmail(),
+					user.getPassword(),
+					user.isEnabled(),
+					true,true,true,
+					authorities);
 	}
 
 }
