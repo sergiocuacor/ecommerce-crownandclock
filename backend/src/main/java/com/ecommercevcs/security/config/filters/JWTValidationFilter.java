@@ -60,10 +60,11 @@ public class JWTValidationFilter extends BasicAuthenticationFilter {
 					.readValue(jsonAuthorities, SimpleGrantedAuthority[].class));
 			System.out.println(authorities);
 			
-			UsernamePasswordAuthenticationToken autenthicationToken = new UsernamePasswordAuthenticationToken(email, authorities);
-			System.out.println(autenthicationToken);
-			SecurityContextHolder.getContext().setAuthentication(autenthicationToken);
-			System.out.println(autenthicationToken);
+			UsernamePasswordAuthenticationToken authenticationToken =
+				    new UsernamePasswordAuthenticationToken(email, null, authorities);
+			System.out.println(authenticationToken);
+			SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+			System.out.println(authenticationToken);
 			chain.doFilter(request, response);
 			
 			
