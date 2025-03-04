@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +18,8 @@ import com.ecommercevcs.dtos.UserDTO;
 import com.ecommercevcs.entities.UserEntity;
 import com.ecommercevcs.services.IUserService;
 
+// @CrossOrigin(origins = "https://localhost/...." o tambien) podemos poner la ruta del front 
+// @CrossOrigin(originPatterns = "*")
 @RestController
 @RequestMapping("users")
 public class UserController {

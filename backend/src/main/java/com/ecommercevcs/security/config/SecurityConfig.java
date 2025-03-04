@@ -12,6 +12,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 
 import com.ecommercevcs.security.config.filters.JWTAuthenticationFilter;
 import com.ecommercevcs.security.config.filters.JWTValidationFilter;
@@ -62,6 +64,15 @@ public class SecurityConfig {
 	        .build();
 	    
 	}
+	
+	@Bean
+	CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration config = new CorsConfiguration();
+		
+		return null;
+		
+	}
+	
 	
 
 
