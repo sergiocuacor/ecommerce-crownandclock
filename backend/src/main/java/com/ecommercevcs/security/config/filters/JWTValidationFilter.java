@@ -40,6 +40,7 @@ public class JWTValidationFilter extends BasicAuthenticationFilter {
 		
 		if(header == null || !header.startsWith(PREFIX_TOKEN)) {
 			
+			chain.doFilter(request, response);
 			return;
 		}
 		String token = header.replace(PREFIX_TOKEN, "");
@@ -49,13 +50,20 @@ public class JWTValidationFilter extends BasicAuthenticationFilter {
 			String email = claims.getSubject();
 			Object authoritiesClaims = claims.get("authorities");
 			
+			ObjectMapper objectMapper = new ObjectMapper();
+			String jsonAuthorities = objectMapper.writeValueAsString(authoritiesClaims);
+
+		
+			System.out.println(authoritiesClaims);
 			Collection<? extends GrantedAuthority> authorities = Arrays.asList(new ObjectMapper()
 					.addMixIn(SimpleGrantedAuthority.class, SimpleGrantedAuthorityJsonCreator.class)
-					.readValue(authoritiesClaims.toString().getBytes(), SimpleGrantedAuthority[].class));
-			
+					.readValue(jsonAuthorities, SimpleGrantedAuthority[].class));
+			System.out.println(authorities);
 			
 			UsernamePasswordAuthenticationToken autenthicationToken = new UsernamePasswordAuthenticationToken(email, authorities);
+			System.out.println(autenthicationToken);
 			SecurityContextHolder.getContext().setAuthentication(autenthicationToken);
+			System.out.println(autenthicationToken);
 			chain.doFilter(request, response);
 			
 			

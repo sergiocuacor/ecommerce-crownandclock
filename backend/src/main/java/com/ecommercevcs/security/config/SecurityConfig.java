@@ -50,7 +50,9 @@ public class SecurityConfig {
 	        .addFilter(new JWTAuthenticationFilter(authenticationManager)) // Agregar el filtro de autenticación JWT
 	        .addFilter(new JWTValidationFilter(authenticationManager))
 	        .build();
+	    
 	}
+	
 
 
 }

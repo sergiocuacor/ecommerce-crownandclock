@@ -23,6 +23,8 @@ public class BrandServiceImpl implements IBrandService {
 
 	@Override
 	public List<BrandEntity> findAll() {
+		System.out.println("FIND ALL BRAND REPOSITORY");
+		System.out.println(this.brandRepository.findAll());
 		
 		return this.brandRepository.findAll();
 	}
