@@ -36,7 +36,7 @@ public class UserController {
 		return ResponseEntity.ok(userService.findById(id));
 	}
 
-	@PostMapping
+	@PostMapping("/register")
 	public ResponseEntity<UserEntity> add(@RequestBody UserEntity user){
 		
 		
