@@ -24,4 +24,4 @@ dist-ssr
 *.sw?
 
 # Específico del Proyecto
-component.d.ts
+components.d.ts
