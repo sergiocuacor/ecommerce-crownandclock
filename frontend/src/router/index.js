@@ -11,6 +11,7 @@ import BrandView from '../views/BrandView.vue';
 import CategoriesView from '../views/CategoriesView.vue';
 import CategoryView from '../views/CategoryView.vue';
 import SocialsView from '../views/SocialsView.vue';
+import UserProfileView from '../views/UserProfileView.vue';
 
 const routes = [
   // Error/Unknown
@@ -46,6 +47,24 @@ const routes = [
       label: 'Login',
       breadcrumb: [{ label: 'Home', path: { name: 'home' } }]
     } 
+  },
+  // User Profile
+  { 
+    path: '/profile',
+    name: 'profile',
+    component: UserProfileView,
+    meta: {
+      label: 'Profile',
+      breadcrumb: [{ label: 'Home', path: { name: 'home' } }]
+    } 
+  },
+  { 
+    path: '/user',
+    redirect: { name: 'profile' }
+  },
+  { 
+    path: '/users',
+    redirect: { name: 'profile' }
   },
   // Cart
   { 
