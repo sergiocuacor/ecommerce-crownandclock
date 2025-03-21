@@ -91,7 +91,9 @@
                         <a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">New...</a>
                     </li>
                     <li>
-                        <a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Profile</a>
+                        <router-link :to="{ name: 'profile' }" class="link-body-emphasis d-inline-flex text-decoration-none rounded">
+                            {{ 'Profile' }}
+                        </router-link>
                     </li>
                     <li>
                         <a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Settings</a>
