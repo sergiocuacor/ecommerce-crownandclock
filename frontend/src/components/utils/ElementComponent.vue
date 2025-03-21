@@ -5,9 +5,12 @@
         <div class="position-relative bg-white">
 
             <!-- Image with link to element -->
-            <router-link v-if="toRoute" :to="toRoute" class="ratio ratio-1x1">
-                <img class="object-fit-contain p-4" :src="imgSrc" :alt="imgAlt" loading="lazy" />
+            <router-link v-if="props.toRoute && props.imgSrc" :to="props.toRoute" class="ratio ratio-1x1">
+                <img :class="[props.imgCustomization, imageLoaded ? '' : 'd-none']" :src="imgSrc" :alt="props.imgAlt" loading="lazy" @load="imageLoaded = true"/>
             </router-link>
+            <div v-else-if="imgSrc" class="ratio ratio-1x1">
+                <img :class="[props.imgCustomization, imageLoaded ? '' : 'd-none']" :src="props.imgSrc" :alt="props.imgAlt" loading="lazy" @load="imageLoaded = true"/>
+            </div>            
             <div v-else class="ratio ratio-1x1">
                 
             </div>
@@ -72,7 +75,11 @@
 
 <script setup>
 
-    defineProps({
+    import { defineProps, defineSlots, ref } from 'vue';
+
+    const imageLoaded = ref(false);
+
+    const props = defineProps({
         toRoute: {
             type: Object,
             required: false,
@@ -85,6 +92,11 @@
         imgAlt: {
             type: String,
             default: '',
+            required: false,
+        },
+        imgCustomization: {
+            type: String,
+            default: 'object-fit-contain p-4',
             required: false,
         },
     });
