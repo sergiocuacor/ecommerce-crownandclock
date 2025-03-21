@@ -1,7 +1,7 @@
 <template>
 
     <!-- SUCCESS -->
-    <ElementComponent v-if="!loading && !error" :imgSrc="item.image" :imgAlt="item.alt" :imgCustomization="`object-fit-cover`">
+    <ElementComponent v-if="!loading && !error" :imgSrc="props.imageURL" :imgAlt="props.imageAlt" :imgCustomization="`object-fit-cover`">
         <template #bottom-right>    
             <button class="btn btn-sm btn-primary m-1">
                 <i class="bi bi-pencil-fill"></i>
@@ -31,19 +31,21 @@
 
     import { ref, onMounted } from 'vue';
 
-    const item = ref([]);
-    const loading = ref(true);
+    // const loading = ref(true);
+    const loading = ref(false);
     const error = ref(null);
     
-    item.value = {
-        alt: 'user-image',
-        image: 'watch_front.avif',
-    };
-
-    onMounted(() => {
-        setTimeout(() => {
-            loading.value = false;
-        }, 2000);
-    }); 
+    const props = defineProps({
+        imageURL: {
+            type: String,
+            default: 'watch_front.avif',
+            required: false,
+        },
+        imageAlt: {
+            type: String,
+            default: 'imagen',
+            required: false,
+        },
+    });
 
 </script>
