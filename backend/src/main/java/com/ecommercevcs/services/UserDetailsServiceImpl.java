@@ -44,5 +44,7 @@ public class UserDetailsServiceImpl implements org.springframework.security.core
 					true,true,true,
 					authorities);
 	}
+	
+	
 
 }
