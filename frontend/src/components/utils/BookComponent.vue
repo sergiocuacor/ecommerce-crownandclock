@@ -1,14 +1,16 @@
 <template>
-    <div class="ui-book">
-        <div class="ratio ratio-1x1">
-            <img class="object-fit-contain p-1" src="/public/watch_back.avif" alt="back-image" />
-        </div>
-        <div class="ui-cover">
-            <div class="ratio ratio-1x1">
-                <img class="object-fit-contain p-1" src="/public/watch_front.avif" alt="front-image" />
-            </div>
-        </div>
-       </div>
+
+  <div class="ui-book">
+    <div class="ratio ratio-1x1">
+      <img class="object-fit-contain p-1" src="/watch_back.avif" alt="back-image" />
+    </div>
+    <div class="ui-cover">
+      <div class="ratio ratio-1x1">
+        <img class="object-fit-contain p-1" src="/watch_front.avif" alt="front-image" />
+      </div>
+    </div>
+  </div>
+
 </template>
 
 <style scoped>
