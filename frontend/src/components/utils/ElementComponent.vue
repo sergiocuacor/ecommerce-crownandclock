@@ -6,10 +6,10 @@
 
             <!-- Image with link to element -->
             <router-link v-if="props.toRoute && props.imgSrc" :to="props.toRoute" class="ratio ratio-1x1">
-                <img :class="[props.imgCustomization, imageLoaded ? '' : 'd-none']" :src="imgSrc" :alt="props.imgAlt" loading="lazy" @load="imageLoaded = true"/>
+                <img :class="[props.imgCustomization, imageLoaded ? '' : 'd-none']" :src="props.imgSrc" :alt="props.imgAlt" @load="imageLoaded = true"/>
             </router-link>
             <div v-else-if="imgSrc" class="ratio ratio-1x1">
-                <img :class="[props.imgCustomization, imageLoaded ? '' : 'd-none']" :src="props.imgSrc" :alt="props.imgAlt" loading="lazy" @load="imageLoaded = true"/>
+                <img :class="[props.imgCustomization, imageLoaded ? '' : 'd-none']" :src="props.imgSrc" :alt="props.imgAlt" @load="imageLoaded = true"/>
             </div>            
             <div v-else class="ratio ratio-1x1">
                 
