@@ -19,11 +19,17 @@
         
         </section>
 
-        <section class="row">
-            
+        <section class="row gy-2 gx-4 py-4">
+
             <article class="col-12">
 
+                <p class="fs-4 fw-bold">Últimas compras</p>
 
+            </article>
+            
+            <article v-for="n in 4" :key="n" class="col-3">
+
+                <BookComponent />           
                 
             </article>
 
@@ -36,6 +42,7 @@
 <script setup>
 
     import { ref } from 'vue';
+import BookComponent from '../components/utils/BookComponent.vue';
 
     const user = ref([]);
 
