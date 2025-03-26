@@ -2,7 +2,7 @@
 
     <!-- SUCCESS -->
     <section v-if="!loading && !error" class="tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-3 lg:tw-grid-cols-4 xl:tw-grid-cols-4 tw-gap-2">
-        <ItemComponent v-for="item in items" :key="item.id" :itemMask="item.id"/>        
+        <ItemComponent v-for="item, index in items.content" :key="index" :itemMask="item.id"/>
     </section>
     
     <!-- LOADING -->
@@ -57,17 +57,20 @@
     const error = ref(null);
 
     const fetchItems = async () => {
-        try {
-            const response = await apiClient.getItems();
+
+        const response = await apiClient.getItemsPageable(0, 12, 'name');
+        
+        if (response.success) {
             items.value = response.data;
-        } catch (err) {
-            error.value = 'Error al cargar los productos';
+        } else {
+            error.value = response.error;
         }
+
     };
 
     onMounted(async () => {
         loading.value = true;
-        await Promise.all([fetchItems()]);
+        await fetchItems();
         loading.value = false;
     });
 
