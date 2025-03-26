@@ -28,8 +28,8 @@
   </div>
 
   <!-- LOADING -->
-  <div v-if="loading" class="">
-    <WordsLoaderComponent />
+  <div v-if="loading" class="tw-m-4 sm:tw-m-0">
+    <WordsLoaderComponent :mainWords="`cargando...`" :secondaryWords="['nombre', 'descripción', 'precio', 'existencias', 'marca']"/>
   </div>
 
   <!-- ERROR -->
@@ -74,38 +74,38 @@
     onMounted(async () => {
         loading.value = true;
         setTimeout(() => {
-            loading.value = false;
-        }, 15000000);
+            loading.value = false;        
+
+            if(props.itemMask == "audemars-piguet-26470st-royal-oak-offshore"){
+
+                item.value = {
+                name: '26470ST Royal Oak Offshore',
+                description: 'Emblemático Royal Oak Offshore con caja de acero inoxidable de 42mm, cronógrafo automático y esfera "Méga Tapisserie". Resistente al agua hasta 100m y brazalete integrado de acero.',
+                price: 34500.00,
+                stock: 3,
+                mask: 'audemars-piguet-26470st-royal-oak-offshore',
+                brand_id: 1,
+                brand_name: 'Audemars Piguet'
+                };
+
+            } else if(props.itemMask == "hermes-ha3210-harnais"){
+
+                item.value = {
+                name: 'HA3.210 Harnais',
+                description: 'Harnais con diseño inspirado en los arneses ecuestres, esfera guilloché y movimiento de precisión',
+                price: 3950.00,
+                stock: 4,
+                mask: 'hermes-ha3210-harnais',
+                brand_id: 4,
+                brand_name: 'Hermès'
+                };
+
+            } else {
+
+                error.value = 'Error al cargar el producto';
+
+            }
+      }, 4000);
     });
-
-    if(props.itemMask == "audemars-piguet-26470st-royal-oak-offshore"){
-
-        item.value = {
-        name: '26470ST Royal Oak Offshore',
-        description: 'Emblemático Royal Oak Offshore con caja de acero inoxidable de 42mm, cronógrafo automático y esfera "Méga Tapisserie". Resistente al agua hasta 100m y brazalete integrado de acero.',
-        price: 34500.00,
-        stock: 3,
-        mask: 'audemars-piguet-26470st-royal-oak-offshore',
-        brand_id: 1,
-        brand_name: 'Audemars Piguet'
-        };
-
-    } else if(props.itemMask == "hermes-ha3210-harnais"){
-
-        item.value = {
-        name: 'HA3.210 Harnais',
-        description: 'Harnais con diseño inspirado en los arneses ecuestres, esfera guilloché y movimiento de precisión',
-        price: 3950.00,
-        stock: 4,
-        mask: 'hermes-ha3210-harnais',
-        brand_id: 4,
-        brand_name: 'Hermès'
-        };
-
-    } else {
-
-        error.value = 'Error al cargar el producto';
-
-    }
 
 </script>
