@@ -1,25 +1,41 @@
 <template>
+
     <div class="ui-card">
       <div class="ui-loader">
-        <p>loading</p>
+        <p>{{ props.mainWords }}</p>
         <div class="ui-words">
-          <span class="ui-word">buttons</span>
-          <span class="ui-word">forms</span>
-          <span class="ui-word">switches</span>
-          <span class="ui-word">cards</span>
-          <span class="ui-word">buttons</span>
+          <span v-for="word, index in props.secondaryWords" :key="index" class="ui-word">{{ word }}</span>
         </div>
       </div>
     </div>
+
 </template>
+
+<script setup>
+
+  import { ref, onMounted } from 'vue';
+
+  const props = defineProps({
+    mainWords: {
+      type: String,
+      default: 'loading',
+      required: false,
+    },
+    secondaryWords: {
+      type: Array,
+      default: ['buttons', 'forms', 'switches', 'cards'],
+    },
+  });
+
+</script>
 
 <style scoped>
 
   .ui-card {
     /* color used to softly clip top and bottom of the .words container */
-    --bg-color: #212121;
-    background-color: var(--bg-color);
-    padding: 1rem 2rem;
+    --ui-bg-color: #212121;
+    background-color: var(--ui-bg-color);
+    padding: 1rem;
     border-radius: 1.25rem;
   }
 
@@ -48,10 +64,10 @@
     position: absolute;
     inset: 0;
     background: linear-gradient(
-      var(--bg-color) 10%,
+      var(--ui-bg-color) 10%,
       transparent 30%,
       transparent 70%,
-      var(--bg-color) 90%
+      var(--ui-bg-color) 90%
     );
     z-index: 20;
   }
@@ -61,10 +77,10 @@
     height: 100%;
     padding-left: 6px;
     color: #956afa;
-    animation: spin_4991 4s infinite;
+    animation: ui-spin_4991 4s infinite;
   }
 
-  @keyframes spin_4991 {
+  @keyframes ui-spin_4991 {
     10% {
       -webkit-transform: translateY(-102%);
       transform: translateY(-102%);
