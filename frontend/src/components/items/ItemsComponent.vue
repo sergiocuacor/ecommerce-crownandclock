@@ -1,9 +1,15 @@
 <template>
 
     <!-- SUCCESS -->
-    <section v-if="!loading && !error" class="tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-3 lg:tw-grid-cols-4 xl:tw-grid-cols-4 tw-gap-2">
-        <ItemComponent v-for="item, index in items.content" :key="index" :itemMask="item.id"/>
-    </section>
+    <section v-if="!loading && !error">
+
+        <ItemPaginationComponent :currentPage="currentPage" :pageSize="pageSize" :totalElements="totalElements"/>
+
+        <div class="tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-3 lg:tw-grid-cols-4 xl:tw-grid-cols-4 tw-gap-2">
+            <ItemComponent v-for="item, index in items.content" :key="index" :itemMask="item.id"/>
+        </div>
+
+    </section>    
     
     <!-- LOADING -->
     <section v-if="loading" class="tw-aspect-square lg:tw-aspect-video tw-relative">
@@ -49,29 +55,54 @@
 
 <script setup>
 
-    import { ref, onMounted } from 'vue';
+    import { ref, onMounted, watch } from 'vue';
+    import { useRoute } from 'vue-router';
     import apiClient from '../../services/api.js';
+
+    const route = useRoute();
 
     const items = ref([]);
     const loading = ref(true);
     const error = ref(null);
+    
+    const currentPage = ref(Number(route.query.page) || 0);
+    const pageSize = ref(Number(route.query.size) || 12);
+    const totalElements = ref(0);
+    const sortBy = ref(route.query.sort || 'name');
+    const selectedBrand = ref(route.query.brand || '');
+    const selectedCategory = ref(route.query.category || '');
 
     const fetchItems = async () => {
 
-        const response = await apiClient.getItemsPageable(0, 12, 'name');
+        loading.value = true;
+
+        const response = await apiClient.getItemsPageable(currentPage.value, pageSize.value, sortBy.value);
         
         if (response.success) {
             items.value = response.data;
+            totalElements.value = items.value.totalElements;
         } else {
             error.value = response.error;
         }
 
-    };
-
-    onMounted(async () => {
-        loading.value = true;
-        await fetchItems();
         loading.value = false;
-    });
+
+    };
+    
+    watch(
+        () => route.query,
+        (newQuery) => {
+            currentPage.value = Number(newQuery.page) || 0;
+            pageSize.value = Number(newQuery.size) || 12;
+            sortBy.value = newQuery.sort || 'name';
+            selectedBrand.value = newQuery.brand || '';
+            selectedCategory.value = newQuery.category || '';
+
+            fetchItems();
+        },
+        { deep: true }
+    );
+
+    onMounted(fetchItems);
 
 </script>
