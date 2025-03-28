@@ -60,10 +60,10 @@ export default {
   getItems() {
     return apiCall('get', '/product/all');
   },
-  getItemsPageable(page = 0, size = 12, sort = 'name') {
+  getItemsPageable(page = 0, size = 12, sort = 'name,asc') {
     return apiCall('get', '/product', { page, size, sort });
   },
-  getItemsFromBrand() {
-    return apiCall('get', `/brand/${mask}` )
+  getItemsFromBrand(id) {
+    return apiCall('get', `/brand/${id}` )
   }
 };
