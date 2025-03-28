@@ -2,18 +2,18 @@
 
     <!-- SUCCESS -->
     <ElementComponent v-if="!loading && !error" :toRoute="{ name: 'product', params: { mask: item.id } }" :imgSrc="apiBaseURL + `/images/` + item.mask + `/image.png`" :imgAlt="`${item.mask}`">
-        <template #top-left>
-            <!-- <RatingComponent v-if="item.rating" :itemRating="item.rating" /> -->
-        </template>
         <template #bottom-right>
             <CartActionsButtonComponent :item="item" :class="'m-1'"/>
         </template>
         <template #footer>
             <div class="col text-truncate">
-                {{ 'Disponibles: ' + item.stock }}
+                {{ item.name }}
             </div>
             <div class="col-12 col-md-auto">
                 {{ item.price + '&#8364' }}
+            </div>
+            <div class="col-12">
+                {{ 'Disponibles: ' + item.stock }}
             </div>
         </template>        
     </ElementComponent>
