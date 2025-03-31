@@ -29,7 +29,7 @@
     <!-- ERROR -->
     <section v-if="error" class="tw-relative">
         <div class="tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-3 lg:tw-grid-cols-4 xl:tw-grid-cols-6 tw-gap-2">
-            <ElementComponent v-if="error" v-for="index in 24" :key="index">
+            <ElementComponent v-for="index in 24" :key="index">
                 <template #middle-center>
                     <i class="bi bi-exclamation-diamond-fill tw-text-red-500 fs-1"></i>
                 </template>
@@ -88,7 +88,7 @@
         loading.value = false;
 
     };
-    
+
     watch(
         () => route.query,
         (newQuery) => {
@@ -97,7 +97,7 @@
             sortBy.value = newQuery.sort || 'name,asc';
             selectedBrand.value = newQuery.brand || '';
             selectedCategory.value = newQuery.category || '';
-
+            
             fetchItems();
         },
         { deep: true }
