@@ -48,13 +48,13 @@
                     </button>
 
                     <button v-if="pageNumberButtons.buttons[0]?.condition" @click="goToAnyPage(pageNumberButtons.buttons[0]?.number)" :class="[pageNumberButtons.commonClasses, (currentPage == pageNumberButtons.buttons[0]?.number) ? pageNumberButtons.currentPageClass : pageNumberButtons.notCurrentPageClass]">
-                        {{ pageNumberButtons.buttons[0]?.number }}
+                        {{ pageNumberButtons.buttons[0]?.number + "A" }}
                     </button>
                     <button v-if="pageNumberButtons.buttons[1]?.condition" @click="goToAnyPage(pageNumberButtons.buttons[1]?.number)" :class="[pageNumberButtons.commonClasses, (currentPage == pageNumberButtons.buttons[1]?.number) ? pageNumberButtons.currentPageClass : pageNumberButtons.notCurrentPageClass]">
-                        {{ pageNumberButtons.buttons[1]?.number }}
+                        {{ pageNumberButtons.buttons[1]?.number + "B" }}
                     </button>
                     <button v-if="pageNumberButtons.buttons[2]?.condition" @click="goToAnyPage(pageNumberButtons.buttons[2]?.number)" :class="[pageNumberButtons.commonClasses, (currentPage == pageNumberButtons.buttons[2]?.number) ? pageNumberButtons.currentPageClass : pageNumberButtons.notCurrentPageClass]">
-                        {{ pageNumberButtons.buttons[2]?.number }}
+                        {{ pageNumberButtons.buttons[2]?.number + "C" }}
                     </button>
 
                     <span v-if="totalPages >= 7 && (currentPage < (totalPages - 3))" class="tw-relative tw-inline-flex tw-items-center tw-px-4 tw-py-2 tw-text-sm tw-font-semibold tw-text-gray-700 tw-ring-1 tw-ring-gray-300 tw-ring-inset focus:tw-outline-offset-0">
@@ -62,13 +62,13 @@
                     </span>
 
                     <button v-if="pageNumberButtons.buttons[3]?.condition" @click="goToAnyPage(pageNumberButtons.buttons[3]?.number)" :class="[pageNumberButtons.commonClasses, (currentPage == pageNumberButtons.buttons[3]?.number) ? pageNumberButtons.currentPageClass : pageNumberButtons.notCurrentPageClass]">
-                        {{ pageNumberButtons.buttons[3]?.number }}
+                        {{ pageNumberButtons.buttons[3]?.number + "D" }}
                     </button>
                     <button v-if="pageNumberButtons.buttons[4]?.condition" @click="goToAnyPage(pageNumberButtons.buttons[4]?.number)" :class="[pageNumberButtons.commonClasses, (currentPage == pageNumberButtons.buttons[4]?.number) ? pageNumberButtons.currentPageClass : pageNumberButtons.notCurrentPageClass]">
-                        {{ pageNumberButtons.buttons[4]?.number }}
+                        {{ pageNumberButtons.buttons[4]?.number + "E" }}
                     </button>
                     <button v-if="pageNumberButtons.buttons[5]?.condition" @click="goToAnyPage(pageNumberButtons.buttons[5]?.number)" :class="[pageNumberButtons.commonClasses, (currentPage == pageNumberButtons.buttons[5]?.number) ? pageNumberButtons.currentPageClass : pageNumberButtons.notCurrentPageClass]">
-                        {{ pageNumberButtons.buttons[5]?.number }}
+                        {{ pageNumberButtons.buttons[5]?.number + "F" }}
                     </button>
                     
                     <!-- NEXT & LAST -->
@@ -100,14 +100,17 @@
     const props = defineProps({
         currentPage: {
             type: Number,
+            default: 1,
             required: true,
         },
         pageSize: {
             type: Number,
+            default: 12,
             required: true,
         },
         totalElements: {
             type: Number,
+            default: 0,
             required: true,
         },    
     });
@@ -126,12 +129,12 @@
             currentPageClass: "tw-text-white tw-z-10 tw-bg-indigo-600 focus-visible:tw-outline-2 focus-visible:tw-outline-offset-2 focus-visible:tw-outline-indigo-600",
             notCurrentPageClass: "tw-text-gray-900 tw-ring-1 tw-ring-gray-300 tw-ring-inset hover:tw-bg-gray-50 focus:tw-outline-offset-0",
             buttons: [
-                { condition: totalPages.value >= 1, number: (currentPage.value == 1 || currentPage.value == 2 || currentPage.value == 3) ? 1 : "fix" },
-                { condition: totalPages.value >= 2, number: (currentPage.value == 1 || currentPage.value == 2 || currentPage.value == 3) ? 2 : "fix" },
-                { condition: totalPages.value >= 3, number: (currentPage.value == 1 || currentPage.value == 2 || currentPage.value == 3) ? 3 : "fix" },
-                { condition: totalPages.value >= 4, number: (totalPages.value - 2) },
-                { condition: totalPages.value >= 5, number: (totalPages.value - 1) },
-                { condition: totalPages.value >= 6, number: totalPages.value },
+                { condition: totalPages.value >= 1, number: (currentPage.value <= 3 || (currentPage.value <= 6 && totalPages.value <= 6)) ? 1 : (currentPage.value >= totalPages.value - 3) ? totalPages.value - 5 : currentPage.value - 2 },
+                { condition: totalPages.value >= 2, number: (currentPage.value <= 3 || (currentPage.value <= 6 && totalPages.value <= 6)) ? 2 : (currentPage.value >= totalPages.value - 3) ? totalPages.value - 4 : currentPage.value - 1 },
+                { condition: totalPages.value >= 3, number: (currentPage.value <= 3 || (currentPage.value <= 6 && totalPages.value <= 6)) ? 3 : (currentPage.value >= totalPages.value - 3) ? totalPages.value - 3 : currentPage.value },
+                { condition: totalPages.value >= 4, number: (totalPages.value <= 6) ? 4 : (totalPages.value - 2) },
+                { condition: totalPages.value >= 5, number: (totalPages.value <= 6) ? 5 : (totalPages.value - 1) },
+                { condition: totalPages.value >= 6, number: (totalPages.value <= 6) ? 6 : totalPages.value },
             ],
         };
     });
