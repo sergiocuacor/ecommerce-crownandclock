@@ -1,6 +1,12 @@
 <template>
 
-    <article class="tw-flex tw-items-center tw-justify-between tw-border-t tw-border-gray-200 tw-bg-white tw-py-3 sm:tw-px-4">
+    <article v-if="currentPage <= 0 || currentPage > totalPages" class="tw-flex tw-items-center tw-justify-center tw-border-t tw-border-gray-200 tw-bg-white tw-py-3 sm:tw-px-4">
+        <p class="tw-text-sm tw-text-gray-700 tw-bg-gray-100 tw-p-2 tw-rounded-md">
+            {{ 'No hay resultados para mostrar o página no válida.' }}
+        </p>
+    </article>
+
+    <article v-if="currentPage > 0 && currentPage <= totalPages" class="tw-flex tw-items-center tw-justify-between tw-border-t tw-border-gray-200 tw-bg-white tw-py-3 sm:tw-px-4">
 
         <!-- MOBILE -->
         <div class="tw-flex tw-flex-1 tw-justify-between sm:tw-hidden">
@@ -11,7 +17,7 @@
                 <i class="bi bi-chevron-left"></i>
             </button>
             <div class="tw-relative tw-inline-flex tw-flex-1 tw-items-center tw-justify-center tw-border-2 tw-border-gray-300 tw-bg-white tw-px-4 tw-py-2 tw-text-sm tw-font-medium tw-text-gray-700 hover:tw-bg-gray-50">
-                {{ 'Pag. ' + currentPage }}
+                {{ currentPage + ' - ' + totalPages }}
             </div>
             <button @click="nextPage" class="tw-relative tw-inline-flex tw-items-center tw-border-y-2 tw-border-gray-300 tw-bg-white tw-px-4 tw-py-2 tw-text-sm tw-font-medium tw-text-gray-700 hover:tw-bg-gray-50">
                 <i class="bi bi-chevron-right"></i>
@@ -48,13 +54,13 @@
                     </button>
 
                     <button v-if="pageNumberButtons.buttons[0]?.condition" @click="goToAnyPage(pageNumberButtons.buttons[0]?.number)" :class="[pageNumberButtons.commonClasses, (currentPage == pageNumberButtons.buttons[0]?.number) ? pageNumberButtons.currentPageClass : pageNumberButtons.notCurrentPageClass]">
-                        {{ pageNumberButtons.buttons[0]?.number + "A" }}
+                        {{ pageNumberButtons.buttons[0]?.number }}
                     </button>
                     <button v-if="pageNumberButtons.buttons[1]?.condition" @click="goToAnyPage(pageNumberButtons.buttons[1]?.number)" :class="[pageNumberButtons.commonClasses, (currentPage == pageNumberButtons.buttons[1]?.number) ? pageNumberButtons.currentPageClass : pageNumberButtons.notCurrentPageClass]">
-                        {{ pageNumberButtons.buttons[1]?.number + "B" }}
+                        {{ pageNumberButtons.buttons[1]?.number }}
                     </button>
                     <button v-if="pageNumberButtons.buttons[2]?.condition" @click="goToAnyPage(pageNumberButtons.buttons[2]?.number)" :class="[pageNumberButtons.commonClasses, (currentPage == pageNumberButtons.buttons[2]?.number) ? pageNumberButtons.currentPageClass : pageNumberButtons.notCurrentPageClass]">
-                        {{ pageNumberButtons.buttons[2]?.number + "C" }}
+                        {{ pageNumberButtons.buttons[2]?.number }}
                     </button>
 
                     <span v-if="totalPages >= 7 && (currentPage < (totalPages - 3))" class="tw-relative tw-inline-flex tw-items-center tw-px-4 tw-py-2 tw-text-sm tw-font-semibold tw-text-gray-700 tw-ring-1 tw-ring-gray-300 tw-ring-inset focus:tw-outline-offset-0">
@@ -62,13 +68,13 @@
                     </span>
 
                     <button v-if="pageNumberButtons.buttons[3]?.condition" @click="goToAnyPage(pageNumberButtons.buttons[3]?.number)" :class="[pageNumberButtons.commonClasses, (currentPage == pageNumberButtons.buttons[3]?.number) ? pageNumberButtons.currentPageClass : pageNumberButtons.notCurrentPageClass]">
-                        {{ pageNumberButtons.buttons[3]?.number + "D" }}
+                        {{ pageNumberButtons.buttons[3]?.number }}
                     </button>
                     <button v-if="pageNumberButtons.buttons[4]?.condition" @click="goToAnyPage(pageNumberButtons.buttons[4]?.number)" :class="[pageNumberButtons.commonClasses, (currentPage == pageNumberButtons.buttons[4]?.number) ? pageNumberButtons.currentPageClass : pageNumberButtons.notCurrentPageClass]">
-                        {{ pageNumberButtons.buttons[4]?.number + "E" }}
+                        {{ pageNumberButtons.buttons[4]?.number }}
                     </button>
                     <button v-if="pageNumberButtons.buttons[5]?.condition" @click="goToAnyPage(pageNumberButtons.buttons[5]?.number)" :class="[pageNumberButtons.commonClasses, (currentPage == pageNumberButtons.buttons[5]?.number) ? pageNumberButtons.currentPageClass : pageNumberButtons.notCurrentPageClass]">
-                        {{ pageNumberButtons.buttons[5]?.number + "F" }}
+                        {{ pageNumberButtons.buttons[5]?.number }}
                     </button>
                     
                     <!-- NEXT & LAST -->
