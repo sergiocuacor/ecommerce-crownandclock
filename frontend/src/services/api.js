@@ -64,6 +64,9 @@ export default {
     return apiCall('get', '/product', { page, size, sort });
   },
   getItemsFromBrand(id) {
-    return apiCall('get', `/brand/${id}` )
+    return apiCall('get', `/brand/${id}`)
+  },
+  getBrands() {
+    return apiCall('get', '/brand');
   }
 };
