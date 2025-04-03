@@ -3,6 +3,34 @@
     <!-- SUCCESS -->
     <section v-if="!loading && !error">
 
+        <article class="row py-3 g-2">
+        
+            <div class="col-12 col-md-6 col-lg-4">
+
+                <BrandSelectorComponent :selectedBrand="selectedBrand"/>
+
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4">
+
+                <SizeSelectorComponent :pageSize="pageSize"/>
+
+            </div>
+
+            <div class="col-12 tw-space-x-2">
+
+                <span v-if="selectedBrand" class="badge text-bg-primary">
+                    {{ 'Marca: ' + selectedBrand }}
+                </span>
+
+                <span class="badge text-bg-primary">
+                    {{ 'Cantidad por página: ' + pageSize }}
+                </span>
+
+            </div>
+
+        </article> 
+
         <ItemPaginationComponent :currentPage="currentPage" :pageSize="pageSize" :totalElements="totalElements"/>
 
         <div class="tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-3 lg:tw-grid-cols-4 xl:tw-grid-cols-4 tw-gap-2">
@@ -69,8 +97,8 @@
     const pageSize = ref(Number(route.query.size) || 12);
     const totalElements = ref(0);
     const sortBy = ref(route.query.sort || 'name,asc');
-    const selectedBrand = ref(route.query.brand || '');
-    const selectedCategory = ref(route.query.category || '');
+    const selectedBrand = ref(route.query.brand || 0);
+    const selectedCategory = ref(route.query.category || '');    
 
     const fetchItems = async () => {
 
@@ -95,9 +123,9 @@
             currentPage.value = Number(newQuery.page) || 1;
             pageSize.value = Number(newQuery.size) || 12;
             sortBy.value = newQuery.sort || 'name,asc';
-            selectedBrand.value = newQuery.brand || '';
+            selectedBrand.value = newQuery.brand || 0;
             selectedCategory.value = newQuery.category || '';
-            
+
             fetchItems();
         },
         { deep: true }
