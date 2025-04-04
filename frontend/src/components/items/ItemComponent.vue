@@ -1,6 +1,6 @@
 <template>
 
-    <ElementComponent v-if="!loading && !error" :toRoute="{ name: 'product', params: { mask: props.item.id } }" :imgSrc="apiBaseURL + `/images/` + props.item.mask + `/image.png`" :imgAlt="`${props.item.mask}`">
+    <ElementComponent :toRoute="{ name: 'product', params: { mask: props.item.id } }" :imgSrc="apiBaseURL + `/images/` + props.item.mask + `/image.png`" :imgAlt="`${props.item.mask}`">
         <template #bottom-right>
             <CartActionsButtonComponent :item="props.item" :class="'m-1'"/>
         </template>
