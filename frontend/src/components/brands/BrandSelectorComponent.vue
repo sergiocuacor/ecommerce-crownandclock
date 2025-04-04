@@ -19,7 +19,7 @@
 
 <script setup>
 
-    import { ref, onMounted, defineEmits } from 'vue';
+    import { ref, onMounted } from 'vue';
     import { useRoute, useRouter } from 'vue-router';    
     import apiClient from '../../services/api.js';
     
@@ -46,8 +46,17 @@
         const response = await apiClient.getBrands();
 
         if (response.success) {
+
             brands.value = response.data;
+
+            const existsBrand = response.data.find(brand => brand.id == selectedBrand.value);
+
+            if (!existsBrand) {
+                selectedBrand.value = 0;
+            }
+
         } else {
+            selectedBrand.value = 0;
             error.value = response.error;
         }
 
