@@ -18,7 +18,7 @@
     <div class="carousel-inner">
       <div v-for="(item, index) in items" :key="'slide-' + index" :class="['carousel-item', { active: index === 0 }]">
         <div class="ratio ratio-16x9">
-          <img :src="apiBaseURL + `/images/` + item.mask + `/image.png`" :alt="item.mask || 'unknown-product'" class="object-fit-contain p-4" @error="changeImageExtension"/>
+          <ImageExtensionCheckerComponent :class="`object-fit-contain p-4`" :src="apiBaseURL + `/images/` + item.mask + `/image.png`" :alt="item.mask || 'unknown-product'"/>
         </div>
         <div class="carousel-caption d-none d-md-block p-3 tw-rounded-md tw-bg-gradient-to-b tw-from-gray-700 tw-from-30% tw-via-gray-600 tw-via-70% tw-to-gray-500 tw-to-100%">
           <h5>{{ item.name || 'Unknown Product' }}</h5>
@@ -78,10 +78,6 @@
   const getRandomItems = (array, count) => {
     const shuffled = [...array].sort(() => 0.5 - Math.random());
     return shuffled.slice(0, count);
-  };
-
-  const changeImageExtension = (event) => {
-    event.target.src = event.target.src.replace(/\.png$/, '.jpeg');
   };
   
   const fetchItems = async () => {
