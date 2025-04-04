@@ -6,10 +6,10 @@
 
             <!-- Image with link to element -->
             <router-link v-if="props.toRoute && props.imgSrc" :to="props.toRoute" class="ratio ratio-1x1">
-                <img :class="[props.imgCustomization, imageLoaded ? '' : 'd-none']" :src="props.imgSrc" :alt="props.imgAlt" @load="imageLoaded = true"/>
+                <ImageExtensionCheckerComponent :class="props.imgCustomization" :src="props.imgSrc" :alt="props.imgAlt"/>
             </router-link>
-            <div v-else-if="imgSrc" class="ratio ratio-1x1">
-                <img :class="[props.imgCustomization, imageLoaded ? '' : 'd-none']" :src="props.imgSrc" :alt="props.imgAlt" @load="imageLoaded = true"/>
+            <div v-else-if="imgSrc" class="ratio ratio-1x1">               
+                <ImageExtensionCheckerComponent :class="props.imgCustomization" :src="props.imgSrc" :alt="props.imgAlt"/>
             </div>            
             <div v-else class="ratio ratio-1x1">
                 
@@ -75,9 +75,7 @@
 
 <script setup>
 
-    import { defineProps, defineSlots, ref } from 'vue';
-
-    const imageLoaded = ref(false);
+    import { defineProps, defineSlots } from 'vue';
 
     const props = defineProps({
         toRoute: {
