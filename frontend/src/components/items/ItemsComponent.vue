@@ -32,7 +32,7 @@
         <ItemPaginationComponent :currentPage="currentPage" :pageSize="pageSize" :totalElements="totalElements"/>
 
         <div class="tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-3 lg:tw-grid-cols-4 xl:tw-grid-cols-4 tw-gap-2">
-            <ItemComponent v-for="item, index in items.content" :key="index" :itemMask="item.id"/>
+            <ItemComponent v-for="item, index in items.content" :key="index" :item="item"/>
         </div>
 
     </section>    
