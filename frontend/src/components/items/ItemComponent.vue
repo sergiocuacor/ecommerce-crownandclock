@@ -1,18 +1,18 @@
 <template>
 
-    <ElementComponent v-if="!loading && !error" :toRoute="{ name: 'product', params: { mask: item.id } }" :imgSrc="apiBaseURL + `/images/` + item.mask + `/image.png`" :imgAlt="`${item.mask}`">
+    <ElementComponent v-if="!loading && !error" :toRoute="{ name: 'product', params: { mask: props.item.id } }" :imgSrc="apiBaseURL + `/images/` + props.item.mask + `/image.png`" :imgAlt="`${props.item.mask}`">
         <template #bottom-right>
-            <CartActionsButtonComponent :item="item" :class="'m-1'"/>
+            <CartActionsButtonComponent :item="props.item" :class="'m-1'"/>
         </template>
         <template #footer>
             <div class="col text-truncate">
-                {{ item.name }}
+                {{ props.item.name }}
             </div>
             <div class="col-12 col-md-auto">
-                {{ item.price + '&#8364' }}
+                {{ props.item.price + '&#8364' }}
             </div>
             <div class="col-12">
-                {{ 'Disponibles: ' + item.stock }}
+                {{ 'Disponibles: ' + props.item.stock }}
             </div>
         </template>        
     </ElementComponent>
