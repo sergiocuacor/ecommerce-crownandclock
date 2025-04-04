@@ -1,8 +1,8 @@
 <template>
 
     <!-- SUCCESS -->
-    <section v-if="!loading && !error" class="tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-3 lg:tw-grid-cols-4 xl:tw-grid-cols-5 tw-gap-2">
-        <BrandComponent v-for="brand in brands" :key="brand.id" :brandMask="brand.id"/>        
+    <section v-if="!loading && !error" class="tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-3 lg:tw-grid-cols-4 xl:tw-grid-cols-4 tw-gap-2">
+        <BrandComponent v-for="brand in brands" :key="brand.id" :brand="brand"/>        
     </section>
     
     <!-- LOADING -->
@@ -42,18 +42,21 @@
     const error = ref(null);
 
     const fetchBrands = async () => {
-        try {
-            const response = await apiClient.getBrands();
+
+        loading.value = true;
+
+        const response = await apiClient.getBrands();        
+
+        if (response.success) {
             brands.value = response.data;
-        } catch (err) {
-            error.value = 'Error al cargar las marcas';
+        } else {
+            error.value = response.error;
         }
+
+        loading.value = false;
+
     };
 
-    onMounted(async () => {
-        loading.value = true;
-        await Promise.all([fetchBrands()]);
-        loading.value = false;
-    });
+    onMounted(fetchBrands);
 
 </script>
