@@ -19,9 +19,7 @@
 
             <div class="col-12 tw-space-x-2">
 
-                <span v-if="selectedBrand" class="badge text-bg-primary">
-                    {{ 'Marca: ' + selectedBrand }}
-                </span>
+                <BrandBadgeComponent :selectedBrand="selectedBrand"/>
 
                 <span class="badge text-bg-primary">
                     {{ 'Cantidad por página: ' + pageSize }}
