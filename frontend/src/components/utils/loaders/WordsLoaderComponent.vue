@@ -13,8 +13,6 @@
 
 <script setup>
 
-  import { ref, onMounted } from 'vue';
-
   const props = defineProps({
     mainWords: {
       type: String,
@@ -33,7 +31,7 @@
 
   .ui-card {
     /* color used to softly clip top and bottom of the .words container */
-    --ui-bg-color: #212121;
+    --ui-bg-color: transparent;
     background-color: var(--ui-bg-color);
     padding: 1rem;
     border-radius: 1.25rem;
@@ -76,7 +74,7 @@
     display: block;
     height: 100%;
     padding-left: 6px;
-    color: #956afa;
+    color: rgb(64, 64, 255);
     animation: ui-spin_4991 4s infinite;
   }
 
