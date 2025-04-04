@@ -1,40 +1,38 @@
 <template>
 
+    <article class="row py-3 g-2">
+        
+        <div class="col-12 col-md-6 col-lg-4">
+
+            <BrandSelectorComponent :selectedBrand="selectedBrand"/>
+
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-4">
+
+            <SizeSelectorComponent :pageSize="pageSize"/>
+
+        </div>
+
+        <div class="col-12 tw-space-x-2">
+
+            <BrandBadgeComponent :selectedBrand="selectedBrand"/>
+
+            <span class="badge text-bg-primary">
+                {{ 'Cantidad por página: ' + pageSize }}
+            </span>
+
+        </div>
+
+    </article> 
+
+    <ItemPaginationComponent :currentPage="currentPage" :pageSize="pageSize" :totalElements="totalElements"/>
+
     <!-- SUCCESS -->
     <section v-if="!loading && !error">
-
-        <article class="row py-3 g-2">
-        
-            <div class="col-12 col-md-6 col-lg-4">
-
-                <BrandSelectorComponent :selectedBrand="selectedBrand"/>
-
-            </div>
-
-            <div class="col-12 col-md-6 col-lg-4">
-
-                <SizeSelectorComponent :pageSize="pageSize"/>
-
-            </div>
-
-            <div class="col-12 tw-space-x-2">
-
-                <BrandBadgeComponent :selectedBrand="selectedBrand"/>
-
-                <span class="badge text-bg-primary">
-                    {{ 'Cantidad por página: ' + pageSize }}
-                </span>
-
-            </div>
-
-        </article> 
-
-        <ItemPaginationComponent :currentPage="currentPage" :pageSize="pageSize" :totalElements="totalElements"/>
-
         <div class="tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-3 lg:tw-grid-cols-4 xl:tw-grid-cols-4 tw-gap-2">
             <ItemComponent v-for="item, index in items.content" :key="index" :item="item"/>
         </div>
-
     </section>    
     
     <!-- LOADING -->
@@ -54,8 +52,8 @@
 
     <!-- ERROR -->
     <section v-if="error" class="tw-relative">
-        <div class="tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-3 lg:tw-grid-cols-4 xl:tw-grid-cols-6 tw-gap-2">
-            <ElementComponent v-for="index in 24" :key="index">
+        <div class="tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-3 lg:tw-grid-cols-4 xl:tw-grid-cols-4 tw-gap-2">
+            <ElementComponent v-for="index in 12" :key="index">
                 <template #middle-center>
                     <i class="bi bi-exclamation-diamond-fill tw-text-red-500 fs-1"></i>
                 </template>
