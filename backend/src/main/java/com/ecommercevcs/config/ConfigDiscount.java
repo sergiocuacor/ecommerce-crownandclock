@@ -3,9 +3,14 @@ package com.ecommercevcs.config;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 
 import com.ecommercevcs.dtos.DiscountDTO;
@@ -13,9 +18,18 @@ import com.ecommercevcs.dtos.DiscountDTO;
 import jakarta.annotation.PostConstruct;
 
 @Component
-public class ConfigDiscount {
-
+public class ConfigDiscount implements ApplicationRunner {
+	
+	private final ResourceLoader resourceLoader;
+	
+	
 	private List<DiscountDTO> discounts = new ArrayList<DiscountDTO>();
+	
+	
+	public ConfigDiscount(ResourceLoader resourceLoader) {
+		super();
+		this.resourceLoader = resourceLoader;
+	}
 
 	public List<DiscountDTO> getDiscounts() {
 		return discounts;
@@ -25,12 +39,17 @@ public class ConfigDiscount {
 		this.discounts = discounts;
 	}
 	
-	@PostConstruct
-	public void getDiscountsForFile() throws IOException {
+
 		
-		String fileDiscounts = "src/main/resources/discounts.txt";
 		
-		BufferedReader br = new BufferedReader(new FileReader(fileDiscounts));
+
+	@Override
+	public void run(ApplicationArguments args) throws Exception {
+		
+		Resource resource = resourceLoader.getResource("classpath:discounts.txt");
+		
+		
+		BufferedReader br = new BufferedReader(new InputStreamReader(resource.getInputStream()));
 		
 		String line;
 		
@@ -47,4 +66,6 @@ public class ConfigDiscount {
 		}
 		
 	}
-}
+		
+	}
+

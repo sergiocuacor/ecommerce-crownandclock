@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ecommercevcs.dtos.DiscountDTO;
 import com.ecommercevcs.dtos.UserDTO;
 import com.ecommercevcs.entities.UserEntity;
 import com.ecommercevcs.services.IUserService;
@@ -54,5 +55,10 @@ public class UserController {
 	@DeleteMapping("/{id}")
 	public void deleteById(@PathVariable Long id) {
 	userService.deleteById(id);
+	}
+	
+	@GetMapping("/availableDiscounts")
+	public ResponseEntity<List<DiscountDTO>> getAvailableDiscounts(@PathVariable Long id){
+		return ResponseEntity.ok(userService.getAvailableDiscounts(id));
 	}
 }

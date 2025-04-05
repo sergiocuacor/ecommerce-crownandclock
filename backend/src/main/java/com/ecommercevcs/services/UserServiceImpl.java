@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.ecommercevcs.dtos.DiscountDTO;
 import com.ecommercevcs.entities.RoleEntity;
 import com.ecommercevcs.entities.UserEntity;
 import com.ecommercevcs.entities.embeddable.Address;
@@ -126,6 +127,12 @@ public class UserServiceImpl implements IUserService {
 
 		userRepository.deleteById(id);
 
+	}
+
+	@Override
+	public List<DiscountDTO> getAvailableDiscounts(Long id) {
+		// TODO Auto-generated method stub
+		return userRepository.getAvailableDiscounts(id);
 	}
 
 	
