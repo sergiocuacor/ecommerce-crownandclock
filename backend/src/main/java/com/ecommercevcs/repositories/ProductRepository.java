@@ -6,8 +6,9 @@ import org.springframework.stereotype.Repository;
 import com.ecommercevcs.entities.ProductEntity;
 
 @Repository
-public interface ProductRepositoryJPA extends JpaRepository<ProductEntity, Long> {
+public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
 	
+	 ProductEntity findByMask(String mask);
 	 ProductEntity findByName(String name);
 
 }

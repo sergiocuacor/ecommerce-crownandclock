@@ -9,17 +9,17 @@ import org.springframework.stereotype.Service;
 
 import com.ecommercevcs.entities.BrandEntity;
 import com.ecommercevcs.entities.ProductEntity;
-import com.ecommercevcs.repositories.BrandRepositoryJPA;
-import com.ecommercevcs.repositories.ProductRepositoryJPA;
+import com.ecommercevcs.repositories.BrandRepository;
+import com.ecommercevcs.repositories.ProductRepository;
 
 @Service
 public class BrandServiceImpl implements IBrandService {
 	
 	@Autowired
-	BrandRepositoryJPA brandRepository;
+	BrandRepository brandRepository;
 	
 	@Autowired
-	ProductRepositoryJPA productRepository;
+	ProductRepository productRepository;
 
 	@Override
 	public List<BrandEntity> findAll() {
@@ -58,15 +58,12 @@ public class BrandServiceImpl implements IBrandService {
 	}
 
 	@Override
-	public ProductEntity addProduct(Long id, ProductEntity product) {
-		Optional<BrandEntity> brand = this.brandRepository.findById(id);
+	public List<ProductEntity> findProductsByBrandName(String brandName) {
 		
-		if(brand.isPresent()) {
-			brand.get().addProduct(product);
-			 this.brandRepository.save(brand.get());
-		}
-		
-		return this.productRepository.findByName(product.getName());
+		return this.brandRepository.findProductsByBrandName(brandName);
 	}
+
+	
+	
 
 }

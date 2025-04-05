@@ -3,6 +3,8 @@ package com.ecommercevcs.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -41,9 +43,21 @@ public class BrandController {
 		return this.brandService.findById(id);
 	}
 	
+	 @GetMapping("/{brandName}/products")
+	public ResponseEntity<List<ProductEntity>> findProductsByBrandName(@PathVariable("brandName") String brandName){
+		
+		 List<ProductEntity> products = brandService.findProductsByBrandName(brandName);
+	        
+	        if (products.isEmpty()) {
+	            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	        }
+	        
+	        return new ResponseEntity<>(products, HttpStatus.OK);
+	}
+	
 	@PostMapping
-	public BrandEntity add(@RequestBody BrandEntity category) {
-		return this.brandService.add(category);
+	public BrandEntity add(@RequestBody BrandEntity brand) {
+		return this.brandService.add(brand);
 	}
 	
 	@DeleteMapping("/{id}")
@@ -52,16 +66,8 @@ public class BrandController {
 	}
 	
 	@PutMapping("/{id}")
-	public BrandEntity update(@RequestBody BrandEntity category, @PathVariable Long id) {
-		return this.brandService.update(category, id);
+	public BrandEntity update(@RequestBody BrandEntity brand, @PathVariable Long id) {
+		return this.brandService.update(brand, id);
 	}
 	
-	@PostMapping("/product/{id}")
-	public ResponseEntity<?> addProduct(@Valid  @RequestBody ProductEntity product, BindingResult result, @PathVariable Long id) {
-		
-		if(result.hasErrors()) {
-			return this.validation.validation(result);
-		}
-		return ResponseEntity.ok(this.brandService.addProduct(id, product));
-	}
 }

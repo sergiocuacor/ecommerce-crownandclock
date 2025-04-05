@@ -14,7 +14,7 @@ import com.ecommercevcs.entities.OrderEntity;
 import com.ecommercevcs.entities.ProductEntity;
 import com.ecommercevcs.entities.UserEntity;
 import com.ecommercevcs.repositories.OrderRepository;
-import com.ecommercevcs.repositories.ProductRepositoryJPA;
+import com.ecommercevcs.repositories.ProductRepository;
 import com.ecommercevcs.repositories.UserRepository;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -30,7 +30,7 @@ public class OrderServiceImpl implements IOrderService{
 	UserRepository userRepository;
 	
 	@Autowired
-	ProductRepositoryJPA productRepository;
+	ProductRepository productRepository;
 	
 	@Autowired
 	ConfigDiscount discounts;

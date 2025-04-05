@@ -32,7 +32,7 @@ public class ProductEntity {
 	@NotBlank
 	@Column(unique = true)
 	private String name;
-
+	
 	@NotBlank
 	private String description;
 
@@ -47,10 +47,6 @@ public class ProductEntity {
 	@NotBlank
 	private String mask;
 	
-	
-	
-	
-
 	@ManyToOne
 	@JoinColumn(name = "brand_id", nullable = true)
 	@JsonBackReference(value = "product-brand")
