@@ -49,6 +49,12 @@ public class OrderEntity {
 	    @JsonManagedReference(value="order-orderdetails")
 		private List<OrderDetailsEntity> orderDetails = new ArrayList<OrderDetailsEntity>();
 	    
+		@Column(name = "discount_applied")
+		private String discountApplied;
+		
+		@Column(name = "discount_percentage")
+		private Integer discountPercentage;
+	    
 	    @PrePersist
 	    public void prePersist() {
 	        orderDate = LocalDateTime.now();
@@ -124,6 +130,20 @@ public class OrderEntity {
 			orderDetail.setOrder(this);
 		}
 	
-	    
+		public String getDiscountApplied() {
+			return discountApplied;
+		}
+
+		public void setDiscountApplied(String discountApplied) {
+			this.discountApplied = discountApplied;
+		}
+
+		public Integer getDiscountPercentage() {
+			return discountPercentage;
+		}
+
+		public void setDiscountPercentage(Integer discountPercentage) {
+			this.discountPercentage = discountPercentage;
+		}
 	    
 }

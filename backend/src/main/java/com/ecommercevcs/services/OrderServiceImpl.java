@@ -63,9 +63,6 @@ public class OrderServiceImpl implements IOrderService{
 			ProductEntity product = productRepository.findById(orderItem.getProductId()).orElseThrow(()-> new EntityNotFoundException("Product with id "+ orderItem.getProductId()+" not found"));
 			
 			orderDetails.setProduct(product);
-			// esto deberia ser removeStock (hacer helper methods)
-			
-			
 			
 			try {
 				product.removeStock(orderItem.getQuantity());
@@ -73,49 +70,41 @@ public class OrderServiceImpl implements IOrderService{
 				throw new IllegalArgumentException("Error al procesar el pedido: "+ i.getMessage());
 			}
 			
-			
-			
 			orderDetails.setQuantity(orderItem.getQuantity()); 
 			
 			orderDetails.setUnitPrice(product.getPrice());
 
-			orderDetails.setSubTotal(product.getPrice()*orderItem.getQuantity());
-			totalOrder += orderDetails.getSubTotal();
-			
-			if(orderCreateDTO.getDiscount() != null) {
-				applyDiscount(orderCreateDTO, order, totalOrder, orderDetails);
-			}else {
-				order.setTotal(totalOrder);
-				orderDetails.setDiscountApplied("");
-				orderDetails.setDiscountPercentage(0);
-				
-			}
+			double itemSubTotal = product.getPrice()*orderItem.getQuantity();
+			orderDetails.setSubTotal(itemSubTotal);
+			totalOrder += itemSubTotal;
 			
 			order.addOrderDetail(orderDetails);
 		}
 		
-		
-		
-		
-	
-		
+		if(orderCreateDTO.getDiscount() != null) {
+			applyDiscount(orderCreateDTO.getDiscount(), order, totalOrder);
+		}else {
+			order.setTotal(totalOrder);
+			order.setDiscountApplied("");
+			order.setDiscountPercentage(0);
+		}
 		
 		
 		return orderRepository.save(order);
 	}
 
-	private void applyDiscount(OrderCreateDTO orderCreateDTO, OrderEntity order, Double totalOrder, OrderDetailsEntity orderDetails) {
-		double discountPercetage = 0;
+	private void applyDiscount(String discountName, OrderEntity order, Double totalOrder) {
+		double discountPercentage = 0;
 		for(DiscountDTO discount : this.discounts.getDiscounts()) {
-			if(orderCreateDTO.getDiscount().equals(discount.getName())) {
-				System.out.println(orderCreateDTO.getDiscount());
-				discountPercetage = (totalOrder * discount.getDiscountPertenage()) /100;
-				System.out.println(discountPercetage);
-				totalOrder = totalOrder - discountPercetage;
+			if(discountName.equals(discount.getName())) {
 				
-				orderDetails.setDiscountApplied(discount.getName());
-				orderDetails.setDiscountPercentage(discount.getDiscountPertenage());
+				double discountAmount = (totalOrder * discount.getDiscountPercentage()) /100;
+				System.out.println(discountPercentage);
+				totalOrder = totalOrder - discountAmount;
 				
+				order.setTotal(totalOrder);
+				order.setDiscountApplied(discount.getName());
+				order.setDiscountPercentage(discount.getDiscountPercentage());
 				break;
 			}
 		}

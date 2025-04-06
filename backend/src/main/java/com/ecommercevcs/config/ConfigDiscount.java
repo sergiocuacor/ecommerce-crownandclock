@@ -62,7 +62,7 @@ public class ConfigDiscount implements ApplicationRunner {
 		}
 		
 		for(DiscountDTO d : this.discounts) {
-			System.out.println("name: " + d.getName() + " discount: " + d.getDiscountPertenage());
+			System.out.println("name: " + d.getName() + " discount: " + d.getDiscountPercentage());
 		}
 		
 	}

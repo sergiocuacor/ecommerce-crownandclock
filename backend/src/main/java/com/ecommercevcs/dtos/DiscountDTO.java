@@ -2,14 +2,14 @@ package com.ecommercevcs.dtos;
 
 public class DiscountDTO {
 	private String name;
-	private Integer discountPertenage;
+	private Integer discountPercentage;
 	
 	
 	
-	public DiscountDTO(String name, Integer discountPertenage) {
+	public DiscountDTO(String name, Integer discountPercentage) {
 		super();
 		this.name = name;
-		this.discountPertenage = discountPertenage;
+		this.discountPercentage = discountPercentage;
 	}
 	
 	public String getName() {
@@ -18,11 +18,11 @@ public class DiscountDTO {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Integer getDiscountPertenage() {
-		return discountPertenage;
+	public Integer getDiscountPercentage() {
+		return discountPercentage;
 	}
-	public void setDiscountPertenage(Integer discountPertenage) {
-		this.discountPertenage = discountPertenage;
+	public void setDiscountPertenage(Integer discountPercentage) {
+		this.discountPercentage = discountPercentage;
 	}
 	
 	
