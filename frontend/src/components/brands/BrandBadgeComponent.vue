@@ -1,6 +1,6 @@
 <template>
 
-    <span v-if="selectedBrand && !loading && !error" class="badge text-bg-primary">
+    <span v-if="!loading" class="badge text-bg-primary">
         {{ 'Marca: ' + selectedBrandName }}
     </span>
 
@@ -8,7 +8,7 @@
 
 <script setup>
 
-    import { ref, onMounted } from 'vue';  
+    import { ref, onMounted, watch } from 'vue';  
     import apiClient from '../../services/api.js';
 
     const props = defineProps({
@@ -20,7 +20,7 @@
     });
 
     const selectedBrand = ref(props.selectedBrand);
-    const selectedBrandName = ref('Desconocida');    
+    const selectedBrandName = ref('TODAS');    
     const loading = ref(true);
     const error = ref(null);
 
@@ -28,29 +28,40 @@
 
         loading.value = true;
 
-        const response = await apiClient.getBrands();        
+        const response = await apiClient.getBrandById(selectedBrand.value);        
 
         if (response.success) {
-
-            const selectedBrandInfo = response.data.find(brand => brand.id == selectedBrand.value);
-
-            if (selectedBrandInfo) {
-                selectedBrandName.value = selectedBrandInfo.name;
-            } else {
-                selectedBrandName.value = 'Desconocida';
-            }
+            
+            selectedBrandName.value = response.data.name;
+            error.value = null;
 
         } else {
 
-            selectedBrandName.value = 'Desconocida';
+            if(selectedBrand.value <= 0) {
+
+                selectedBrandName.value = 'TODAS';
+
+            } else {
+
+                selectedBrandName.value = 'Desconocida';
+
+            }
+            
             error.value = response.error;
 
         }
 
         loading.value = false;
 
-    };
+    };    
 
-    onMounted(fetchBrandName)
+    watch(() => props.selectedBrand, (newVal) => {
+
+        selectedBrand.value = newVal;
+        fetchBrandName();
+
+    });
+    
+    onMounted(fetchBrandName);
 
 </script>
