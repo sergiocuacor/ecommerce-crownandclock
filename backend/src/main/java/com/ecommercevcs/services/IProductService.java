@@ -18,4 +18,5 @@ public interface IProductService {
 	public ProductEntity update(ProductEntity product, Long id);
 	public Page<ProductEntity> pageProducts(Pageable pageable);
 	public ProductEntity findByMask(String mask);
+	public Page<ProductEntity> pageProductsByBrandId(Pageable pageable,Long brandId);
 }

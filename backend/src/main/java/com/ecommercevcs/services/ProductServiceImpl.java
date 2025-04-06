@@ -76,6 +76,12 @@ public class ProductServiceImpl implements IProductService {
 	public ProductEntity findByMask(String mask) {
 		return this.productRepository.findByMask(mask);
 	}
+
+	@Override
+	public Page<ProductEntity> pageProductsByBrandId(Pageable pageable,Long brandId) {
+		
+		return this.productRepository.findByBrandId( pageable,brandId);
+	}
 	
 	
 
