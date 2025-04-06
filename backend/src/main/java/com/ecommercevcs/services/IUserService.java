@@ -8,7 +8,7 @@ import com.ecommercevcs.entities.UserEntity;
 public interface IUserService{
 
 	public List<UserEntity> findAll();
-	public List<DiscountDTO> getAvailableDiscounts(Long id);
+//	public List<DiscountDTO> getAvailableDiscounts(Long id);
 	public UserEntity findById(Long id);
 	public UserEntity add(UserEntity user);
 	public UserEntity update(UserEntity user, Long id);

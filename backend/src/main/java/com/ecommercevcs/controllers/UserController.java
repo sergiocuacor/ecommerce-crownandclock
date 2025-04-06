@@ -57,8 +57,8 @@ public class UserController {
 	userService.deleteById(id);
 	}
 	
-	@GetMapping("/availableDiscounts")
-	public ResponseEntity<List<DiscountDTO>> getAvailableDiscounts(@PathVariable Long id){
-		return ResponseEntity.ok(userService.getAvailableDiscounts(id));
-	}
+//	@GetMapping("/availableDiscounts")
+//	public ResponseEntity<List<DiscountDTO>> getAvailableDiscounts(@PathVariable Long id){
+//		return ResponseEntity.ok(userService.getAvailableDiscounts(id));
+//	}
 }

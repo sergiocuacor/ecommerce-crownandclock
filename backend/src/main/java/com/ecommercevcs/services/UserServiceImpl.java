@@ -129,11 +129,11 @@ public class UserServiceImpl implements IUserService {
 
 	}
 
-	@Override
-	public List<DiscountDTO> getAvailableDiscounts(Long id) {
-		// TODO Auto-generated method stub
-		return userRepository.getAvailableDiscounts(id);
-	}
+//	@Override
+//	public List<DiscountDTO> getAvailableDiscounts(Long id) {
+//		// TODO Auto-generated method stub
+//		return userRepository.getAvailableDiscounts(id);
+//	}
 
 	
 

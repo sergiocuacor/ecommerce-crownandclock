@@ -39,6 +39,12 @@ public class OrderDetailsEntity {
 	@Column(name = "subtotal")
 	private Double subtotal;
 	
+	@Column(name = "discount_applied")
+	private String discountApplied;
+	
+	@Column(name = "discount_percentage")
+	private Integer discountPercentage;
+	
 	public void calculateSubtotal() {
 		this.subtotal = this.unitPrice*this.quantity;
 	}
@@ -97,6 +103,34 @@ public class OrderDetailsEntity {
 	public void setUnitPrice(Double unitPrice) {
 		this.unitPrice = unitPrice;
 	}
+
+	public Double getSubtotal() {
+		return subtotal;
+	}
+
+	public void setSubtotal(Double subtotal) {
+		this.subtotal = subtotal;
+	}
+
+	
+
+	public String getDiscountApplied() {
+		return discountApplied;
+	}
+
+	public void setDiscountApplied(String discountApplied) {
+		this.discountApplied = discountApplied;
+	}
+
+	public Integer getDiscountPercentage() {
+		return discountPercentage;
+	}
+
+	public void setDiscountPercentage(Integer discountPercentage) {
+		this.discountPercentage = discountPercentage;
+	}
+	
+	
 	
 	
 	

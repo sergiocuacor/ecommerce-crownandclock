@@ -12,5 +12,5 @@ public interface UserRepository extends JpaRepository<UserEntity, Long>{
 	
 	Optional<UserEntity> findByEmail(String email);
 	
-	List<DiscountDTO> getAvailableDiscounts(Long id);
+	//List<DiscountDTO> getAvailableDiscounts(Long id);
 }
