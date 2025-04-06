@@ -93,7 +93,7 @@
     const pageSize = ref(Number(route.query.size) || 12);
     const totalElements = ref(0);
     const sortBy = ref(route.query.sort || 'name,asc');
-    const selectedBrand = ref(route.query.brand || 0);
+    const selectedBrand = ref(Number(route.query.brand) || 0);
     const selectedCategory = ref(route.query.category || '');    
 
     const fetchItems = async () => {
@@ -119,7 +119,7 @@
             currentPage.value = Number(newQuery.page) || 1;
             pageSize.value = Number(newQuery.size) || 12;
             sortBy.value = newQuery.sort || 'name,asc';
-            selectedBrand.value = newQuery.brand || 0;
+            selectedBrand.value = Number(newQuery.brand) || 0;
             selectedCategory.value = newQuery.category || '';
 
             fetchItems();
