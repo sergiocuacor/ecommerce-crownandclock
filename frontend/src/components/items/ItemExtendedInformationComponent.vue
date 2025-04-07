@@ -51,9 +51,32 @@
   </div>
 
   <!-- ERROR -->
-  <div v-if="error" class="tw-text-center tw-text-red-500">
-      <i class="bi bi-exclamation-diamond-fill fs-1"></i>
-      <div class="text-center text-xs md:text-2xl">{{ 'Error al cargar el producto o no existe' }}</div>
+  <div v-if="error" class="row overflow-hidden sm:tw-border-2 sm:tw-rounded-lg">
+
+    <div class="col-12 col-lg-4 tw-bg-cyan-500/10">
+        <div class="ratio ratio-1x1">
+          <ImageExtensionCheckerComponent :class="`object-fit-contain`" :src="'/error_image.png'" :alt="item.name"/>
+        </div>          
+    </div>
+
+    <div class="col-12 col-lg-8 tw-bg-cyan-500/25">
+      <div class="tw-grid tw-content-center tw-justify-center tw-space-y-2 tw-p-4 tw-h-full">
+        <div class="tw-text-center tw-text-red-500">
+            <i class="bi bi-exclamation-diamond-fill fs-1"></i>
+            <div class="text-center text-xs md:text-2xl">{{ 'Error al cargar el producto o no existe' }}</div>
+        </div>
+      </div>          
+    </div>
+
+    <div class="col-12 tw-bg-cyan-500/35">
+      <div class="tw-space-y-2 tw-p-4">
+        <div class="tw-text-center tw-text-red-500">
+            <i class="bi bi-exclamation-diamond-fill fs-1"></i>
+            <div class="text-center text-xs md:text-2xl">{{ 'Error al cargar el producto o no existe' }}</div>
+        </div>
+      </div>         
+    </div>
+
   </div>
 
 </template>
@@ -83,18 +106,20 @@
 
       const response = await apiClient.getItem(props.itemMask);
 
-      if (response.success) {
-
-        item.value = response.data;
-
-      } else {
-
-        error.value = response.error;
-        
-      }
-
       setTimeout(() => {
+
+        if (response.success) {
+
+          item.value = response.data;      
+
+        } else {        
+        
+          error.value = response.error;            
+
+        }
+        
         loading.value = false;
+
       }, 2500);
 
     };
