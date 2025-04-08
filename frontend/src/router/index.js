@@ -11,6 +11,7 @@ import BrandView from '../views/BrandView.vue';
 import CategoriesView from '../views/CategoriesView.vue';
 import CategoryView from '../views/CategoryView.vue';
 import SocialsView from '../views/SocialsView.vue';
+import UserProfileView from '../views/UserProfileView.vue';
 
 const routes = [
   // Error/Unknown
@@ -46,6 +47,24 @@ const routes = [
       label: 'Login',
       breadcrumb: [{ label: 'Home', path: { name: 'home' } }]
     } 
+  },
+  // User Profile
+  { 
+    path: '/profile',
+    name: 'profile',
+    component: UserProfileView,
+    meta: {
+      label: 'Profile',
+      breadcrumb: [{ label: 'Home', path: { name: 'home' } }]
+    } 
+  },
+  { 
+    path: '/user',
+    redirect: { name: 'profile' }
+  },
+  { 
+    path: '/users',
+    redirect: { name: 'profile' }
   },
   // Cart
   { 
@@ -275,30 +294,60 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
+
+  let defaultPageTitle = 'Crown & Clock';
+  let pageTitle = defaultPageTitle;
+
+  if (to.meta.label) {
+
+    pageTitle = defaultPageTitle + ' - ' + to.meta.label;
+    
+  }
+
   if (to.meta.breadcrumb) {
+
     let breadcrumbs = [...to.meta.breadcrumb];
 
     if (to.params.mask) {
+
       try {
+
         const response = await apiClient.getItem(to.params.mask);
         let item = response.data;
+
         if (item) {
+
           breadcrumbs.push({ label: item.title, path: to.path });
+          pageTitle = defaultPageTitle + ' - ' + item.title;
+
         } else {
+
           breadcrumbs.push({ label: 'Unknown Product', path: to.path });
+          pageTitle = defaultPageTitle + ' - ' + 'Unknown Product';
+
         }
+
       } catch (error) {
-        console.error('Error fetching item:', error);
+
+        console.error('Error Fetching Item:', error);
         breadcrumbs.push({ label: 'Error Loading Product', path: to.path });
+
       }
+
     } else {
+
       breadcrumbs.push({ label: to.meta.label, path: to.path });
+
     }
 
     to.meta.breadcrumbs = breadcrumbs;
     
   }
+
+  document.title = pageTitle;
+
   next();
+
 });
 
 export default router;
