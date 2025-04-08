@@ -22,9 +22,9 @@
             <div>
               <span class="tw-block tw-text-[13px] tw-font-semibold tw-text-black tw-mb-2">{{ 'HAVE A PROMO CODE?' }}</span>
               <form class="tw-grid tw-grid-cols-[1fr_80px] tw-gap-2">
-                <input type="text" placeholder="¿Tienes un cupón?" class="tw-h-9 tw-px-3 tw-rounded tw-border tw-border-[rgb(16,86,82)] tw-bg-[#FBF3E4] tw-outline-none tw-transition-all tw-duration-300 tw-ease-[cubic-bezier(0.15,0.83,0.66,1)] focus:tw-border-transparent focus:tw-ring-2 focus:tw-ring-[#C9C1B2]"/>
+                <input type="text" placeholder="COUPON" class="tw-h-9 tw-px-3 tw-rounded tw-border tw-border-[rgb(16,86,82)] tw-bg-[#FBF3E4] tw-outline-none tw-transition-all tw-duration-300 tw-ease-[cubic-bezier(0.15,0.83,0.66,1)] focus:tw-border-transparent focus:tw-ring-2 focus:tw-ring-[#C9C1B2]"/>
                 <button type="button" class="tw-flex tw-justify-center tw-items-center tw-h-9 tw-w-full tw-bg-[rgba(16,86,82,0.75)] tw-shadow-[0px_0.5px_0.5px_#F3D2C9,0px_1px_0.5px_rgba(239,239,239,0.5)] tw-rounded tw-text-[12px] tw-font-semibold tw-text-black">
-                  {{ 'Aplicar' }}
+                  {{ 'Apply' }}
                 </button>
               </form>
             </div>
@@ -33,11 +33,9 @@
               <span class="tw-block tw-text-[13px] tw-font-semibold tw-text-black tw-mb-2">{{ 'PAYMENT' }}</span>
               <div class="tw-grid tw-grid-cols-[10fr_1fr] tw-gap-y-1">
                 <span class="tw-text-[12px] tw-font-semibold tw-text-black tw-text-left">{{ 'Subtotal:' }}</span>
-                <span class="tw-text-[13px] tw-font-semibold tw-text-black tw-text-right">{{ 'uwu' + '€' }}</span>
-                <span class="tw-text-[12px] tw-font-semibold tw-text-black tw-text-left">{{ 'Shipping:' }}</span>
-                <span class="tw-text-[13px] tw-font-semibold tw-text-black tw-text-right">{{ 'uwu' + '€' }}</span>
-                <span class="tw-text-[12px] tw-font-semibold tw-text-black tw-text-left">{{ 'Impuestos: ' }}</span>
-                <span class="tw-text-[13px] tw-font-semibold tw-text-black tw-text-right">{{ 'uwu' + '€' }}</span>
+                <span class="tw-text-[13px] tw-font-semibold tw-text-black tw-text-right">{{ cartSubtotal + '€' }}</span>
+                <span class="tw-text-[12px] tw-font-semibold tw-text-black tw-text-left">{{ 'Taxes (21%): ' }}</span>
+                <span class="tw-text-[13px] tw-font-semibold tw-text-black tw-text-right">{{ cartTaxes + '€' }}</span>
               </div>
             </div>
           </div>
@@ -47,7 +45,7 @@
       <!-- Checkout Card -->
       <div class="tw-w-full tw-bg-[#FFFAEB] tw-shadow-[0px_187px_75px_rgba(0,0,0,0.01),0px_105px_63px_rgba(0,0,0,0.05),0px_47px_47px_rgba(0,0,0,0.09),0px_12px_26px_rgba(0,0,0,0.1),0px_0px_0px_rgba(0,0,0,0.1)]">
         <div class="tw-flex tw-items-center tw-justify-between tw-px-5 tw-py-2.5 tw-bg-[rgba(16,86,82,0.5)]">
-          <label class="tw-relative tw-text-[22px] tw-font-black tw-text-[#2B2B2F]">{{ cartTotal + '€'  }}</label>
+          <label class="tw-relative tw-text-[22px] tw-font-black tw-text-[#2B2B2F]">{{ 'Total: ' + cartTotal + '€'  }}</label>
           <button class="tw-flex tw-justify-center tw-items-center tw-w-[150px] tw-h-9 tw-bg-[rgba(16,86,82,0.55)] tw-shadow-[0px_0.5px_0.5px_rgba(16,86,82,0.75),0px_1px_0.5px_rgba(16,86,82,0.75)] tw-border tw-border-[rgb(16,86,82)] tw-rounded-[7px] tw-text-[13px] tw-font-semibold tw-text-black tw-transition-all tw-duration-300 tw-ease-[cubic-bezier(0.15,0.83,0.66,1)]" @click="checkout">
             {{ 'Pagar' }}
           </button>
@@ -66,6 +64,14 @@
 
     const cartTotal = computed(() => {
         return cartStore.items.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
+    });
+
+    const cartSubtotal = computed(() => {
+        return ((cartStore.items.reduce((total, item) => total + item.price * item.quantity, 0)) * 0.79).toFixed(2);
+    });
+
+    const cartTaxes = computed(() => {
+        return ((cartStore.items.reduce((total, item) => total + item.price * item.quantity, 0)) * 0.21).toFixed(2);
     });
 
     function checkout() {
