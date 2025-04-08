@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ecommercevcs.dtos.DiscountDTO;
 import com.ecommercevcs.dtos.OrderCreateDTO;
 import com.ecommercevcs.entities.OrderEntity;
 import com.ecommercevcs.services.IOrderService;
@@ -53,5 +54,9 @@ public class OrderController {
 		orderService.deleteById(id);
 	}
 	
+	@GetMapping("/discounts/{userId}")
+	public List<String> findAllDiscountsAvailable(@PathVariable Long userId){
+		return this.orderService.findAllDiscountNamesAppliedByUser(userId);
+	}
 	
 }

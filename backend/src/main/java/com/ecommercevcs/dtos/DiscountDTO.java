@@ -5,7 +5,11 @@ public class DiscountDTO {
 	private Integer discountPercentage;
 	
 	
-	
+	public DiscountDTO(String name) {
+		super();
+		this.name = name;
+	}
+
 	public DiscountDTO(String name, Integer discountPercentage) {
 		super();
 		this.name = name;

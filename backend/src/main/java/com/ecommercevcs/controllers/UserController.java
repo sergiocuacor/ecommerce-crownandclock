@@ -22,7 +22,7 @@ import com.ecommercevcs.services.IUserService;
 // @CrossOrigin(origins = "https://localhost/...." o tambien) podemos poner la ruta del front 
 // @CrossOrigin(originPatterns = "*")
 @RestController
-@RequestMapping("users")
+@RequestMapping("/users")
 public class UserController {
 
 	@Autowired

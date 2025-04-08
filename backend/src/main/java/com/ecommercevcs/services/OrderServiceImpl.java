@@ -1,8 +1,10 @@
 package com.ecommercevcs.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import com.ecommercevcs.config.ConfigDiscount;
@@ -127,6 +129,21 @@ public class OrderServiceImpl implements IOrderService{
 
 		orderRepository.deleteById(id);
 	}
+
+	@Override
+	public List<String> findAllDiscountNamesAppliedByUser(Long userId) {
+		List<String> listDiscountsByUser = new ArrayList<String>();
+		
+		listDiscountsByUser.addAll(this.orderRepository.findAllDiscountNamesAppliedByUser(userId));
+		
+		List<DiscountDTO> listDiscounts = this.discounts.getDiscounts();
+		
+		
+		return listDiscountsByUser;
+	}
+
+
+	
 
 	
 	

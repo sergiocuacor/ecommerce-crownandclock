@@ -2,6 +2,9 @@ package com.ecommercevcs.services;
 
 import java.util.List;
 
+import org.springframework.data.repository.query.Param;
+
+import com.ecommercevcs.dtos.DiscountDTO;
 import com.ecommercevcs.dtos.OrderCreateDTO;
 import com.ecommercevcs.entities.OrderEntity;
 
@@ -12,5 +15,5 @@ public interface IOrderService {
 	public OrderEntity add(OrderCreateDTO order);
 	public OrderEntity update(OrderEntity order, Long id);
 	public void deleteById(Long id);
-	
+	List<String> findAllDiscountNamesAppliedByUser(@Param("userId") Long userId);
 }
