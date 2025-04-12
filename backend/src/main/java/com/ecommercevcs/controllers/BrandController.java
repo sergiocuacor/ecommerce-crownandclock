@@ -24,7 +24,7 @@ import com.ecommercevcs.validation.utils.ValidationUtils;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/brand")
+@RequestMapping("/brands")
 public class BrandController {
 	
 	@Autowired

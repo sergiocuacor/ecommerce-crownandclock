@@ -28,7 +28,7 @@ public class UserController {
 	@Autowired
 	IUserService userService;
 	
-	@GetMapping
+	@GetMapping("/all")
 	public ResponseEntity<List<UserEntity>> findAll(){
 		
 		return ResponseEntity.ok(userService.findAll()); 

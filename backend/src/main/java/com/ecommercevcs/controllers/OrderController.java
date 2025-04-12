@@ -19,14 +19,14 @@ import com.ecommercevcs.services.IOrderService;
 
 
 @RestController
-@RequestMapping("/order")
+@RequestMapping("/orders")
 public class OrderController {
 
 	@Autowired
 	IOrderService orderService;
 	
 	
-	@GetMapping
+	@GetMapping("/all")
 	public ResponseEntity<List<OrderEntity>> findAll(){
 		
 		return ResponseEntity.ok(orderService.findAll());

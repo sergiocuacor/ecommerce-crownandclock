@@ -25,7 +25,7 @@ import com.ecommercevcs.validation.utils.ValidationUtils;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/product")
+@RequestMapping("/products")
 public class ProductController {
 	
 	@Autowired
@@ -68,12 +68,12 @@ public class ProductController {
 		return this.productService.update(product, id);
 	}
 	
-	@PostMapping("/product/{id}")
-	public ResponseEntity<?> addProduct(@Valid  @RequestBody ProductEntity product, BindingResult result, @PathVariable Long id) {
+	@PostMapping("/{brandId}")
+	public ResponseEntity<?> addProduct(@Valid  @RequestBody ProductEntity product, BindingResult result, @PathVariable Long brandId) {
 		
 		if(result.hasErrors()) {
 			return this.validation.validation(result);
 		}
-		return ResponseEntity.ok(this.productService.addProduct(id, product));
+		return ResponseEntity.ok(this.productService.addProduct(brandId, product));
 	}
 }
