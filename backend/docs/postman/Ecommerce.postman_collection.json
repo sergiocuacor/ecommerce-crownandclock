@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "6bde1909-4eb4-4ea2-b47b-ce0156dec904",
+		"_postman_id": "927f830d-5fa3-479c-a3fe-167b0bfc3a5a",
 		"name": "Ecommerce",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "36320241"
@@ -181,33 +181,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/brands",
+							"raw": "http://localhost:8080/brands/all",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"brands"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Add Brand",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/brands",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"brands"
+								"brands",
+								"all"
 							]
 						}
 					},
@@ -255,6 +237,45 @@
 					"response": []
 				},
 				{
+					"name": "Add Brand",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/brands",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"brands"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Brands",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/brands/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"brands",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Delete Brand",
 					"request": {
 						"method": "DELETE",
@@ -275,9 +296,30 @@
 					"response": []
 				},
 				{
-					"name": "Update Brands",
+					"name": "Get All *Detailed* Brands",
 					"request": {
-						"method": "PUT",
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/brands/detailed/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"brands",
+								"detailed",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get *Detailed* Brand By Id",
+					"request": {
+						"method": "GET",
 						"header": [],
 						"url": {
 							"raw": "http://localhost:8080/brands/1",

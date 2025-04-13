@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ecommercevcs.dtos.BrandDTO;
 import com.ecommercevcs.entities.BrandEntity;
 import com.ecommercevcs.entities.ProductEntity;
 import com.ecommercevcs.services.IBrandService;
@@ -33,12 +34,23 @@ public class BrandController {
 	@Autowired
 	ValidationUtils validation;
 	
-	@GetMapping
+	
+	@GetMapping("/all")
+	public List<BrandDTO> findAllBrands(){
+		return this.brandService.findAllBrands();
+	}
+	
+	@GetMapping("/{brandId}")
+	public BrandDTO findBrandById(@PathVariable Long brandId) {
+		return this.brandService.findBrandById(brandId);
+	}
+	
+	@GetMapping("/detailed/all")
 	public List<BrandEntity> findAll() {
 		return this.brandService.findAll();
 	}
 	
-	@GetMapping("/{id}")
+	@GetMapping("/detailed/{id}")
 	public BrandEntity findById(@PathVariable Long id) {
 		return this.brandService.findById(id);
 	}
