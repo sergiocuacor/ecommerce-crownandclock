@@ -3,11 +3,11 @@
     <li class="list-group-item">            
         <div class="tw-flex tw-items-center tw-gap-4">
             <router-link :to="{ name: 'product', params: { mask: item.id } }" class="ratio ratio-1x1 tw-w-3/12">
-                <img class="tw-object-contain" :src="item.image" :alt="item.id">
+                <img class="tw-object-contain p-1" :src="apiBaseURL + `/images/` + item.mask + `/image.png`" :imgAlt="`${item.mask}`" :alt="item.mask" @error="changeImageExtension"/>
             </router-link>
             <div class="tw-font-medium tw-w-9/12">
                 <div class="tw-w-64 tw-overflow-hidden tw-whitespace-nowrap tw-text-ellipsis tw-truncate dark:tw-text-white">
-                    {{ item.title }}
+                    {{ item.name }}
                 </div>
                 <div class="tw-text-sm tw-text-gray-500 dark:tw-text-gray-400">
                     {{ item.price + '&#8364' }}
@@ -43,7 +43,11 @@
 
 <script setup>
 
+    import { ref } from 'vue';
     import { useCartStore } from '../../store/cart.js';
+    import apiClient from '../../services/api.js';    
+
+    const apiBaseURL = ref(apiClient.getApiBaseURL());
     
     const cartStore = useCartStore();
 
@@ -55,6 +59,10 @@
     });
 
     const item = props.item;
+
+    const changeImageExtension = (event) => {
+        event.target.src = event.target.src.replace(/\.png$/, '.jpeg');
+    };
 
     function increaseQuantity(item) {
         cartStore.increaseQuantity(item.id);

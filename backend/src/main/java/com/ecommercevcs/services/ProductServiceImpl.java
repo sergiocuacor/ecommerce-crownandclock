@@ -54,8 +54,8 @@ public class ProductServiceImpl implements IProductService {
 	}
 	
 	@Override
-	public ProductEntity addProduct(Long id, ProductEntity product) {
-		Optional<BrandEntity> brand = this.brandRepository.findById(id);
+	public ProductEntity addProduct(Long brandId, ProductEntity product) {
+		Optional<BrandEntity> brand = this.brandRepository.findById(brandId);
 		
 		if(brand.isPresent()) {
 			brand.get().addProduct(product);

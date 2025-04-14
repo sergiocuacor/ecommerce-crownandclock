@@ -2,7 +2,7 @@
 
     <li class="tw-flex tw-flex-col md:tw-flex-row md:tw-items-center tw-relative tw-py-2.5">
         <router-link :to="{ name: 'product', params: { mask: item.id } }" class="ratio ratio-1x1 tw-w-full md:tw-w-2/12 tw-bg-gray-100 tw-rounded">
-            <img class="tw-object-contain tw-p-3" :src="item.image" :alt="item.id">
+            <ImageExtensionCheckerComponent :class="`tw-object-contain tw-p-3`" :src="apiBaseURL + `/images/` + item.mask + `/image.png`" :alt="item.name"/>
         </router-link>
         <div class="tw-absolute tw-top-0 tw-right-0 tw-me-2.5 md:tw-me-0 tw-mt-5 md:tw-mt-2.5">
             <div class="btn-group">
@@ -39,8 +39,11 @@
 
 <script setup>
 
+    import { ref } from 'vue';
     import { useCartStore } from '../../store/cart.js';
-    
+    import apiClient from '../../services/api.js';
+
+    const apiBaseURL = ref(apiClient.getApiBaseURL());    
     const cartStore = useCartStore();
 
     const props = defineProps({

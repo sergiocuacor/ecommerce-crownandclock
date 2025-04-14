@@ -1,11 +1,11 @@
 <template>
     
     <label for="brandSelector" class="form-label">{{ 'Marcas: ' }}</label>
-    <select name="brandSelector" id="brandSelector" class="form-select" @change="handleChange">
+    <select name="brandSelector" id="brandSelector" class="form-select" v-model="selectedBrand" @change="handleChange">
         
-        <!-- COMPONENT -->
-        <option v-if="!loading && !error" disabled selected>{{ 'Selecciona una marca' }}</option>
-        <option v-if="!loading && !error" v-for="brand in brands" :key="brand.id" :value="brand.id">{{ brand.name }}</option>
+        <!-- SUCCESS -->
+        <option v-if="!loading && !error" value="0" selected>{{ '* selecciona una marca *' }}</option>
+        <option v-if="!loading && !error" v-for="brand in brands" :key="brand.id" :value="brand.id" :disabled="brand == selectedBrand">{{ brand.name }}</option>
         
         <!-- LOADING -->
         <option disabled selected v-if="loading">{{ 'Cargando...' }}</option>
@@ -20,30 +20,67 @@
 <script setup>
 
     import { ref, onMounted } from 'vue';
+    import { useRoute, useRouter } from 'vue-router';    
     import apiClient from '../../services/api.js';
+    
+    const route = useRoute();
+    const router = useRouter();
+
+    const props = defineProps({
+        selectedBrand: {
+            type: Number,
+            default: 0,
+            required: true,
+        },
+    });
 
     const brands = ref([]);
+    const selectedBrand = ref(props.selectedBrand);
     const loading = ref(true);
     const error = ref(null);
 
     const fetchBrands = async () => {
-        try {
-            const response = await apiClient.getBrands();
-            brands.value = response.data;
-        } catch (err) {
-            error.value = 'Error al cargar las marcas';
-        }
-    };
 
-    const handleChange = (event) => {
-        const selectedBrandId = event.target.value;
-        emit('brandSelected', selectedBrandId);
-    };
-
-    onMounted(async () => {
         loading.value = true;
-        await Promise.all([fetchBrands()]);
+
+        const response = await apiClient.getBrands();
+
+        if (response.success) {
+
+            brands.value = response.data;
+
+            const existsBrand = response.data.find(brand => brand.id == selectedBrand.value);
+
+            if (!existsBrand) {
+                selectedBrand.value = 0;
+            }
+
+        } else {
+            selectedBrand.value = 0;
+            error.value = response.error;
+        }
+
         loading.value = false;
-    });
+
+    };
+
+    const handleChange = () => {
+        
+        const selectedBrandMatch = brands.value.find(brand => brand.id == selectedBrand.value);
+        const newQuery = { ...route.query };
+        
+        newQuery.page = 1;
+
+        if (selectedBrandMatch) {
+            newQuery.brand = selectedBrandMatch.id;
+        } else {
+            delete newQuery.brand;
+        }        
+        
+        router.push({ path: route.path, query: newQuery });
+
+    };    
+
+    onMounted(fetchBrands);
 
 </script>
