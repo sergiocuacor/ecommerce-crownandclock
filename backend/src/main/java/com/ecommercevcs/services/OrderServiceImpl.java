@@ -138,8 +138,30 @@ public class OrderServiceImpl implements IOrderService{
 		
 		List<DiscountDTO> listDiscounts = this.discounts.getDiscounts();
 		
+		List<Integer> numListIndexDiscounts = new ArrayList<Integer>();
 		
-		return listDiscountsByUser;
+		for(int i=0; i< listDiscounts.size(); i++) {
+			
+			for(String discount : listDiscountsByUser) {
+				if(listDiscounts.get(i).getName().equalsIgnoreCase(discount)) {
+					System.out.println(i);
+					numListIndexDiscounts.add(i);
+				}
+					
+			}
+			
+		}
+			
+		for (int i = numListIndexDiscounts.size() - 1; i >= 0; i--) {
+		    listDiscounts.remove((int) numListIndexDiscounts.get(i));
+		}
+		
+		List<String> finalListDiscountsAvailableForUser = new ArrayList<String>();
+		for(DiscountDTO discount : listDiscounts) {
+			finalListDiscountsAvailableForUser.add(discount.getName());
+		}
+		
+		return finalListDiscountsAvailableForUser;
 	}
 
 
