@@ -6,7 +6,7 @@ import java.util.Objects;
 
 
 import com.ecommercevcs.entities.embeddable.Address;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -95,9 +95,22 @@ public class UserEntity {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private boolean admin;
 	
+	@JsonIgnore
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JsonManagedReference(value = "user-review")
+	private List<ReviewEntity> reviews = new ArrayList<ReviewEntity>();
 	
 	
+	public void addReview(ReviewEntity review) {
+		this.reviews.add(review);
+		review.setUser(this);
+		
+	}
 	
+	public void removeReview(ReviewEntity review) {
+		this.reviews.remove(review);
+		review.setUser(null);
+	}
 	
 	
 	// addOrder y removeOrder son helpers methods que ayudan a mantener la consistencia de la relación
@@ -211,6 +224,18 @@ public class UserEntity {
 				&& Objects.equals(name, other.name) && Objects.equals(orderList, other.orderList)
 				&& Objects.equals(password, other.password) && Objects.equals(phoneNumber, other.phoneNumber)
 				&& Objects.equals(roles, other.roles);
+	}
+	public boolean isAdmin() {
+		return admin;
+	}
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
+	}
+	public List<ReviewEntity> getReviews() {
+		return reviews;
+	}
+	public void setReviews(List<ReviewEntity> reviews) {
+		this.reviews = reviews;
 	}
 	
 	

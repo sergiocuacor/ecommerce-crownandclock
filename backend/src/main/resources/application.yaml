@@ -9,5 +9,21 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
-      ddl-auto: update    
+      ddl-auto: update
     show-sql: true
+
+##Configuración de logging detallado
+logging:
+  level:
+    root: INFO
+    org:
+      springframework:
+        web: DEBUG
+        http: DEBUG
+        security: DEBUG
+    com:
+      fasterxml:
+        jackson: DEBUG
+    com.ecommercevcs: DEBUG  # Ajusta esto a tu paquete base
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"

@@ -1,5 +1,6 @@
 package com.ecommercevcs.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.ecommercevcs.validation.IsPositiveValueDouble;
@@ -56,7 +57,51 @@ public class ProductEntity {
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JsonManagedReference(value = "product-orderdetails")
 	private List<OrderDetailsEntity> orderDetails;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JsonManagedReference(value = "product-review")
+	private List<ReviewEntity> reviews = new ArrayList<ReviewEntity>();
+	
 
+	@Column(name = "average_rating")
+	private Double averageRating = 0.0;
+	
+
+	@Column(name = "rating_count")
+	private Integer ratingCount = 0;
+	
+	
+	public void calculateAverageRating() {
+	    if (reviews == null || reviews.isEmpty()) {
+	        this.averageRating = 0.0;
+	        this.ratingCount = 0;
+	    } else {
+	        this.ratingCount = reviews.size();
+	        // Filtrar reviews con rating no nulo antes de calcular el promedio
+	        this.averageRating = reviews.stream()
+	            .filter(review -> review.getRating() != null)  // Filtrar ratings nulos
+	            .mapToDouble(ReviewEntity::getRating)
+	            .average()
+	            .orElse(0.0);
+	    }
+	}
+	
+	public void addReview(ReviewEntity review) {
+		this.reviews.add(review);
+		review.setProduct(this);
+		this.calculateAverageRating();
+	}
+	
+	public void removeReview(ReviewEntity review) {
+		this.reviews.remove(review);
+		review.setProduct(null);
+		this.calculateAverageRating();
+	}
+	
+	
+	
+	
 	public void addStock(Integer quantity) {
 		this.stock += quantity;
 	}
@@ -145,6 +190,31 @@ public class ProductEntity {
 		this.mask = mask;
 	}
 
+	public List<ReviewEntity> getReviews() {
+		return reviews;
+	}
+
+	public void setReviews(List<ReviewEntity> reviews) {
+		this.reviews = reviews;
+	}
+
+	public Double getAverageRating() {
+		return averageRating;
+	}
+
+	public void setAverageRating(Double averageRating) {
+		this.averageRating = averageRating;
+	}
+
+	public Integer getRatingCount() {
+		return ratingCount;
+	}
+
+	public void setRatingCount(Integer ratingCount) {
+		this.ratingCount = ratingCount;
+	}
+
+	
 	
 	
 
