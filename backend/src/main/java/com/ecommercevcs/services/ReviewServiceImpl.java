@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ecommercevcs.controllers.ReviewController;
 import com.ecommercevcs.dtos.ReviewDTO;
@@ -40,8 +41,8 @@ public class ReviewServiceImpl implements IReviewService {
 
 	@Override
 	public List<ReviewDTO> getReviewsByProductId(Long productId) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return this.reviewRepository.findByProductId(productId).stream().map(this::mapToDTO).collect(Collectors.toList());
 	}
 
 	@Override
@@ -87,16 +88,70 @@ public class ReviewServiceImpl implements IReviewService {
 	}
 
 	@Override
-	public ReviewDTO updateReview(Long reviewId, ReviewDTO review, Long userId) {
-		// TODO Auto-generated method stub
-		return null;
+	@Transactional
+	public ReviewDTO updateReview(Long reviewId, ReviewDTO reviewDTO, Long userId) {
+	    logger.info("Actualizando review con ID: {} para usuario ID: {}", reviewId, userId);
+	    
+	    
+	    ReviewEntity reviewEntity = reviewRepository.findById(reviewId)
+	            .orElseThrow(() -> new EntityNotFoundException("Review no encontrada con ID: " + reviewId));
+	    
+	    if (!reviewEntity.getUser().getId().equals(userId)) {
+	        throw new IllegalStateException("La review no pertenece al usuario indicado");
+	    }
+	    
+	    if (reviewDTO.getRating() != null) {
+	        reviewEntity.setRating(reviewDTO.getRating());
+	    }
+	    if (reviewDTO.getComment() != null) {
+	        reviewEntity.setComment(reviewDTO.getComment());
+	    }
+	    
+	    ReviewEntity updatedReview = reviewRepository.save(reviewEntity);
+	    
+	    ProductEntity product = updatedReview.getProduct();
+	    product.calculateAverageRating();
+	    productRepository.save(product);
+	    
+	    logger.info("Review actualizada correctamente. ");
+	    logger.info("Rating: :{}, Comentario:{}", updatedReview.getRating(), updatedReview.getComment());
+	    return mapToDTO(updatedReview);
+	}
+	
+	@Override
+	@Transactional
+	public ReviewDTO removeReview(Long reviewId, Long userId) {
+	    logger.info("Eliminando review con ID: {} para usuario ID: {}", reviewId, userId);
+	    
+	    // Encontrar la valoración
+	    ReviewEntity review = reviewRepository.findById(reviewId)
+	            .orElseThrow(() -> new EntityNotFoundException("Review no encontrada con ID: " + reviewId));
+	    
+	    // Verificar que pertenece al usuario correcto
+	    if (!review.getUser().getId().equals(userId)) {
+	        throw new IllegalStateException("La review no pertenece al usuario indicado");
+	    }
+	    
+	    // Guardar una copia de la valoración para devolver
+	    ReviewDTO reviewDTO = mapToDTO(review);
+	    
+	    // Guardar referencia al producto para recalcular su rating después
+	    ProductEntity product = review.getProduct();
+	    
+	    // Eliminar la valoración
+	    reviewRepository.delete(review);
+	    
+	    // Recalcular valoración promedio del producto
+	    product = productRepository.findById(product.getId()).orElse(product);
+	    product.calculateAverageRating();
+	    productRepository.save(product);
+	    
+	    logger.info("Review eliminada correctamente");
+	    
+	    return reviewDTO;
 	}
 
-	@Override
-	public ReviewDTO removeReview(Long reviewId, Long userId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 	public ReviewDTO mapToDTO(ReviewEntity review) {
 
@@ -112,4 +167,5 @@ public class ReviewServiceImpl implements IReviewService {
 		return reviewDto;
 
 	}
+
 }
