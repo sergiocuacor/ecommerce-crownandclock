@@ -3,6 +3,8 @@ package com.ecommercevcs.services;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import com.ecommercevcs.controllers.ReviewController;
 import com.ecommercevcs.entities.BrandEntity;
 import com.ecommercevcs.entities.ProductEntity;
 import com.ecommercevcs.repositories.BrandRepository;
@@ -18,6 +21,9 @@ import com.ecommercevcs.repositories.ProductRepository;
 
 @Service
 public class ProductServiceImpl implements IProductService {
+	
+    private static final Logger logger = LoggerFactory.getLogger(ProductServiceImpl.class);
+
 	
 	@Autowired
 	ProductRepository productRepository;

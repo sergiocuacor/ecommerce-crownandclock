@@ -3,11 +3,14 @@ package com.ecommercevcs.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import com.ecommercevcs.config.ConfigDiscount;
+import com.ecommercevcs.controllers.ReviewController;
 import com.ecommercevcs.dtos.DiscountDTO;
 import com.ecommercevcs.dtos.OrderCreateDTO;
 import com.ecommercevcs.dtos.OrderCreateItemDTO;
@@ -24,6 +27,8 @@ import jakarta.transaction.Transactional;
 
 @Service
 public class OrderServiceImpl implements IOrderService{
+
+    private static final Logger logger = LoggerFactory.getLogger(OrderServiceImpl.class);
 
 	
 	@Autowired

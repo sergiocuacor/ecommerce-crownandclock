@@ -3,9 +3,12 @@ package com.ecommercevcs.services;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ecommercevcs.controllers.ReviewController;
 import com.ecommercevcs.dtos.ReviewDTO;
 import com.ecommercevcs.entities.ProductEntity;
 import com.ecommercevcs.entities.ReviewEntity;
@@ -18,8 +21,11 @@ import com.ecommercevcs.repositories.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 
 @Service
-public class ReviewService implements IReviewService {
+public class ReviewServiceImpl implements IReviewService {
 
+    private static final Logger logger = LoggerFactory.getLogger(ReviewServiceImpl.class);
+
+	
 	@Autowired
 	ReviewRepository reviewRepository;
 

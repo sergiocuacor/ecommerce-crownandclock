@@ -2,6 +2,8 @@ package com.ecommercevcs.controllers;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
@@ -27,6 +29,8 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/brands")
 public class BrandController {
+	
+    private static final Logger logger = LoggerFactory.getLogger(BrandController.class);
 	
 	@Autowired
 	IBrandService brandService;

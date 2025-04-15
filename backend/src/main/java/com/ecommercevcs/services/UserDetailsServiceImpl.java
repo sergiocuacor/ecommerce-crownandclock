@@ -1,10 +1,11 @@
 package com.ecommercevcs.services;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -14,12 +15,15 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ecommercevcs.entities.RoleEntity;
+import com.ecommercevcs.controllers.ReviewController;
 import com.ecommercevcs.entities.UserEntity;
 import com.ecommercevcs.repositories.UserRepository;
 
 @Service
 public class UserDetailsServiceImpl implements org.springframework.security.core.userdetails.UserDetailsService {
+	
+    private static final Logger logger = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
+
 	
 	@Autowired
 	private UserRepository userRepository;

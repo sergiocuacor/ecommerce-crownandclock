@@ -2,6 +2,8 @@ package com.ecommercevcs.controllers;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,7 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ecommercevcs.dtos.CreateReviewRequestDTO;
 import com.ecommercevcs.dtos.ReviewDTO;
-import com.ecommercevcs.services.ReviewService;
+import com.ecommercevcs.services.IReviewService;
+import com.ecommercevcs.services.ReviewServiceImpl;
 
 
 
@@ -20,12 +23,18 @@ import com.ecommercevcs.services.ReviewService;
 @RequestMapping("/reviews")
 public class ReviewController {
 	
+    private static final Logger logger = LoggerFactory.getLogger(ReviewController.class);
+	
 	@Autowired
-	ReviewService reviewService;
+	IReviewService reviewService;
 	
 	@PostMapping("/{userId}/{productId}")
 	public ReviewDTO createReview(@RequestBody CreateReviewRequestDTO reviewRequest, @PathVariable Long userId, @PathVariable Long productId) throws Exception {
-		System.out.println(reviewRequest.getComment() + reviewRequest.getComment());
+		
+		logger.info("Recibida solicitud de review: User con ID: {}, Producto con ID: {}", userId, productId);
+		logger.debug("Datos de la review: rating={}, comment={}", 
+                reviewRequest.getRating(), reviewRequest.getComment());
+		
 		ReviewDTO review = new ReviewDTO();
 		review.setComment(reviewRequest.getComment());
 		review.setRating(reviewRequest.getRating());
