@@ -52,6 +52,8 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public UserEntity add(UserEntity user) {
 		
+		
+		
 		logger.debug("Inicio del add de use");
 		
 		RoleEntity roleUser = this.roleRepository.findByName("ROLE_USER").orElseThrow(() -> {
