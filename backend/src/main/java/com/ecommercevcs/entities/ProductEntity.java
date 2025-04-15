@@ -123,6 +123,10 @@ public class ProductEntity {
 	public String getIdBrand() {
 		return "" + this.brand.getId();
 	}
+	
+	public String getnameBrand() {
+		return "" + this.brand.getName();
+	}
 
 	public List<OrderDetailsEntity> getOrderDetails() {
 		return orderDetails;
