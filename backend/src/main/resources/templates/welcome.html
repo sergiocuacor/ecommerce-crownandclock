@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenida</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .welcome-container {
+            text-align: center;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #4CAF50;
+        }
+        p {
+            color: #555;
+        }
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            text-decoration: none;
+            background: #4CAF50;
+            color: white;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        a:hover {
+            background: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="welcome-container">
+        <h1>¡Bienvenido/a, <span th:text="${name}"></span>!</h1>
+        <p>Nos alegra tenerte aquí. Explora nuestra página y descubre todo lo que tenemos para ofrecerte.</p>
+        <p>DESCUENTO <span th:text="${discount}"></span>! </p>
+        <a href="inicio.html">Ir a la página principal</a>
+    </div>
+</body>
+</html>

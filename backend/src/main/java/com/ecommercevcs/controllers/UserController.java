@@ -14,16 +14,28 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ecommercevcs.config.ConfigDiscount;
 import com.ecommercevcs.dtos.DiscountDTO;
 import com.ecommercevcs.dtos.UserDTO;
 import com.ecommercevcs.entities.UserEntity;
 import com.ecommercevcs.services.IUserService;
+import com.ecommercevcs.utils.email.EmailConstantsUtil;
+import com.ecommercevcs.utils.email.EmailUtil;
+
+
+import jakarta.mail.MessagingException;
 
 // @CrossOrigin(origins = "https://localhost/...." o tambien) podemos poner la ruta del front 
 // @CrossOrigin(originPatterns = "*")
 @RestController
 @RequestMapping("/users")
 public class UserController {
+	
+	@Autowired
+	ConfigDiscount configDiscounts;
+	
+	@Autowired
+	EmailUtil emailUtil;
 
 	@Autowired
 	IUserService userService;
@@ -37,14 +49,28 @@ public class UserController {
 	@GetMapping("/{id}")
 	public ResponseEntity<UserEntity> findById(@PathVariable Long id) {
 		
+		
 		return ResponseEntity.ok(userService.findById(id));
 	}
 
 	@PostMapping("/register")
-	public ResponseEntity<UserEntity> add(@RequestBody UserEntity user){
-		
-		
-		return ResponseEntity.ok(userService.add(user));
+	public ResponseEntity<UserEntity> add(@RequestBody UserEntity user) throws MessagingException{
+	    try {
+	        DiscountDTO discount = this.configDiscounts.getDiscounts().get(1);
+	        this.emailUtil.sendHtmlEmail(
+	            user.getName(),
+	            discount.getName(),
+	            user.getEmail(),
+	            EmailConstantsUtil.SUBJECT_NAME,
+	            EmailConstantsUtil.TEMPLATEHTML_NAME
+	        );
+	    } catch (MessagingException e) {
+	        
+	        System.err.println("Error enviando correo: " + e.getMessage());
+	       
+	    }
+
+	    return ResponseEntity.ok(userService.add(user));
 	}
 	
 	@PutMapping("/{id}")
