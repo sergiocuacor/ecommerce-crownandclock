@@ -40,5 +40,11 @@ export default {
   },
   getValidDiscountsForUser(id) {
     return apiCall('get', `/orders/discounts/${id}`);
-  }
+  },
+  postLoginUser(data) {
+    return apiCall('post', '/login', {}, data);
+  },
+  postRegisterUser(data) {
+    return apiCall('post', '/register', {}, data);
+  },
 };
