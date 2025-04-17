@@ -56,7 +56,7 @@ public class ReviewController {
 	    return this.reviewService.getReviewsByProductId(productId);
 	}
 
-	@PutMapping("/{reviewId}")
+	@PutMapping("/{reviewId}/user/{userId}")
 	public ReviewDTO updateReview(
 	        @PathVariable Long reviewId,
 	        @RequestBody CreateReviewRequestDTO reviewRequest,
@@ -73,7 +73,7 @@ public class ReviewController {
 	    return this.reviewService.updateReview(reviewId, review, userId);
 	}
 
-	@DeleteMapping("/{reviewId}")
+	@PutMapping("/{reviewId}/user/{userId}")
 	public ReviewDTO removeReview(
 	        @PathVariable Long reviewId,
 	        @PathVariable Long userId) throws Exception {
