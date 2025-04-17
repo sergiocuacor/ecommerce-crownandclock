@@ -1,8 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import { useAuthStore } from '../services/auth.js';
 import apiClient from '../services/api.js';
 import NotFoundView from '../views/NotFoundView.vue';
 import HomeView from '../views/HomeView.vue';
 import LoginView from '../views/LoginView.vue';
+import RegisterView from '../views/RegisterView.vue';
 import CartView from '../views/CartView.vue';
 import ItemsView from '../views/ItemsView.vue';
 import ItemView from '../views/ItemView.vue';
@@ -48,6 +50,16 @@ const routes = [
       breadcrumb: [{ label: 'Home', path: { name: 'home' } }]
     } 
   },
+  // Register
+  { 
+    path: '/register',
+    name: 'register',
+    component: RegisterView,
+    meta: {
+      label: 'Register',
+      breadcrumb: [{ label: 'Home', path: { name: 'home' } }]
+    } 
+  },
   // User Profile
   { 
     path: '/profile',
@@ -55,7 +67,8 @@ const routes = [
     component: UserProfileView,
     meta: {
       label: 'Profile',
-      breadcrumb: [{ label: 'Home', path: { name: 'home' } }]
+      breadcrumb: [{ label: 'Home', path: { name: 'home' } }],
+      requiresAuth: true
     } 
   },
   { 
@@ -294,59 +307,69 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
+  
+  const auth = useAuthStore();
 
-  let defaultPageTitle = 'Crown & Clock';
-  let pageTitle = defaultPageTitle;
+  if (to.meta.requiresAuth && !auth.token) {
 
-  if (to.meta.label) {
+    next('/login'); // 🔁 redirige a login si no hay token
 
-    pageTitle = defaultPageTitle + ' - ' + to.meta.label;
-    
-  }
+  } else {
 
-  if (to.meta.breadcrumb) {
+    let defaultPageTitle = 'Crown & Clock';
+    let pageTitle = defaultPageTitle;
 
-    let breadcrumbs = [...to.meta.breadcrumb];
+    if (to.meta.label) {
 
-    if (to.params.mask) {
+      pageTitle = defaultPageTitle + ' - ' + to.meta.label;
+      
+    }
 
-      try {
+    if (to.meta.breadcrumb) {
 
-        const response = await apiClient.getItem(to.params.mask);
-        let item = response.data;
+      let breadcrumbs = [...to.meta.breadcrumb];
 
-        if (item) {
+      if (to.params.mask) {
 
-          breadcrumbs.push({ label: item.title, path: to.path });
-          pageTitle = defaultPageTitle + ' - ' + item.title;
+        try {
 
-        } else {
+          const response = await apiClient.getItem(to.params.mask);
+          let item = response.data;
 
-          breadcrumbs.push({ label: 'Unknown Product', path: to.path });
-          pageTitle = defaultPageTitle + ' - ' + 'Unknown Product';
+          if (item) {
+
+            breadcrumbs.push({ label: item.title, path: to.path });
+            pageTitle = defaultPageTitle + ' - ' + item.title;
+
+          } else {
+
+            breadcrumbs.push({ label: 'Unknown Product', path: to.path });
+            pageTitle = defaultPageTitle + ' - ' + 'Unknown Product';
+
+          }
+
+        } catch (error) {
+
+          console.error('Error Fetching Item:', error);
+          breadcrumbs.push({ label: 'Error Loading Product', path: to.path });
 
         }
 
-      } catch (error) {
+      } else {
 
-        console.error('Error Fetching Item:', error);
-        breadcrumbs.push({ label: 'Error Loading Product', path: to.path });
+        breadcrumbs.push({ label: to.meta.label, path: to.path });
 
       }
 
-    } else {
-
-      breadcrumbs.push({ label: to.meta.label, path: to.path });
-
+      to.meta.breadcrumbs = breadcrumbs;
+      
     }
 
-    to.meta.breadcrumbs = breadcrumbs;
+    document.title = pageTitle;
+
+    next(); // ✅ continúa
     
-  }
-
-  document.title = pageTitle;
-
-  next();
+  }  
 
 });
 
