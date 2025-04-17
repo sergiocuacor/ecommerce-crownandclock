@@ -15,5 +15,5 @@ public interface IOrderService {
 	public OrderEntity add(OrderCreateDTO order);
 	public OrderEntity update(OrderEntity order, Long id);
 	public void deleteById(Long id);
-	List<String> findAllDiscountNamesAppliedByUser(@Param("userId") Long userId);
+	List<?> findAllDiscountNamesAppliedByUser(@Param("userId") Long userId);
 }

@@ -136,7 +136,7 @@ public class OrderServiceImpl implements IOrderService{
 	}
 
 	@Override
-	public List<String> findAllDiscountNamesAppliedByUser(Long userId) {
+	public List<?> findAllDiscountNamesAppliedByUser(Long userId) {
 		List<String> listDiscountsByUser = new ArrayList<String>();
 		
 		listDiscountsByUser.addAll(this.orderRepository.findAllDiscountNamesAppliedByUser(userId));
@@ -161,12 +161,12 @@ public class OrderServiceImpl implements IOrderService{
 		    listDiscounts.remove((int) numListIndexDiscounts.get(i));
 		}
 		
-		List<String> finalListDiscountsAvailableForUser = new ArrayList<String>();
-		for(DiscountDTO discount : listDiscounts) {
-			finalListDiscountsAvailableForUser.add(discount.getName());
-		}
+//		List<String> finalListDiscountsAvailableForUser = new ArrayList<String>();
+//		for(DiscountDTO discount : listDiscounts) {
+//			finalListDiscountsAvailableForUser.add(discount.getName());
+//		}
 		
-		return finalListDiscountsAvailableForUser;
+		return listDiscounts;
 	}
 
 
