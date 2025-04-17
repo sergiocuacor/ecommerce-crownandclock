@@ -21,18 +21,24 @@ export default {
     return apiClient.defaults.baseURL;
   },
   getItem(mask) {
-    return apiCall('get', `/product/${mask}`);
+    return apiCall('get', `/products/${mask}`);
   },
   getItems() {
-    return apiCall('get', '/product/all');
+    return apiCall('get', '/products/all');
   },
-  getItemsPageable(page = 0, size = 12, sort = 'name,asc') {
-    return apiCall('get', '/product', { page, size, sort });
+  getItemsPageable(page = 0, size = 12, sort = 'name,asc', brand = '') {
+    return apiCall('get', '/products', { page, size, sort, brand });
   },
   getBrandById(id) {
-    return apiCall('get', `/brand/${id}`);
+    return apiCall('get', `/brands/${id}`);
   },
   getBrands() {
-    return apiCall('get', '/brand');
+    return apiCall('get', '/brands/all');
+  },
+  postOrder(data) {
+    return apiCall('post', '/orders', {}, data);
+  },
+  getValidDiscountsForUser(id) {
+    return apiCall('get', `/orders/discounts/${id}`);
   }
 };
