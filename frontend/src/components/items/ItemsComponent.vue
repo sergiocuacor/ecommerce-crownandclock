@@ -93,14 +93,14 @@
     const pageSize = ref(Number(route.query.size) || 12);
     const totalElements = ref(0);
     const sortBy = ref(route.query.sort || 'name,asc');
-    const selectedBrand = ref(Number(route.query.brand) || 0);
-    const selectedCategory = ref(route.query.category || '');    
+    const selectedBrand = ref(Number(route.query.brand) || '');
+    const selectedCategory = ref(route.query.category || '');
 
     const fetchItems = async () => {
 
         loading.value = true;
 
-        const response = await apiClient.getItemsPageable(currentPage.value - 1, pageSize.value, sortBy.value);
+        const response = await apiClient.getItemsPageable(currentPage.value - 1, pageSize.value, sortBy.value, selectedBrand.value);
         
         if (response.success) {
             items.value = response.data;
@@ -119,7 +119,7 @@
             currentPage.value = Number(newQuery.page) || 1;
             pageSize.value = Number(newQuery.size) || 12;
             sortBy.value = newQuery.sort || 'name,asc';
-            selectedBrand.value = Number(newQuery.brand) || 0;
+            selectedBrand.value = Number(newQuery.brand) || '';
             selectedCategory.value = newQuery.category || '';
 
             fetchItems();
