@@ -57,7 +57,7 @@ public class UserController {
 		try {
 			DiscountDTO discount = this.configDiscounts.getDiscounts().get(1);
 			this.emailUtil.sendHtmlEmailWelcome(user.getName(), discount.getName(), user.getEmail(),
-					EmailConstantsUtil.SUBJECT_NAME, EmailConstantsUtil.TEMPLATEHTML_WELCOME);
+					EmailConstantsUtil.SUBJECT_NAMEWELCOME, EmailConstantsUtil.TEMPLATEHTML_WELCOME);
 		} catch (MessagingException e) {
 
 			System.err.println("Error enviando correo: " + e.getMessage());

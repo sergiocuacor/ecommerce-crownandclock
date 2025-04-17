@@ -22,13 +22,20 @@ import com.ecommercevcs.entities.UserEntity;
 import com.ecommercevcs.repositories.OrderRepository;
 import com.ecommercevcs.repositories.ProductRepository;
 import com.ecommercevcs.repositories.UserRepository;
+import com.ecommercevcs.utils.email.EmailConstantsUtil;
+import com.ecommercevcs.utils.email.EmailUtil;
 
+import jakarta.mail.MessagingException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 
 @Service
 public class OrderServiceImpl implements IOrderService {
-
+	
+	@Autowired
+	EmailUtil emailUtil;
+	
+	
 	@Autowired
 	OrderRepository orderRepository;
 	@Autowired
@@ -177,13 +184,21 @@ public class OrderServiceImpl implements IOrderService {
 		for (OrderCreateItemDTO p : order.getItems()) {
 			Optional<ProductEntity> product = this.productRepository.findById(p.getProductId());
 			if (product.isPresent()) {
+				
 				listOrderEmail.add(
 						new EmailOrderDTO(product.get().getName(), product.get().getMask(), p.getQuantity()));
-						
+						System.out.println("producto mask : " + product.get().getMask());
 			} else {
 				System.out.println("Producto no encontrado");
 			}
 
+		}
+		try {
+			this.emailUtil.sendHtmlEmailOrder(user.getName(), listOrderEmail, user.getEmail(),
+					EmailConstantsUtil.SUBJECT_NAMEORDER, EmailConstantsUtil.TEMPLATEHTML_ORDER);
+		} catch (MessagingException e) {
+			
+			e.printStackTrace();
 		}
 
 	}
