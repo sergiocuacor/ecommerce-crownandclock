@@ -13,8 +13,7 @@
 
     const props = defineProps({
         selectedBrand: {
-            type: Number,
-            default: 0,
+            default: '',
             required: true,
         },
     });
@@ -28,26 +27,25 @@
 
         loading.value = true;
 
-        const response = await apiClient.getBrandById(selectedBrand.value);        
+        if(selectedBrand.value != '') {
 
-        if (response.success) {
-            
-            selectedBrandName.value = response.data.name;
-            error.value = null;
+            const response = await apiClient.getBrandById(selectedBrand.value);        
 
-        } else {
-
-            if(selectedBrand.value <= 0) {
-
-                selectedBrandName.value = 'TODAS';
+            if (response.success) {
+                
+                selectedBrandName.value = response.data.name;
+                error.value = null;
 
             } else {
 
-                selectedBrandName.value = 'Desconocida';
+                selectedBrandName.value = 'Desconocida';                
+                error.value = response.error;
 
             }
+
+        } else {
             
-            error.value = response.error;
+            selectedBrandName.value = 'TODAS';
 
         }
 
