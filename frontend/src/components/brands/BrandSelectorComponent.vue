@@ -4,7 +4,7 @@
     <select name="brandSelector" id="brandSelector" class="form-select" v-model="selectedBrand" @change="handleChange">
         
         <!-- SUCCESS -->
-        <option v-if="!loading && !error" value="0" selected>{{ '* selecciona una marca *' }}</option>
+        <option v-if="!loading && !error" value="" selected>{{ '* selecciona una marca *' }}</option>
         <option v-if="!loading && !error" v-for="brand in brands" :key="brand.id" :value="brand.id" :disabled="brand == selectedBrand">{{ brand.name }}</option>
         
         <!-- LOADING -->
@@ -28,8 +28,7 @@
 
     const props = defineProps({
         selectedBrand: {
-            type: Number,
-            default: 0,
+            default: '',
             required: true,
         },
     });
@@ -52,11 +51,11 @@
             const existsBrand = response.data.find(brand => brand.id == selectedBrand.value);
 
             if (!existsBrand) {
-                selectedBrand.value = 0;
+                selectedBrand.value = '';
             }
 
         } else {
-            selectedBrand.value = 0;
+            selectedBrand.value = '';
             error.value = response.error;
         }
 
