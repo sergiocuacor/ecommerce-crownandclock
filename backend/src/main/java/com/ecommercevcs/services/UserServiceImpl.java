@@ -2,6 +2,7 @@ package com.ecommercevcs.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,6 +52,8 @@ public class UserServiceImpl implements IUserService {
 	@Transactional
 	@Override
 	public UserEntity add(UserEntity user) {
+		
+		
 		
 		logger.debug("Inicio del add de use");
 		
@@ -127,6 +130,12 @@ public class UserServiceImpl implements IUserService {
 
 		userRepository.deleteById(id);
 
+	}
+
+	@Override
+	public UserEntity findByEmail(String email) {
+			UserEntity user = this.userRepository.findByEmail(email).get();
+		return user;
 	}
 
 //	@Override
