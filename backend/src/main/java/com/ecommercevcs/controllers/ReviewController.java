@@ -73,7 +73,7 @@ public class ReviewController {
 	    return this.reviewService.updateReview(reviewId, review, userId);
 	}
 
-	@PutMapping("/{reviewId}/user/{userId}")
+	@DeleteMapping("/{reviewId}/user/{userId}")
 	public ReviewDTO removeReview(
 	        @PathVariable Long reviewId,
 	        @PathVariable Long userId) throws Exception {
