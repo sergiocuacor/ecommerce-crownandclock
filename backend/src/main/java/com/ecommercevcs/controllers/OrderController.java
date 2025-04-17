@@ -40,6 +40,7 @@ public class OrderController {
 	
 	@PostMapping
 	public ResponseEntity<OrderCreateDTO> add(@RequestBody OrderCreateDTO order){
+		this.sendEmailToUser(order);
 		orderService.add(order);
 		return ResponseEntity.ok(order);
 	}
@@ -57,6 +58,12 @@ public class OrderController {
 	@GetMapping("/discounts/{userId}")
 	public List<String> findAllDiscountsAvailable(@PathVariable Long userId){
 		return this.orderService.findAllDiscountNamesAppliedByUser(userId);
+	}
+	
+	public void sendEmailToUser(OrderCreateDTO order){
+		
+		this.orderService.sendMailToUser(order);
+		
 	}
 	
 }

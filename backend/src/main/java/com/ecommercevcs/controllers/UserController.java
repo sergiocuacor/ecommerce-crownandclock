@@ -56,8 +56,8 @@ public class UserController {
 	public ResponseEntity<UserEntity> add(@RequestBody UserEntity user) throws MessagingException {
 		try {
 			DiscountDTO discount = this.configDiscounts.getDiscounts().get(1);
-			this.emailUtil.sendHtmlEmail(user.getName(), discount.getName(), user.getEmail(),
-					EmailConstantsUtil.SUBJECT_NAME, EmailConstantsUtil.TEMPLATEHTML_NAME);
+			this.emailUtil.sendHtmlEmailWelcome(user.getName(), discount.getName(), user.getEmail(),
+					EmailConstantsUtil.SUBJECT_NAME, EmailConstantsUtil.TEMPLATEHTML_WELCOME);
 		} catch (MessagingException e) {
 
 			System.err.println("Error enviando correo: " + e.getMessage());
