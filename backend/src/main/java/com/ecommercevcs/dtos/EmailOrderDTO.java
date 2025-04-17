@@ -7,7 +7,6 @@ public class EmailOrderDTO {
 	public Integer quantity;
 	
 	
-	
 	public EmailOrderDTO(String name, String mask, Integer quantity) {
 		super();
 		this.name = name;
@@ -16,6 +15,10 @@ public class EmailOrderDTO {
 		
 	}
 	
+	
+	
+
+
 	public String getName() {
 		return name;
 	}
@@ -34,6 +37,8 @@ public class EmailOrderDTO {
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
+
+	
 	
 	
 	

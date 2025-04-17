@@ -75,18 +75,14 @@
                 <tr style="background-color: #f2f2f2;">
                     <th>Producto</th>
                     <th>Cantidad</th>
-                    <th>Imagen</th>
+                    
                 </tr>
             </thead>
             <tbody>
                 <tr th:each="product : ${products}">
                     <td th:text="${product.name}">Nombre</td>
                     <td th:text="${product.quantity}">0</td>
-                    <td>
-                        <img th:src="@{'http://localhost:8080/images/' + ${product.mask} + '/image.png'}"
-                             class="product-image"
-                             alt="Product Image"/>
-                    </td>
+                    
                 </tr>
             </tbody>
         </table>

@@ -48,7 +48,9 @@ public class EmailUtil {
     	
     	helper.setFrom("carlosrose96@gmail.com");
     	helper.setTo(to); 
-    	helper.setSubject(subject); 
+    	helper.setSubject(subject);
+    	
+    	
     	Context context = new Context();
         context.setVariable("name", username); 
         context.setVariable("products", products);
