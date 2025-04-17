@@ -45,6 +45,9 @@ export default {
     return apiCall('post', '/login', {}, data);
   },
   postRegisterUser(data) {
-    return apiCall('post', '/register', {}, data);
+    return apiCall('post', '/users/register', {}, data);
   },
+  getUserData() {
+    return apiCall('get', '/users/me');
+  }
 };
