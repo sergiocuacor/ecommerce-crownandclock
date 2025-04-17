@@ -1,54 +1,157 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bienvenida</title>
+    <title>Welcome</title>
     <style>
+        /* Base styles */
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f8f8f8;
             margin: 0;
             padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            color: #333;
+            line-height: 1.6;
         }
-        .welcome-container {
-            text-align: center;
-            background: white;
-            padding: 30px;
+        
+        /* Main container */
+        .email-container {
+            max-width: 600px;
+            margin: 30px auto;
+            background-color: white;
             border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+            overflow: hidden;
         }
-        h1 {
-            color: #4CAF50;
+        
+        /* Header */
+        .header {
+            background-color: #222;
+            padding: 35px 30px;
+            text-align: center;
         }
-        p {
-            color: #555;
-        }
-        a {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 20px;
-            text-decoration: none;
-            background: #4CAF50;
+        
+        .header h1 {
             color: white;
-            border-radius: 5px;
-            transition: background 0.3s;
+            margin: 0;
+            font-size: 24px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
         }
-        a:hover {
-            background: #45a049;
+        
+        /* Content */
+        .content {
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .welcome-message {
+            font-size: 17px;
+            color: #444;
+            line-height: 1.7;
+            margin-bottom: 25px;
+        }
+        
+        /* Discount highlight */
+        .discount-container {
+            background-color: #f5f5f5;
+            border: 1px solid #e6e6e6;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+        
+        .discount-label {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-right: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .discount-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #222;
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 4px;
+            background-color: #e9e9e9;
+        }
+        
+        /* Action button */
+        .action-button {
+            display: inline-block;
+            background-color: #222;
+            color: white;
+            text-decoration: none;
+            padding: 14px 32px;
+            border-radius: 4px;
+            font-weight: 500;
+            margin-top: 25px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 14px;
+        }
+        
+        .action-button:hover {
+            background-color: #333;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: #f9f9f9;
+            padding: 25px 30px;
+            text-align: center;
+            font-size: 14px;
+            color: #777;
+            border-top: 1px solid #efefef;
+        }
+        
+        /* Responsive for mobile */
+        @media only screen and (max-width: 600px) {
+            .email-container {
+                margin: 0;
+                border-radius: 0;
+            }
+            
+            .header, .content, .footer {
+                padding: 20px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="welcome-container">
-        <h1>¡Bienvenido/a, <span th:text="${name}"></span>!</h1>
-        <p>Nos alegra tenerte aquí. Explora nuestra página y descubre todo lo que tenemos para ofrecerte.</p>
-        <p>DESCUENTO <span th:text="${discount}"></span>! </p>
-        <a href="inicio.html">Ir a la página principal</a>
+    <div class="email-container">
+        <div class="header">
+            <h1>Welcome to Crown and Clock, <span th:text="${name}">Member</span>!</h1>
+        </div>
+        
+        <div class="content">
+            <p class="welcome-message">
+                We're delighted to have you join us. Explore our collection and discover the perfect timepiece that speaks to your unique style.
+            </p>
+            
+            <div class="discount-container">
+                <span class="discount-label">Your Exclusive Offer:</span>
+                <span class="discount-value" th:text="${discount}">20% OFF</span>
+            </div>
+            
+            <p class="welcome-message">
+                Use your welcome discount on your first purchase to experience our commitment to quality and craftsmanship.
+            </p>
+            
+            
+        </div>
+        
+        <div class="footer">
+            <p>&copy; 2023 Crown and Clock | Elegance in every second</p>
+        </div>
     </div>
 </body>
 </html>
