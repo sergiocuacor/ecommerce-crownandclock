@@ -81,4 +81,9 @@ public class ProductController {
 		}
 		return ResponseEntity.ok(this.productService.addProduct(brandId, product));
 	}
+	
+	@GetMapping("/stock/{productId}")
+	public Integer getProductStock(@PathVariable Long productId) {
+		return this.productService.findById(productId).getStock();
+	}
 }
