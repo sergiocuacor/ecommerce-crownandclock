@@ -8,7 +8,7 @@
         </div>
         <div class="offcanvas-body tw-py-0">
             <CartOffCanvasBodyComponent v-if="utilsStore.offCanvasContent === 'cart'" />
-            <UserControlPanelOffCanvasBodyComponent v-if="utilsStore.offCanvasContent === 'controlPanel'" />
+            <UserControlPanelOffCanvasBodyComponent v-if="utilsStore.offCanvasContent === 'controlPanel' && authStore.token"/>
         </div>
     </div>
 </template>
@@ -16,7 +16,9 @@
 <script setup>
 
     import { useUtilsStore } from '../services/utils.js';
+    import { useAuthStore } from '../services/auth.js'
 
     const utilsStore = useUtilsStore();
+    const authStore = useAuthStore();
 
 </script>
