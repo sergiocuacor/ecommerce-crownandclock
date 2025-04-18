@@ -1,16 +1,19 @@
 spring:
   application:
     name: backend
+
   datasource:
-    url: jdbc:mysql://localhost:3305/clockdb
-    username: root
-    password: PracticaRoot
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3305/clockdb}
+    username: ${SPRING_DATASOURCE_USERNAME:root}
+    password: ${SPRING_DATASOURCE_PASSWORD:PracticaRoot}
     driver-class-name: com.mysql.cj.jdbc.Driver
+
   jpa:
     database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
       ddl-auto: update
     show-sql: true
+
   mail:
     host: smtp.gmail.com
     port: 587
@@ -32,6 +35,6 @@ logging:
     com:
       fasterxml:
         jackson: DEBUG
-    com.ecommercevcs: DEBUG  # Ajusta esto a tu paquete base
+      ecommercevcs: DEBUG  # Ajusta esto a tu paquete base si es otro
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
