@@ -1,5 +1,4 @@
 import { defineStore } from "pinia";
-import axios from 'axios';
 
 export const useAuthStore = defineStore("auth", {
 
@@ -15,7 +14,6 @@ export const useAuthStore = defineStore("auth", {
 
             localStorage.setItem("token", token);
             this.token = token;
-            this.establishTokenInAxios();
 
         },
 
@@ -23,22 +21,7 @@ export const useAuthStore = defineStore("auth", {
 
             localStorage.removeItem('token');
             this.token = null;
-            this.establishTokenInAxios();
             
-        },
-
-        establishTokenInAxios() {
-
-            if (this.token != null) {
-
-                axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.token;
-
-            } else {
-
-                delete axios.defaults.headers.common['Authorization'];
-
-            }
-
         },
 
     },
