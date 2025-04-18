@@ -93,8 +93,4 @@ public class UserController {
 		return ResponseEntity.ok(user);
 	}
 
-//	@GetMapping("/availableDiscounts")
-//	public ResponseEntity<List<DiscountDTO>> getAvailableDiscounts(@PathVariable Long id){
-//		return ResponseEntity.ok(userService.getAvailableDiscounts(id));
-//	}
 }
