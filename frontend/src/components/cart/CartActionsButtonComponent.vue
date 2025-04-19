@@ -8,6 +8,7 @@
             :disabled="isDisabledAdd"
             data-bs-toggle="offcanvas"
             data-bs-target="#offcanvasNavbar"
+            :title="`Add to cart`"
         >
             <i class="bi bi-bag-plus-fill"></i>
         </button>
@@ -16,9 +17,10 @@
             type="button"
             class="tw-bg-black tw-text-white tw-rounded-e-md tw-w-12 tw-h-12 sm:tw-w-10 sm:tw-h-10 tw-flex tw-items-center tw-justify-center tw-shadow-md hover:tw-bg-gray-800 disabled:tw-opacity-50"
             @click="removeFromCart"
-            data-bs-toggle="offcanvas"
-            data-bs-target="#offcanvasNavbar"
             :disabled="isDisabledRemove"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasNavbar"            
+            :title="`Remove from cart`"
         >
             <i class="bi bi-bag-dash-fill"></i>
         </button>
