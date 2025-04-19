@@ -37,6 +37,9 @@ export default {
   getItemsPageable(page = 0, size = 12, sort = 'name,asc', brand = '') {
     return apiCall('get', '/products', { page, size, sort, brand });
   },
+  getItemStock(id) {
+    return apiCall('get', `/products/stock/${id}`);
+  },
   getBrandById(id) {
     return apiCall('get', `/brands/${id}`);
   },
