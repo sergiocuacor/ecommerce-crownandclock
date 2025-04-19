@@ -21,11 +21,14 @@
             <hr class="tw-h-px tw-bg-[rgba(16,86,82,0.75)] tw-border-0" />
             <div>
               <span class="tw-block tw-text-[13px] tw-font-semibold tw-text-black tw-mb-2">{{ 'HAVE A PROMO CODE?' }}</span>
-              <form class="tw-grid tw-grid-cols-[1fr_80px] tw-gap-2">
-                <input type="text" placeholder="COUPON" class="tw-h-9 tw-px-3 tw-rounded tw-border tw-border-[rgb(16,86,82)] tw-bg-[#FBF3E4] tw-outline-none tw-transition-all tw-duration-300 tw-ease-[cubic-bezier(0.15,0.83,0.66,1)] focus:tw-border-transparent focus:tw-ring-2 focus:tw-ring-[#C9C1B2]"/>
-                <button type="button" class="tw-flex tw-justify-center tw-items-center tw-h-9 tw-w-full tw-bg-[rgba(16,86,82,0.75)] tw-shadow-[0px_0.5px_0.5px_#F3D2C9,0px_1px_0.5px_rgba(239,239,239,0.5)] tw-rounded tw-text-[12px] tw-font-semibold tw-text-black">
+              <form @submit.prevent class="tw-grid tw-grid-cols-[1fr_80px] tw-gap-2">
+                <input v-model="coupon" type="text" placeholder="COUPON" class="tw-h-9 tw-px-3 tw-rounded tw-border tw-border-[rgb(16,86,82)] tw-bg-[#FBF3E4] tw-outline-none tw-transition-all tw-duration-300 tw-ease-[cubic-bezier(0.15,0.83,0.66,1)] focus:tw-border-transparent focus:tw-ring-2 focus:tw-ring-[#C9C1B2]"/>
+                <button @click="validateCoupon" type="button" class="tw-flex tw-justify-center tw-items-center tw-h-9 tw-w-full tw-bg-[rgba(16,86,82,0.75)] tw-shadow-[0px_0.5px_0.5px_#F3D2C9,0px_1px_0.5px_rgba(239,239,239,0.5)] tw-rounded tw-text-[12px] tw-font-semibold tw-text-black">
                   {{ 'Apply' }}
                 </button>
+                <p v-if="coupon && !isCouponValid" class="tw-text-[11px] tw-text-red-600">
+                  {{ 'Invalid coupon code.' }}
+                </p>
               </form>
             </div>
             <hr class="tw-h-px tw-bg-[rgba(16,86,82,0.75)] tw-border-0" />
@@ -57,25 +60,106 @@
 
 <script setup>
 
-    import { computed } from 'vue';
+    import { computed, onMounted, ref } from 'vue';
+    import { useRouter } from 'vue-router';
     import { useCartStore } from '../../store/cart.js';
+    import apiClient from '../../services/api.js';
 
+    const router = useRouter();
     const cartStore = useCartStore();
+    const userId = ref(null);
+    const discounts = ref([]);
+    const coupon = ref('');
+    const isCouponValid = ref(false);
+    const isSubmitting = ref(false);
 
-    const cartTotal = computed(() => {
-        return cartStore.items.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
+    const fetchDiscounts = async () => {
+
+      const response = await apiClient.getValidDiscountsForUser(userId.value);
+
+      if (response.success) {
+        discounts.value = response.data;
+      }
+
+    };
+
+    const fetchUserId = async () => {
+
+      const response = await apiClient.getUserData();
+
+      if (response.success) {
+
+        userId.value = response.data.id;
+
+      }
+
+    };
+
+    const sendOrder = async (order) => {
+
+      const response = await apiClient.postOrder(order);
+
+      if (response.success) {
+        console.log('Order sent successfully!');
+        router.push('/profile');
+      } else {
+        console.error('Error sending order:', response.error);
+      }
+
+    };
+
+    const rawTotal = computed(() =>
+      cartStore.items.reduce((total, item) => total + item.price * item.quantity, 0)
+    );
+
+    const cartTotal = computed(() => rawTotal.value.toFixed(2));
+    const cartSubtotal = computed(() => (rawTotal.value * 0.79).toFixed(2));
+    const cartTaxes = computed(() => (rawTotal.value * 0.21).toFixed(2));
+        
+    const validateCoupon = async () => {
+
+      await fetchDiscounts();
+
+      isCouponValid.value = discounts.value.some(
+        code => code.toLowerCase() === coupon.value.toLowerCase()
+      );
+
+    };
+
+    const checkout = async () => {
+
+      if (isSubmitting.value) return;
+
+      isSubmitting.value = true;
+
+      await validateCoupon();
+
+      const simplifiedArray = cartStore.items.map(item => ({
+        productId: item.id,
+        quantity: item.quantity,
+      }));
+
+      const order = {
+        userId: userId.value,
+        items: simplifiedArray,
+        ...(isCouponValid.value && { discount: coupon.value }),
+      };
+
+      await sendOrder(order);
+      isSubmitting.value = false;
+
+    };
+
+    onMounted(async () => {
+      
+      await fetchUserId();
+
+      if (userId.value != null) {
+
+        await fetchDiscounts();
+
+      }
+      
     });
-
-    const cartSubtotal = computed(() => {
-        return ((cartStore.items.reduce((total, item) => total + item.price * item.quantity, 0)) * 0.79).toFixed(2);
-    });
-
-    const cartTaxes = computed(() => {
-        return ((cartStore.items.reduce((total, item) => total + item.price * item.quantity, 0)) * 0.21).toFixed(2);
-    });
-
-    function checkout() {
-        alert('Proceeding to checkout...');
-    }
 
 </script>
