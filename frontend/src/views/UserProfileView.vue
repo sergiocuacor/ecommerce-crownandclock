@@ -2,15 +2,15 @@
 
     <main class="container-sm tw-pt-16 lg:tw-pt-14 tw-font-serif" v-if="!loading">
 
-        <div class="card shadow-lg">
+        <div class="card">
 
             <div class="card-header tw-bg-black/90 tw-text-white">
-                <h4 class="mb-0">{{ 'User Profile' }}</h4>
+                <h4 class="mb-0 tw-uppercase">{{ 'User Profile' }}</h4>
             </div>
 
             <div class="card-body">
 
-                <h5 class="card-title fw-semibold">{{ 'Personal Information' }}</h5>
+                <h5 class="card-title fw-semibold tw-uppercase">{{ 'Personal Information' }}</h5>
 
                 <ul class="list-group list-group-flush mb-3">
                     <li class="list-group-item"><strong>{{ 'Full name: ' }}</strong>{{ user.name }}</li>
@@ -20,7 +20,7 @@
                     <li class="list-group-item"><strong>{{ 'Phone number: ' }}</strong>{{ user.phoneNumber }}</li>
                 </ul>
 
-                <h5 class="card-title fw-semibold">{{ 'Full Address' }}</h5>
+                <h5 class="card-title fw-semibold tw-uppercase">{{ 'Full Address' }}</h5>
                 
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item"><strong>{{ 'Address: ' }}</strong>{{ user.address.streetAddress }}</li>
