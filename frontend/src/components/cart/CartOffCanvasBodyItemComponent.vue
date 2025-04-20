@@ -44,7 +44,7 @@
                         class="tw-bg-black tw-text-white tw-rounded-md tw-h-7 tw-flex tw-items-center tw-justify-center tw-px-1.5 tw-shadow-md hover:tw-bg-gray-800 disabled:tw-opacity-50 tw-cursor-pointer tw-text-xl tw-transition tw-delay-150 tw-duration-300 tw-ease-in-out hover:tw--translate-y-1 hover:tw-scale-110"
                         @click="removeFromCart(props.item.id)"
                     >
-                        {{ 'Quitar' }}
+                        {{ 'Remove' }}
                     </button>
                 </div>
             </div>
