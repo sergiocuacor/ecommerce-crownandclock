@@ -1,5 +1,21 @@
 import { defineStore } from "pinia";
 
+const fetchTokenValidity = async () => {
+
+  const response = await apiClient.getTokenValidation();
+
+  let isValid = false;
+
+  if (response.success) {
+
+    isValid = response.data.valid;
+
+  }
+
+  return isValid;
+
+};
+
 export const useAuthStore = defineStore("auth", {
 
     state: () => ({
@@ -23,6 +39,22 @@ export const useAuthStore = defineStore("auth", {
             this.token = null;
             
         },
+
+        async tokenValidation() {
+
+            if(this.token != null) {
+
+                const isValid = await fetchTokenValidity();
+
+                if(!isValid) {
+
+                    this.logOutUser();
+
+                }
+
+            }
+
+        }
 
     },
 
