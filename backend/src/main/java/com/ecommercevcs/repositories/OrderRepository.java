@@ -19,5 +19,5 @@ public interface OrderRepository extends JpaRepository<OrderEntity, Long>{
 		       "WHERE o.user.id = :userId AND od.product.id = :productId)")
 	boolean existsByUserIdAndProductId(Long userId, Long productId);
 	
-	List<OrderEntity> findByOrderDate(LocalDateTime startDate, LocalDateTime endDate);
+	List<OrderEntity> findByOrderDateBetween(LocalDateTime startDate, LocalDateTime endDate);
 }

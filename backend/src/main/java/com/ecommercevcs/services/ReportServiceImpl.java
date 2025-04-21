@@ -15,6 +15,7 @@ import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ import com.ecommercevcs.entities.OrderEntity;
 import com.ecommercevcs.repositories.OrderRepository;
 
 @Service
-public class ReportServiceImpl {
+public class ReportServiceImpl implements ReportService{
 
 	private static final Logger logger = LoggerFactory.getLogger(ReportServiceImpl.class);
 
@@ -39,7 +40,7 @@ public class ReportServiceImpl {
 		LocalDateTime startOfDay = reportDate.atStartOfDay();
 		LocalDateTime endOfDay = reportDate.atTime(23, 59, 59);
 
-		List<OrderEntity> orders = orderRepository.findByOrderDate(startOfDay, endOfDay);
+		List<OrderEntity> orders = orderRepository.findByOrderDateBetween(startOfDay, endOfDay);
 
 		logger.info("Generando informe de ventas para el día: {}", reportDate);
 
@@ -74,7 +75,7 @@ public class ReportServiceImpl {
 		
 		Sheet sheet = workbook.createSheet("Informe de ventas");
 		
-		// Estilos del informe
+	
 		CellStyle headerStyle = workbook.createCellStyle();
 		Font headerFont = workbook.createFont();
 		headerFont.setBold(true);
@@ -100,7 +101,7 @@ public class ReportServiceImpl {
             cell.setCellStyle(headerStyle);
         }
         
-        // Añadimos los datos
+        
         int rowNum = 3;
         for (SalesReportItem item : salesItems) {
             Row row = sheet.createRow(rowNum++);
@@ -109,7 +110,7 @@ public class ReportServiceImpl {
             row.createCell(2).setCellValue(item.getAmount());
         }
         
-        // Total
+        
         Row totalRow = sheet.createRow(rowNum + 1);
         Cell labelCell = totalRow.createCell(0);
         labelCell.setCellValue("TOTAL VENTAS:");
@@ -119,7 +120,7 @@ public class ReportServiceImpl {
         totalCell.setCellValue(totalSales);
         totalCell.setCellStyle(totalStyle);
         
-        // Ajustar anchos de columna
+       
         for (int i = 0; i < headers.length; i++) {
             sheet.autoSizeColumn(i);
         }
