@@ -56,32 +56,9 @@
                     <div :id="`productPanel-` + index" class="accordion-collapse collapse" :class="index == 0 ? 'show' : ''">
                         <div class="accordion-body">
 
-                            <OrderItemsComponent :orderItems="order.orderDetails"/>                            
+                            <OrderItemsComponent :orderItems="order.orderDetails"/>
 
-                            <div class="tw-mt-2 tw-p-2 tw-bg-gray-200 tw-border-2 tw-rounded-md tw-divide-y-2 tw-divide-gray-300">
-                                <div class="tw-text-center tw-text-lg tw-font-semibold tw-pb-2">
-                                    {{ 'Invoice' }}
-                                </div>
-                                <div class="tw-py-2 tw-font-bold">
-                                    {{ 'Subtotal: ' }}<strong>{{ (order.total * 0.79) + '€' }}</strong>
-                                </div>
-                                <div class="tw-py-2 tw-font-bold">
-                                    {{ 'Taxes (21%): ' }}<strong>{{ (order.total * 0.21) + '€' }}</strong>
-                                </div>
-                                <div v-if="order.discountApplied != null && order.discountPercentage != null" class="tw-bg-gray-200 tw-font-bold tw-divide-y-2 tw-divide-gray-300">
-                                    <div class="tw-py-2">
-                                        {{ 'Coupon ' + order.discountApplied + '(' + order.discountPercentage + '%): '}}<strong>{{ '-' + (order.total * (order.discountPercentage / 100)) + '€' }}</strong>
-                                    </div>
-                                    <div class="tw-text-center tw-pt-2">
-                                       {{ 'Total: ' }}<strong>{{ (order.total * (1 - (order.discountPercentage / 100))) + '€' }} </strong>
-                                    </div>                                    
-                                </div>
-                                <div v-else class="tw-bg-gray-200 tw-font-bold tw-divide-y-2 tw-divide-gray-300">
-                                    <div class="tw-text-center tw-pt-2">
-                                        {{ 'Total: ' }}<strong>{{ order.total + '€' }}</strong>
-                                    </div>                                    
-                                </div>
-                            </div>
+                            <OrderInformationComponent :order="order"/>
                             
                         </div>
                     </div>
