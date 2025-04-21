@@ -55,8 +55,7 @@
 
 <script setup>
 
-    import { ref } from 'vue';
-    import { computed } from 'vue';
+    import { ref, computed } from 'vue';
     import { useCartStore } from '../../store/cart.js';
     import apiClient from '../../services/api.js';
 
