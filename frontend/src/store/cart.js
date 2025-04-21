@@ -167,6 +167,15 @@ export const useCartStore = defineStore('cart', {
 
     },
 
+    emptyCart() {
+
+      this.items = [];
+      this.saveCart();
+      this.coupon = null;
+      this.saveCoupon();
+
+    }
+
   },
   
 });
