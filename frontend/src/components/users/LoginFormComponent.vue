@@ -62,7 +62,7 @@
 
             authStore.logInUser(response.data.token);
             error.value = null;
-            router.push('/products');
+            router.push('/home');
 
         } else {
 
