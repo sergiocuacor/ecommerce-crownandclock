@@ -21,7 +21,7 @@ import com.ecommercevcs.config.ConfigDiscount;
 import com.ecommercevcs.dtos.DiscountDTO;
 import com.ecommercevcs.dtos.UserDTO;
 import com.ecommercevcs.entities.UserEntity;
-import com.ecommercevcs.services.IUserService;
+import com.ecommercevcs.services.UserService;
 import com.ecommercevcs.utils.email.EmailConstantsUtil;
 import com.ecommercevcs.utils.email.EmailUtil;
 
@@ -43,7 +43,7 @@ public class UserController {
 	EmailUtil emailUtil;
 
 	@Autowired
-	IUserService userService;
+	UserService userService;
 
 	@GetMapping("/all")
 	public ResponseEntity<List<UserEntity>> findAll() {

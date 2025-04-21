@@ -1214,7 +1214,7 @@
 			"name": "Reports",
 			"item": [
 				{
-					"name": "Sales Report TODAY",
+					"name": "Excel: Sales Report TODAY",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -1234,7 +1234,7 @@
 					"response": []
 				},
 				{
-					"name": "Sales Report Specific Day",
+					"name": "Excel: Sales Report Specific Day",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -1254,7 +1254,7 @@
 					},
 					"response": [
 						{
-							"name": "Sales Report Specific Day",
+							"name": "Excel: Sales Report Specific Day",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
@@ -1278,6 +1278,245 @@
 							"body": null
 						}
 					]
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/users/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"register"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Register",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"Juan Pérez\",\r\n  \"firstName\": \"Juan\",\r\n  \"lastName\": \"Pérez\",\r\n  \"email\": \"juan.perez@example.com\",\r\n  \"password\": \"SecurePassword123\",\r\n  \"phoneNumber\": \"+34612345678\",\r\n  \"address\": {\r\n    \"streetAddress\": \"Calle Gran Vía 123\",\r\n    \"city\": \"Madrid\",\r\n    \"state\": \"Madrid\",\r\n    \"country\": \"España\",\r\n    \"postalCode\": \"28013\"\r\n  },\r\n  \"admin\": false\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/users/register",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"users",
+										"register"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Register",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"Empresa ABC\",\r\n  \"firstName\": \"Representante\",\r\n  \"lastName\": \"Comercial\",\r\n  \"email\": \"contacto@empresaabc.com\",\r\n  \"password\": \"Business123\",\r\n  \"phoneNumber\": \"+34911234567\",\r\n  \"address\": {\r\n    \"streetAddress\": \"Avenida Negocio 42\",\r\n    \"city\": \"Valencia\",\r\n    \"state\": \"Comunidad Valenciana\",\r\n    \"country\": \"España\",\r\n    \"postalCode\": \"46001\"\r\n  },\r\n  \"admin\": false\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/users/register",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"users",
+										"register"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Login",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtaWd1ZWxmZXJzb3RvQGdtYWlsLmVzIiwiYXV0aG9yaXRpZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfVVNFUiJ9XSwiZXhwIjoxNzQyNjQ1NTg0LCJpYXQiOjE3NDI2NDE5ODR9.1g6x_AprHXeBtXbXQ7NG2golb2wEs6IjuJisPBLU8-U",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"admin@admin.com\",\r\n    \"password\": \"admin123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"juan.perez@example.com\",\r\n    \"password\": \"SecurePassword123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"login"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Login Admin",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"admin@admin.com\",\r\n    \"password\": \"admin123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"login"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Validate Token",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJhdXRob3JpdGllcyI6W3siYXV0aG9yaXR5IjoiUk9MRV9BRE1JTiJ9LHsiYXV0aG9yaXR5IjoiUk9MRV9VU0VSIn1dLCJleHAiOjE3NDUyNjA5MzUsImlhdCI6MTc0NTI1NzMzNX0.ChVm2ykwjgg_BKke1iXuPmWVWWl4DRy2T-Nm7BEc3gs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/auth/validate-token",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"validate-token"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}

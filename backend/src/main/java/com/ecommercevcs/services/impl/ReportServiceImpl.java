@@ -1,4 +1,4 @@
-package com.ecommercevcs.services;
+package com.ecommercevcs.services.impl;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 import com.ecommercevcs.entities.OrderDetailsEntity;
 import com.ecommercevcs.entities.OrderEntity;
 import com.ecommercevcs.repositories.OrderRepository;
+import com.ecommercevcs.services.ReportService;
 
 @Service
 public class ReportServiceImpl implements ReportService{

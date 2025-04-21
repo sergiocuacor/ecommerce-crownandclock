@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -35,7 +36,7 @@ public class ReportController {
 	private ReportService reportService;
 	
 	@GetMapping("/daily-sales")
-    public ResponseEntity<Resource> generateDailySalesReport() {
+    public ResponseEntity<byte[]> generateDailySalesReport() {
         return generateDailySalesReportForDate(null);
     }
 	
@@ -43,33 +44,31 @@ public class ReportController {
 	 * Formato {date}: YYYY-MM-dd
 	 */
 	@GetMapping("/daily-sales/{date}")
-    public ResponseEntity<Resource> generateDailySalesReportForDate(
-            @PathVariable(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
-        
-        try {
-            Workbook workbook = reportService.generateDailySalesReport(date);
-            
-            
-            LocalDate reportDate = (date != null) ? date : LocalDate.now();
-            String fileName = "informe_ventas_" + reportDate.format(DateTimeFormatter.ISO_LOCAL_DATE) + ".xlsx";
-            
-            
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            workbook.write(outputStream);
-            workbook.close();
-            
-            ByteArrayResource resource = new ByteArrayResource(outputStream.toByteArray());
-            
-            
-            return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName)
-                    .contentType(MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
-                    .contentLength(resource.contentLength())
-                    .body(resource);
-            
-        } catch (IOException e) {
-            logger.error("Error al generar el informe de ventas", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
+	public ResponseEntity<byte[]> generateDailySalesReportForDate(
+	        @PathVariable(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+	    
+	    try {
+	        Workbook workbook = reportService.generateDailySalesReport(date);
+	        
+	        LocalDate reportDate = (date != null) ? date : LocalDate.now();
+	        String fileName = "informe_ventas_" + reportDate.format(DateTimeFormatter.ISO_LOCAL_DATE) + ".xlsx";
+	        
+	        // Cambiar a byte[] directamente
+	        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+	        workbook.write(baos);
+	        byte[] bytes = baos.toByteArray();
+	        workbook.close();
+	        baos.close();
+	        
+	        HttpHeaders headers = new HttpHeaders();
+	        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+	        headers.setContentDisposition(ContentDisposition.attachment().filename(fileName).build());
+	        
+	        return new ResponseEntity<>(bytes, headers, HttpStatus.OK);
+	        
+	    } catch (IOException e) {
+	        logger.error("Error al generar el informe de ventas", e);
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+	    }
+	}
 }

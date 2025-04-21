@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ecommercevcs.dtos.BrandDTO;
 import com.ecommercevcs.entities.BrandEntity;
 import com.ecommercevcs.entities.ProductEntity;
-import com.ecommercevcs.services.IBrandService;
+import com.ecommercevcs.services.BrandService;
 import com.ecommercevcs.validation.utils.ValidationUtils;
 
 import jakarta.validation.Valid;
@@ -33,7 +33,7 @@ public class BrandController {
     private static final Logger logger = LoggerFactory.getLogger(BrandController.class);
 	
 	@Autowired
-	IBrandService brandService;
+	BrandService brandService;
 	
 	@Autowired
 	ValidationUtils validation;

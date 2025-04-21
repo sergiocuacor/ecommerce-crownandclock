@@ -6,7 +6,7 @@ import com.ecommercevcs.dtos.ReviewDTO;
 import com.ecommercevcs.entities.ProductEntity;
 import com.ecommercevcs.entities.UserEntity;
 
-public interface IReviewService {
+public interface ReviewService {
 	
 	public List<ReviewDTO> getReviewsByProductId(Long productId);
 	

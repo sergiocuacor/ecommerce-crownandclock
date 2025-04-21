@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ecommercevcs.dtos.DiscountDTO;
 import com.ecommercevcs.dtos.OrderCreateDTO;
 import com.ecommercevcs.entities.OrderEntity;
-import com.ecommercevcs.services.IOrderService;
+import com.ecommercevcs.services.OrderService;
 
 
 @RestController
@@ -28,7 +28,7 @@ public class OrderController {
     private static final Logger logger = LoggerFactory.getLogger(OrderController.class);
 	
 	@Autowired
-	IOrderService orderService;
+	OrderService orderService;
 	
 	
 	@GetMapping("/all")

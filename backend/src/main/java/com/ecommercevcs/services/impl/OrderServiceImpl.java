@@ -1,4 +1,4 @@
-package com.ecommercevcs.services;
+package com.ecommercevcs.services.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,12 +21,13 @@ import com.ecommercevcs.entities.UserEntity;
 import com.ecommercevcs.repositories.OrderRepository;
 import com.ecommercevcs.repositories.ProductRepository;
 import com.ecommercevcs.repositories.UserRepository;
+import com.ecommercevcs.services.OrderService;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 
 @Service
-public class OrderServiceImpl implements IOrderService{
+public class OrderServiceImpl implements OrderService{
 
     private static final Logger logger = LoggerFactory.getLogger(OrderServiceImpl.class);
 
