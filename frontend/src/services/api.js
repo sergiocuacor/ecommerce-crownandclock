@@ -60,5 +60,8 @@ export default {
   },
   getUserData() {
     return apiCall('get', '/users/me');
+  },
+  getTokenValidation() {
+    return apiCall('get', '/auth/validate-token');
   }
 };
