@@ -23,7 +23,7 @@
         </div>
         <div class="tw-font-medium tw-w-full md:tw-w-10/12 md:tw-ps-2 tw-pt-2 md:tw-pt-0">
             <div class="tw-overflow-hidden tw-truncate dark:tw-text-white">
-                {{ props.item.title }}
+                {{ props.item.name }}
             </div>
             <div class="tw-text-sm tw-text-gray-500 dark:tw-text-gray-400">
                 {{ props.item.price + '&#8364' }}
