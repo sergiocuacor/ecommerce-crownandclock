@@ -310,66 +310,55 @@ router.beforeEach(async (to, from, next) => {
   
   const auth = useAuthStore();
 
-  if (to.meta.requiresAuth && !auth.token) {
-
-    next('/login'); // 🔁 redirige a login si no hay token
-
-  } else {
-
-    let defaultPageTitle = 'Crown & Clock';
-    let pageTitle = defaultPageTitle;
-
-    if (to.meta.label) {
-
-      pageTitle = defaultPageTitle + ' - ' + to.meta.label;
-      
+  if (to.meta.requiresAuth) {
+    if (!auth.token) {
+      return next('/login');
     }
 
-    if (to.meta.breadcrumb) {
+    await auth.tokenValidation();
 
-      let breadcrumbs = [...to.meta.breadcrumb];
+    if (!auth.token) {
+      return next('/login');
+    }
+  }
 
-      if (to.params.mask) {
+  let defaultPageTitle = 'Crown & Clock';
+  let pageTitle = defaultPageTitle;
 
-        try {
+  if (to.meta.label) {
+    pageTitle = `${defaultPageTitle} - ${to.meta.label}`;
+  }
 
-          const response = await apiClient.getItem(to.params.mask);
-          let item = response.data;
+  if (to.meta.breadcrumb) {
+    const breadcrumbs = [...to.meta.breadcrumb];
 
-          if (item) {
+    if (to.params.mask) {
+      try {
+        const response = await apiClient.getItem(to.params.mask);
+        const item = response.data;
 
-            breadcrumbs.push({ label: item.title, path: to.path });
-            pageTitle = defaultPageTitle + ' - ' + item.title;
-
-          } else {
-
-            breadcrumbs.push({ label: 'Unknown Product', path: to.path });
-            pageTitle = defaultPageTitle + ' - ' + 'Unknown Product';
-
-          }
-
-        } catch (error) {
-
-          console.error('Error Fetching Item:', error);
-          breadcrumbs.push({ label: 'Error Loading Product', path: to.path });
-
+        if (item) {
+          breadcrumbs.push({ label: item.title, path: to.path });
+          pageTitle = `${defaultPageTitle} - ${item.title}`;
+        } else {
+          breadcrumbs.push({ label: 'Unknown Product', path: to.path });
+          pageTitle = `${defaultPageTitle} - Unknown Product`;
         }
-
-      } else {
-
-        breadcrumbs.push({ label: to.meta.label, path: to.path });
-
+      } catch (error) {
+        console.error('Error fetching item:', error);
+        breadcrumbs.push({ label: 'Error Loading Product', path: to.path });
       }
-
-      to.meta.breadcrumbs = breadcrumbs;
-      
+    } else {
+      if (!breadcrumbs.find(b => b.path === to.path)) {
+        breadcrumbs.push({ label: to.meta.label, path: to.path });
+      }
     }
 
-    document.title = pageTitle;
+    to.meta.breadcrumbs = breadcrumbs;
+  }
 
-    next(); // ✅ continúa
-    
-  }  
+  document.title = pageTitle;
+  next();
 
 });
 
