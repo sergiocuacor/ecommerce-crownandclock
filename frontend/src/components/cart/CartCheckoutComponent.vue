@@ -93,8 +93,8 @@
     const cartTotal = computed(() => rawTotal.value.toFixed(2));
     const cartSubtotal = computed(() => (rawTotal.value * 0.79).toFixed(2));
     const cartTaxes = computed(() => (rawTotal.value * 0.21).toFixed(2));
-    const cartTotalDiscounted = computed(() => (rawTotal.value * (1 - (cartStore.coupon.discountPercentage / 100))))
-    const cartDiscount = computed(() => (rawTotal.value * (cartStore.coupon.discountPercentage / 100)))
+    const cartTotalDiscounted = computed(() => (rawTotal.value * (1 - (cartStore.coupon.discountPercentage / 100))).toFixed(2));
+    const cartDiscount = computed(() => (rawTotal.value * (cartStore.coupon.discountPercentage / 100)).toFixed(2));
 
     const fetchUserId = async () => {
 
