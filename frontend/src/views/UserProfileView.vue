@@ -13,21 +13,44 @@
                 <h5 class="card-title fw-semibold tw-uppercase">{{ 'Personal Information' }}</h5>
 
                 <ul class="list-group list-group-flush mb-3">
-                    <li class="list-group-item"><strong>{{ 'Full name: ' }}</strong>{{ user.name }}</li>
-                    <li class="list-group-item"><strong>{{ 'First name: ' }}</strong>{{ user.firstName }}</li>
-                    <li class="list-group-item"><strong>{{ 'Last name: ' }}</strong>{{ user.lastName }}</li>
-                    <li class="list-group-item"><strong>{{ 'Email: ' }}</strong>{{ user.email }}</li>
-                    <li class="list-group-item"><strong>{{ 'Phone number: ' }}</strong>{{ user.phoneNumber }}</li>
+                    <li class="list-group-item">
+                        <strong>{{ 'Full name: ' }}</strong>{{ user.name }}                     
+                    </li>
+                    <li class="list-group-item tw-flex tw-items-center tw-justify-between tw-gap-2">
+                        <UserInformationInputGeneratorComponent :text="`First name: `" :inputType="`text`" :value="user.firstName" :validationId="`firstName`" :userId="user.id"/>
+                    </li>    
+                    <li class="list-group-item tw-flex tw-items-center tw-justify-between tw-gap-2">
+                        <UserInformationInputGeneratorComponent :text="`Last name: `" :inputType="`text`" :value="user.lastName" :validationId="`lastName`" :userId="user.id"/>
+                    </li>
+                    <li class="list-group-item">
+                        <UserInformationPasswordInputComponent :userId="user.id"/>
+                    </li>
+                    <li class="list-group-item tw-flex tw-items-center tw-justify-between tw-gap-2">
+                        <UserInformationInputGeneratorComponent :text="`Email: `" :inputType="`email`" :value="user.email" :validationId="`email`" :userId="user.id"/>
+                    </li>
+                    <li class="list-group-item tw-flex tw-items-center tw-justify-between tw-gap-2">
+                        <UserInformationInputGeneratorComponent :text="`Phone number: `" :inputType="`text`" :value="user.phoneNumber" :validationId="`phoneNumber`" :userId="user.id"/>
+                    </li>
                 </ul>
 
                 <h5 class="card-title fw-semibold tw-uppercase">{{ 'Full Address' }}</h5>
                 
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><strong>{{ 'Address: ' }}</strong>{{ user.address.streetAddress }}</li>
-                    <li class="list-group-item"><strong>{{ 'City: ' }}</strong>{{ user.address.city }}</li>
-                    <li class="list-group-item"><strong>{{ 'State: ' }}</strong>{{ user.address.state }}</li>
-                    <li class="list-group-item"><strong>{{ 'Country: ' }}</strong>{{ user.address.country }}</li>
-                    <li class="list-group-item"><strong>{{ 'Postal code: ' }}</strong>{{ user.address.postalCode }}</li>
+                <ul class="list-group list-group-flush">                    
+                    <li class="list-group-item tw-flex tw-items-center tw-justify-between tw-gap-2">
+                        <UserInformationInputGeneratorComponent :text="`Address: `" :inputType="`text`" :value="user.address.streetAddress" :validationId="`streetAddress`" :userId="user.id"/>
+                    </li>
+                    <li class="list-group-item tw-flex tw-items-center tw-justify-between tw-gap-2">
+                        <UserInformationInputGeneratorComponent :text="`City: `" :inputType="`text`" :value="user.address.city" :validationId="`city`" :userId="user.id"/>
+                    </li>
+                    <li class="list-group-item tw-flex tw-items-center tw-justify-between tw-gap-2">
+                        <UserInformationInputGeneratorComponent :text="`State: `" :inputType="`text`" :value="user.address.state" :validationId="`state`" :userId="user.id"/>
+                    </li>
+                    <li class="list-group-item tw-flex tw-items-center tw-justify-between tw-gap-2">
+                        <UserInformationInputGeneratorComponent :text="`Country: `" :inputType="`text`" :value="user.address.country" :validationId="`country`" :userId="user.id"/>
+                    </li>
+                    <li class="list-group-item tw-flex tw-items-center tw-justify-between tw-gap-2">
+                        <UserInformationInputGeneratorComponent :text="`Postal code: `" :inputType="`text`" :value="user.address.postalCode" :validationId="`postalCode`" :userId="user.id"/>
+                    </li>
                 </ul>
             </div>
 
