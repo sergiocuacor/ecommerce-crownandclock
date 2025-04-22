@@ -311,6 +311,7 @@ router.beforeEach(async (to, from, next) => {
   const auth = useAuthStore();
 
   if (to.meta.requiresAuth) {
+
     if (!auth.token) {
       return next('/login');
     }
@@ -320,6 +321,11 @@ router.beforeEach(async (to, from, next) => {
     if (!auth.token) {
       return next('/login');
     }
+
+  } else {
+
+    await auth.tokenValidation();
+    
   }
 
   let defaultPageTitle = 'Crown & Clock';
