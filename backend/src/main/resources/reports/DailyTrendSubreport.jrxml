@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" 
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" 
+              name="DailyTrendSubreport" 
+              pageWidth="555" 
+              pageHeight="400"
+              columnWidth="555"
+              leftMargin="0"
+              rightMargin="0"
+              topMargin="0"
+              bottomMargin="0"
+              uuid="12345678-1234-1234-1234-123456789012">
+    
+    <parameter name="TOTAL_MONTHLY_SALES" class="java.lang.Double"/>
+    
+    <field name="day" class="java.lang.String"/>
+    <field name="sales" class="java.lang.Double"/>
+    
+    <variable name="TOTAL_SALES" class="java.lang.Double" calculation="Sum">
+        <variableExpression><![CDATA[$F{sales}]]></variableExpression>
+        <initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+    </variable>
+    
+    <title>
+        <band height="1">
+        </band>
+    </title>
+    
+    <columnHeader>
+        <band height="30">
+            <staticText>
+                <reportElement x="0" y="0" width="80" height="30" uuid="12345678-1234-1234-1234-123456789013"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[Día]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="80" y="0" width="200" height="30" uuid="12345678-1234-1234-1234-123456789014"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[Ventas]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="280" y="0" width="275" height="30" uuid="12345678-1234-1234-1234-123456789015"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[% del Total Mensual]]></text>
+            </staticText>
+        </band>
+    </columnHeader>
+    
+    <detail>
+        <band height="20" splitType="Stretch">
+            <!-- Día del mes -->
+            <textField>
+                <reportElement x="0" y="0" width="80" height="20" uuid="12345678-1234-1234-1234-123456789017"/>
+                <textElement textAlignment="Center"/>
+                <textFieldExpression><![CDATA[$F{day}]]></textFieldExpression>
+            </textField>
+            
+            <!-- Ventas del día -->
+            <textField pattern="#,##0.00 €">
+                <reportElement x="80" y="0" width="200" height="20" uuid="12345678-1234-1234-1234-123456789018"/>
+                <textElement textAlignment="Right"/>
+                <textFieldExpression><![CDATA[$F{sales}]]></textFieldExpression>
+            </textField>
+            
+            <!-- Porcentaje respecto al total mensual (usando el parámetro) -->
+            <textField pattern="#,##0.00%">
+                <reportElement x="280" y="0" width="275" height="20" uuid="12345678-1234-1234-1234-123456789019"/>
+                <textElement textAlignment="Right"/>
+                <textFieldExpression><![CDATA[$P{TOTAL_MONTHLY_SALES} > 0 ? $F{sales} / $P{TOTAL_MONTHLY_SALES} : 0]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+    
+    <summary>
+        <band height="30">
+            <line>
+                <reportElement x="0" y="0" width="555" height="1" uuid="12345678-1234-1234-1234-123456789023"/>
+            </line>
+            <staticText>
+                <reportElement x="0" y="5" width="80" height="20" uuid="12345678-1234-1234-1234-123456789024"/>
+                <textElement textAlignment="Center">
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[TOTAL:]]></text>
+            </staticText>
+            <textField pattern="#,##0.00 €">
+                <reportElement x="80" y="5" width="200" height="20" uuid="12345678-1234-1234-1234-123456789025"/>
+                <textElement textAlignment="Right">
+                    <font isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$V{TOTAL_SALES}]]></textFieldExpression>
+            </textField>
+            <textField pattern="#,##0.00%">
+                <reportElement x="280" y="5" width="275" height="20" uuid="12345678-1234-1234-1234-123456789026"/>
+                <textElement textAlignment="Right">
+                    <font isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[1.0]]></textFieldExpression>
+            </textField>
+        </band>
+    </summary>
+</jasperReport>
