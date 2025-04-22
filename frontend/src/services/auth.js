@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import apiClient from "./api.js"
 
 const fetchTokenValidity = async () => {
 
