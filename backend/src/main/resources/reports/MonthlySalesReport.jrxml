@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" 
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
               xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" 
-              name="SalesReport" 
+              name="MonthlySalesReport" 
               pageWidth="595" 
               pageHeight="842" 
               columnWidth="555" 
@@ -10,118 +10,121 @@
               rightMargin="20" 
               topMargin="20" 
               bottomMargin="20"
-              uuid="12345678-1234-1234-1234-123456789012">
+              uuid="00000001-0002-0003-0004-000000000005">
     
     <parameter name="ReportTitle" class="java.lang.String"/>
-    <parameter name="ReportDate" class="java.util.Date"/>
+    <parameter name="ReportMonth" class="java.lang.Integer"/>
+    <parameter name="ReportYear" class="java.lang.Integer"/>
+    <parameter name="MonthName" class="java.lang.String"/>
     <parameter name="TotalSales" class="java.lang.Double"/>
     <parameter name="OrderCount" class="java.lang.Integer"/>
     <parameter name="AverageTicket" class="java.lang.Double"/>
-    <parameter name="PreviousDaySales" class="java.lang.Double"/>
+    <parameter name="PreviousMonthSales" class="java.lang.Double"/>
     <parameter name="SalesVariation" class="java.lang.Double"/>
     <parameter name="ProductDataSource" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
-    <parameter name="HourlyDataSource" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
+    <parameter name="DailyDataSource" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
     <parameter name="ProductsSubreport" class="net.sf.jasperreports.engine.JasperReport"/>
-    <parameter name="HourlySubreport" class="net.sf.jasperreports.engine.JasperReport"/>
+    <parameter name="DailyTrendSubreport" class="net.sf.jasperreports.engine.JasperReport"/>
     <parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false"/>
     
     <title>
         <band height="500" splitType="Stretch">
+            <!-- Título principal -->
             <textField>
-                <reportElement x="0" y="0" width="555" height="30" uuid="12345678-1234-1234-1234-123456789013"/>
+                <reportElement x="0" y="0" width="555" height="30" uuid="00000001-0002-0003-0004-000000000006"/>
                 <textElement textAlignment="Center" verticalAlignment="Middle">
                     <font size="16" isBold="true"/>
                 </textElement>
                 <textFieldExpression><![CDATA[$P{ReportTitle}]]></textFieldExpression>
             </textField>
             
-            <textField pattern="dd/MM/yyyy">
-                <reportElement x="0" y="30" width="555" height="20" uuid="12345678-1234-1234-1234-123456789014"/>
+            <textField>
+                <reportElement x="0" y="30" width="555" height="20" uuid="00000001-0002-0003-0004-000000000007"/>
                 <textElement textAlignment="Center" verticalAlignment="Middle">
                     <font size="12"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$P{ReportDate}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$P{MonthName} + " " + $P{ReportYear}]]></textFieldExpression>
             </textField>
             
-            <!-- SECCION 1: RESUMEN DE VENTAS -->
+            <!-- SECCIÓN 1: RESUMEN DE VENTAS -->
             <staticText>
-                <reportElement x="0" y="60" width="555" height="20" uuid="12345678-1234-1234-1234-123456789015"/>
+                <reportElement x="0" y="60" width="555" height="20" uuid="00000001-0002-0003-0004-000000000008"/>
                 <textElement>
                     <font size="14" isBold="true"/>
                 </textElement>
-                <text><![CDATA[Resumen de Ventas]]></text>
+                <text><![CDATA[Resumen de Ventas Mensuales]]></text>
             </staticText>
             
             <staticText>
-                <reportElement x="0" y="90" width="180" height="20" uuid="12345678-1234-1234-1234-123456789016"/>
+                <reportElement x="0" y="90" width="180" height="20" uuid="00000001-0002-0003-0004-000000000009"/>
                 <textElement>
                     <font isBold="true"/>
                 </textElement>
-                <text><![CDATA[Total de Ventas:]]></text>
+                <text><![CDATA[Total de Ventas del Mes:]]></text>
             </staticText>
             <textField pattern="#,##0.00 €">
-                <reportElement x="180" y="90" width="100" height="20" uuid="12345678-1234-1234-1234-123456789017"/>
+                <reportElement x="180" y="90" width="100" height="20" uuid="00000001-0002-0003-0004-000000000010"/>
                 <textFieldExpression><![CDATA[$P{TotalSales}]]></textFieldExpression>
             </textField>
             
             <staticText>
-                <reportElement x="0" y="110" width="180" height="20" uuid="12345678-1234-1234-1234-123456789018"/>
+                <reportElement x="0" y="110" width="180" height="20" uuid="00000001-0002-0003-0004-000000000011"/>
                 <textElement>
                     <font isBold="true"/>
                 </textElement>
                 <text><![CDATA[Número de Pedidos:]]></text>
             </staticText>
             <textField>
-                <reportElement x="180" y="110" width="100" height="20" uuid="12345678-1234-1234-1234-123456789019"/>
+                <reportElement x="180" y="110" width="100" height="20" uuid="00000001-0002-0003-0004-000000000012"/>
                 <textFieldExpression><![CDATA[$P{OrderCount}]]></textFieldExpression>
             </textField>
             
             <staticText>
-                <reportElement x="0" y="130" width="180" height="20" uuid="12345678-1234-1234-1234-123456789020"/>
+                <reportElement x="0" y="130" width="180" height="20" uuid="00000001-0002-0003-0004-000000000013"/>
                 <textElement>
                     <font isBold="true"/>
                 </textElement>
-                <text><![CDATA[Ticket Promedio:]]></text>
+                <text><![CDATA[Valor Promedio por Pedido:]]></text>
             </staticText>
             <textField pattern="#,##0.00 €">
-                <reportElement x="180" y="130" width="100" height="20" uuid="12345678-1234-1234-1234-123456789021"/>
+                <reportElement x="180" y="130" width="100" height="20" uuid="00000001-0002-0003-0004-000000000014"/>
                 <textFieldExpression><![CDATA[$P{AverageTicket}]]></textFieldExpression>
             </textField>
             
             <staticText>
-                <reportElement x="300" y="90" width="180" height="20" uuid="12345678-1234-1234-1234-123456789022"/>
+                <reportElement x="300" y="90" width="180" height="20" uuid="00000001-0002-0003-0004-000000000015"/>
                 <textElement>
                     <font isBold="true"/>
                 </textElement>
-                <text><![CDATA[Ventas del Día Anterior:]]></text>
+                <text><![CDATA[Ventas del Mes Anterior:]]></text>
             </staticText>
             <textField pattern="#,##0.00 €">
-                <reportElement x="480" y="90" width="75" height="20" uuid="12345678-1234-1234-1234-123456789023"/>
-                <textFieldExpression><![CDATA[$P{PreviousDaySales}]]></textFieldExpression>
+                <reportElement x="480" y="90" width="75" height="20" uuid="00000001-0002-0003-0004-000000000016"/>
+                <textFieldExpression><![CDATA[$P{PreviousMonthSales}]]></textFieldExpression>
             </textField>
             
             <staticText>
-                <reportElement x="300" y="110" width="180" height="20" uuid="12345678-1234-1234-1234-123456789024"/>
+                <reportElement x="300" y="110" width="180" height="20" uuid="00000001-0002-0003-0004-000000000017"/>
                 <textElement>
                     <font isBold="true"/>
                 </textElement>
-                <text><![CDATA[Variación vs. Día Anterior:]]></text>
+                <text><![CDATA[Variación vs. Mes Anterior:]]></text>
             </staticText>
             <textField pattern="#,##0.00%">
-                <reportElement x="480" y="110" width="75" height="20" uuid="12345678-1234-1234-1234-123456789025"/>
+                <reportElement x="480" y="110" width="75" height="20" uuid="00000001-0002-0003-0004-000000000018"/>
                 <textFieldExpression><![CDATA[$P{SalesVariation}/100]]></textFieldExpression>
             </textField>
             
-            <!-- SECCION 2: DETALLE DE PRODUCTOS VENDIDOS -->
+            <!-- SECCIÓN 2: DETALLE DE PRODUCTOS VENDIDOS -->
             <staticText>
-                <reportElement x="0" y="170" width="555" height="30" uuid="12345678-1234-1234-1234-123456789026"/>
+                <reportElement x="0" y="170" width="555" height="30" uuid="00000001-0002-0003-0004-000000000019"/>
                 <textElement>
                     <font size="14" isBold="true"/>
                 </textElement>
-                <text><![CDATA[Detalle de Productos Vendidos]]></text>
+                <text><![CDATA[Productos Más Vendidos del Mes]]></text>
             </staticText>
             <subreport>
-                <reportElement x="0" y="210" width="555" height="280" uuid="12345678-1234-1234-1234-123456789027"/>
+                <reportElement x="0" y="210" width="555" height="280" uuid="00000001-0002-0003-0004-000000000020"/>
                 <dataSourceExpression><![CDATA[$P{ProductDataSource}]]></dataSourceExpression>
                 <subreportExpression><![CDATA[$P{ProductsSubreport}]]></subreportExpression>
             </subreport>
@@ -135,16 +138,19 @@
     <detail>
         <band height="350" splitType="Stretch">
             <staticText>
-                <reportElement x="0" y="10" width="555" height="30" uuid="12345678-1234-1234-1234-123456789028"/>
+                <reportElement x="0" y="10" width="555" height="30" uuid="00000001-0002-0003-0004-000000000021"/>
                 <textElement>
                     <font size="14" isBold="true"/>
                 </textElement>
-                <text><![CDATA[Distribución de Ventas por Hora]]></text>
+                <text><![CDATA[Tendencia de Ventas Diarias]]></text>
             </staticText>
             <subreport>
-                <reportElement x="0" y="50" width="555" height="290" uuid="12345678-1234-1234-1234-123456789029"/>
-                <dataSourceExpression><![CDATA[$P{HourlyDataSource}]]></dataSourceExpression>
-                <subreportExpression><![CDATA[$P{HourlySubreport}]]></subreportExpression>
+                <reportElement x="0" y="50" width="555" height="290" uuid="00000001-0002-0003-0004-000000000022"/>
+                <subreportParameter name="TOTAL_MONTHLY_SALES">
+                    <subreportParameterExpression><![CDATA[$P{TotalSales}]]></subreportParameterExpression>
+                </subreportParameter>
+                <dataSourceExpression><![CDATA[$P{DailyDataSource}]]></dataSourceExpression>
+                <subreportExpression><![CDATA[$P{DailyTrendSubreport}]]></subreportExpression>
             </subreport>
         </band>
     </detail>
@@ -152,7 +158,7 @@
     <pageFooter>
         <band height="50" splitType="Stretch">
             <textField>
-                <reportElement x="455" y="20" width="100" height="30" uuid="12345678-1234-1234-1234-123456789030"/>
+                <reportElement x="455" y="20" width="100" height="30" uuid="00000001-0002-0003-0004-000000000023"/>
                 <textElement textAlignment="Right"/>
                 <textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER}]]></textFieldExpression>
             </textField>

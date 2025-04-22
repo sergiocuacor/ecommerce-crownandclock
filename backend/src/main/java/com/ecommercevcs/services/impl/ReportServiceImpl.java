@@ -95,57 +95,57 @@ public class ReportServiceImpl implements ReportService {
 	}
 
 	private JasperPrint createMonthlyJasperPrint(Integer year, Integer month) throws Exception {
-	    // Determinar año/mes para el informe (usar actual si no se especifica)
+	    
 	    LocalDate now = LocalDate.now();
 	    int reportYear = (year != null) ? year : now.getYear();
 	    int reportMonth = (month != null) ? month : now.getMonthValue();
 	    
-	    // Crear fecha para el primer y último día del mes
+	    
 	    LocalDate firstDayOfMonth = LocalDate.of(reportYear, reportMonth, 1);
 	    LocalDate lastDayOfMonth = firstDayOfMonth.withDayOfMonth(firstDayOfMonth.lengthOfMonth());
 	    
-	    // Fechas para el mes anterior (para comparación)
+	    
 	    LocalDate firstDayOfPreviousMonth = firstDayOfMonth.minusMonths(1);
 	    LocalDate lastDayOfPreviousMonth = firstDayOfPreviousMonth.withDayOfMonth(
 	            firstDayOfPreviousMonth.lengthOfMonth());
 	    
-	    // Convertir a LocalDateTime para la consulta
+	    
 	    LocalDateTime startOfMonth = firstDayOfMonth.atStartOfDay();
 	    LocalDateTime endOfMonth = lastDayOfMonth.atTime(23, 59, 59);
 	    LocalDateTime startOfPreviousMonth = firstDayOfPreviousMonth.atStartOfDay();
 	    LocalDateTime endOfPreviousMonth = lastDayOfPreviousMonth.atTime(23, 59, 59);
 	    
-	    // Obtener órdenes del mes actual y anterior
+	    
 	    List<OrderEntity> currentMonthOrders = orderRepository.findByOrderDateBetween(startOfMonth, endOfMonth);
 	    List<OrderEntity> previousMonthOrders = orderRepository.findByOrderDateBetween(startOfPreviousMonth, endOfPreviousMonth);
 	    
 	    logger.info("Generando informe mensual para: {}/{} con {} órdenes", 
 	            reportYear, reportMonth, currentMonthOrders.size());
 	    
-	    // Estadísticas generales
+	    
 	    double totalSales = 0.0;
 	    double previousMonthTotalSales = 0.0;
 	    
-	    // Ventas por producto
+	    
 	    List<SalesReportItem> productSales = new ArrayList<>();
 	    Map<String, SalesReportItem> productMap = new HashMap<>();
 	    
-	    // Ventas por día (para gráfico de tendencia)
+	    
 	    Map<Integer, Double> salesByDay = new HashMap<>();
-	    // Inicializar todos los días del mes con 0
+	    
 	    for (int day = 1; day <= lastDayOfMonth.getDayOfMonth(); day++) {
 	        salesByDay.put(day, 0.0);
 	    }
 	    
-	    // Procesar órdenes del mes actual
+	    
 	    for (OrderEntity order : currentMonthOrders) {
 	        totalSales += order.getTotal();
 	        
-	        // Agregar a ventas por día
+	        
 	        int day = order.getOrderDate().getDayOfMonth();
 	        salesByDay.put(day, salesByDay.getOrDefault(day, 0.0) + order.getTotal());
 	        
-	        // Procesar productos
+	        
 	        for (OrderDetailsEntity detail : order.getOrderDetails()) {
 	            String productName = detail.getProduct().getName();
 	            double amount = detail.getSubTotal();
@@ -160,22 +160,22 @@ public class ReportServiceImpl implements ReportService {
 	        }
 	    }
 	    
-	    // Convertir mapa a lista y ordenar por importe
+	    
 	    productSales.addAll(productMap.values());
 	    productSales.sort(Comparator.comparing(SalesReportItem::getAmount).reversed());
 	    
-	    // Calcular ventas del mes anterior
+	    
 	    for (OrderEntity order : previousMonthOrders) {
 	        previousMonthTotalSales += order.getTotal();
 	    }
 	    
-	    // Calcular variación porcentual
+	   
 	    double salesVariation = 0.0;
 	    if (previousMonthTotalSales > 0) {
 	        salesVariation = ((totalSales - previousMonthTotalSales) / previousMonthTotalSales) * 100;
 	    }
 	    
-	    // Crear datos para gráfico de tendencia diaria
+	    
 	    List<DailySalesItem> dailyData = new ArrayList<>();
 	    for (int day = 1; day <= lastDayOfMonth.getDayOfMonth(); day++) {
 	        String dayLabel = String.valueOf(day);
@@ -183,31 +183,34 @@ public class ReportServiceImpl implements ReportService {
 	        dailyData.add(new DailySalesItem(dayLabel, amount));
 	    }
 	    
-	    // Compilar informes
+	    
 	    JasperReport mainReport = reportCompiler.getCompiledReport("MonthlySalesReport");
 	    JasperReport productsSubreport = reportCompiler.getCompiledReport("ProductsSubreport");
 	    JasperReport dailySubreport = reportCompiler.getCompiledReport("DailyTrendSubreport");
 	    
-	    // Configurar parámetros
+	    String[] monthNames = {
+	            "ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", 
+	            "JULIO", "AGOSTO", "SEPTIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE"
+	        };
+	        String monthName = monthNames[reportMonth - 1];
+	        
 	    Map<String, Object> parameters = new HashMap<>();
 	    parameters.put("ReportTitle", "Informe de Ventas Mensuales");
 	    parameters.put("ReportMonth", reportMonth);
 	    parameters.put("ReportYear", reportYear);
+	    parameters.put("MonthName", monthName);
 	    parameters.put("TotalSales", totalSales);
 	    parameters.put("OrderCount", currentMonthOrders.size());
 	    parameters.put("AverageTicket", currentMonthOrders.size() > 0 ? totalSales / currentMonthOrders.size() : 0);
 	    parameters.put("PreviousMonthSales", previousMonthTotalSales);
 	    parameters.put("SalesVariation", salesVariation);
-	    
-	    // Configurar ruta de subinformes
+	    parameters.put("TOTAL_MONTHLY_SALES", totalSales);
 	    String reportFolder = "/reports/";
 	    parameters.put("SUBREPORT_DIR", reportFolder);
 	    
-	    // Asignar subinformes
 	    parameters.put("ProductsSubreport", productsSubreport);
 	    parameters.put("DailyTrendSubreport", dailySubreport);
 	    
-	    // Asignar fuentes de datos
 	    JRBeanCollectionDataSource productDataSource = new JRBeanCollectionDataSource(productSales);
 	    parameters.put("ProductDataSource", productDataSource);
 	    
@@ -250,7 +253,7 @@ public class ReportServiceImpl implements ReportService {
 		double totalSales = 0.0;
 		double previousDayTotalSales = 0.0;
 
-		// Órdenes del día
+		// Pedidos del día
 		Map<String, SalesReportItem> productMap = new HashMap<>();
 		for (OrderEntity order : currentDayOrders) {
 			totalSales += order.getTotal();
@@ -284,7 +287,7 @@ public class ReportServiceImpl implements ReportService {
 			salesVariation = ((totalSales - previousDayTotalSales) / previousDayTotalSales) * 100;
 		}
 
-		// Preparar lista de horas para el informe
+		
 		List<HourlySalesItem> hourlyData = new ArrayList<>();
 		for (int hour = 0; hour < 24; hour++) {
 			String hourLabel = String.format("%02d:00 - %02d:59", hour, hour);
@@ -378,7 +381,7 @@ public class ReportServiceImpl implements ReportService {
 		}
 	}
 	
-	// Clase para los datos de ventas diarias (para el informe mensual)
+	// clase para los datos de ventas diarias (para el informe mensual)
 		public static class DailySalesItem {
 		    private String day;
 		    private double sales;

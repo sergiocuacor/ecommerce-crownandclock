@@ -422,12 +422,21 @@
 					"response": []
 				},
 				{
-					"name": "Update Product",
+					"name": "Update User",
 					"request": {
 						"method": "PUT",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"email\": \"manuel1233.garcia@example.es\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "http://localhost:8080/users/1",
+							"raw": "http://localhost:8080/users/{userId}",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -435,11 +444,76 @@
 							"port": "8080",
 							"path": [
 								"users",
-								"1"
+								"{userId}"
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Update Email",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"email\": \"emailACTUALIZADO@example.es\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/users/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"users",
+										"1"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Update Street",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n     \"address\": {\r\n        \"streetAddress\": \"Valenzuela\",\r\n        \"city\": \"Madrid\",\r\n        \"state\": \"Comunidad de Madrid\",\r\n        \"country\": \"España\",\r\n        \"postalCode\": \"28001\"\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/users/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"users",
+										"2"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
 				},
 				{
 					"name": "Get All Users",
@@ -1214,32 +1288,12 @@
 			"name": "Reports",
 			"item": [
 				{
-					"name": "Excel: Sales Report TODAY",
+					"name": "Excel: Daily Sales",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/reports/daily-sales",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"reports",
-								"daily-sales"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Excel: Sales Report Specific Day",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/reports/daily-sales/{YYYY-MM-dd}",
+							"raw": "http://localhost:8080/reports/daily-sales/excel",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1248,7 +1302,29 @@
 							"path": [
 								"reports",
 								"daily-sales",
-								"{YYYY-MM-dd}"
+								"excel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Excel: Daily Sales Specific Day",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/reports/daily-sales/excel/{date}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"reports",
+								"daily-sales",
+								"excel",
+								"{date}"
 							]
 						}
 					},
@@ -1259,7 +1335,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/reports/daily-sales/2025-04-06",
+									"raw": "http://localhost:8080/reports/daily-sales/excel/2025-04-06",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -1268,7 +1344,219 @@
 									"path": [
 										"reports",
 										"daily-sales",
+										"excel",
 										"2025-04-06"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "PDF: Daily Sales",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/reports/daily-sales/pdf",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"reports",
+								"daily-sales",
+								"pdf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PDF: Daily Sales Specific Day",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/reports/daily-sales/pdf/{date}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"reports",
+								"daily-sales",
+								"pdf",
+								"{date}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "PDF: Daily Sales Specific Day",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/reports/daily-sales/pdf/2025-04-21",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"reports",
+										"daily-sales",
+										"pdf",
+										"2025-04-21"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "PDF: Monthly Sales",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/reports/monthly-sales/pdf",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"reports",
+								"monthly-sales",
+								"pdf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Excel: Monthly Sales",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/reports/monthly-sales/excel",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"reports",
+								"monthly-sales",
+								"excel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Excel: Monthly Sales Specific Month",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/reports/monthly-sales/excel/{year}/{month}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"reports",
+								"monthly-sales",
+								"excel",
+								"{year}",
+								"{month}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Excel: Monthly Sales Specific Month",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/reports/monthly-sales/excel/2025/04",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"reports",
+										"monthly-sales",
+										"excel",
+										"2025",
+										"04"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "PDF: Monthly Sales Specific Month",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/reports/monthly-sales/pdf/{year}/{month}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"reports",
+								"monthly-sales",
+								"pdf",
+								"{year}",
+								"{month}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "PDF: Monthly Sales Specific Month",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/reports/monthly-sales/pdf/2025/04",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"reports",
+										"monthly-sales",
+										"pdf",
+										"2025",
+										"04"
 									]
 								}
 							},
