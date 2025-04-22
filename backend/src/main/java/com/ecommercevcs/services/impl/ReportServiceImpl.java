@@ -1,164 +1,399 @@
 package com.ecommercevcs.services.impl;
 
+import java.io.ByteArrayOutputStream;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.Font;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ecommercevcs.entities.OrderDetailsEntity;
 import com.ecommercevcs.entities.OrderEntity;
 import com.ecommercevcs.repositories.OrderRepository;
 import com.ecommercevcs.services.ReportService;
+import com.ecommercevcs.utils.reports.JasperReportCompiler;
+
+import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
+import net.sf.jasperreports.export.SimpleExporterInput;
+import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
+import net.sf.jasperreports.export.SimpleXlsxReportConfiguration;
 
 @Service
-public class ReportServiceImpl implements ReportService{
+public class ReportServiceImpl implements ReportService {
 
 	private static final Logger logger = LoggerFactory.getLogger(ReportServiceImpl.class);
 
-	@Autowired
-	private OrderRepository orderRepository;
+	private final OrderRepository orderRepository;
+	private final JasperReportCompiler reportCompiler;
 
-	public Workbook generateDailySalesReport(LocalDate date) {
+	public ReportServiceImpl(OrderRepository orderRepository, JasperReportCompiler reportCompiler) {
+		this.orderRepository = orderRepository;
+		this.reportCompiler = reportCompiler;
 
+	}
+	
+	public byte[] generateMonthlySalesPdfReport(Integer year, Integer month) throws Exception {
+	    JasperPrint jasperPrint = createMonthlyJasperPrint(year, month);
+	    return JasperExportManager.exportReportToPdf(jasperPrint);
+	}
+
+	public byte[] generateMonthlySalesExcelReport(Integer year, Integer month) throws Exception {
+	    JasperPrint jasperPrint = createMonthlyJasperPrint(year, month);
+
+	    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+	    JRXlsxExporter exporter = new JRXlsxExporter();
+
+	    exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
+	    exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(outputStream));
+
+	    SimpleXlsxReportConfiguration configuration = new SimpleXlsxReportConfiguration();
+	    configuration.setOnePagePerSheet(false);
+	    configuration.setRemoveEmptySpaceBetweenColumns(true);
+	    configuration.setDetectCellType(true);
+	    exporter.setConfiguration(configuration);
+
+	    exporter.exportReport();
+
+	    return outputStream.toByteArray();
+	}
+
+	public byte[] generateDailySalesPdfReport(LocalDate date) throws Exception {
+		JasperPrint jasperPrint = createJasperPrint(date);
+		return JasperExportManager.exportReportToPdf(jasperPrint);
+	}
+
+	public byte[] generateDailySalesExcelReport(LocalDate date) throws Exception {
+		JasperPrint jasperPrint = createJasperPrint(date);
+
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		JRXlsxExporter exporter = new JRXlsxExporter();
+
+		exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
+		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(outputStream));
+
+		SimpleXlsxReportConfiguration configuration = new SimpleXlsxReportConfiguration();
+		configuration.setOnePagePerSheet(false);
+		configuration.setRemoveEmptySpaceBetweenColumns(true);
+		configuration.setDetectCellType(true);
+		exporter.setConfiguration(configuration);
+
+		exporter.exportReport();
+
+		return outputStream.toByteArray();
+	}
+
+	private JasperPrint createMonthlyJasperPrint(Integer year, Integer month) throws Exception {
+	    // Determinar año/mes para el informe (usar actual si no se especifica)
+	    LocalDate now = LocalDate.now();
+	    int reportYear = (year != null) ? year : now.getYear();
+	    int reportMonth = (month != null) ? month : now.getMonthValue();
+	    
+	    // Crear fecha para el primer y último día del mes
+	    LocalDate firstDayOfMonth = LocalDate.of(reportYear, reportMonth, 1);
+	    LocalDate lastDayOfMonth = firstDayOfMonth.withDayOfMonth(firstDayOfMonth.lengthOfMonth());
+	    
+	    // Fechas para el mes anterior (para comparación)
+	    LocalDate firstDayOfPreviousMonth = firstDayOfMonth.minusMonths(1);
+	    LocalDate lastDayOfPreviousMonth = firstDayOfPreviousMonth.withDayOfMonth(
+	            firstDayOfPreviousMonth.lengthOfMonth());
+	    
+	    // Convertir a LocalDateTime para la consulta
+	    LocalDateTime startOfMonth = firstDayOfMonth.atStartOfDay();
+	    LocalDateTime endOfMonth = lastDayOfMonth.atTime(23, 59, 59);
+	    LocalDateTime startOfPreviousMonth = firstDayOfPreviousMonth.atStartOfDay();
+	    LocalDateTime endOfPreviousMonth = lastDayOfPreviousMonth.atTime(23, 59, 59);
+	    
+	    // Obtener órdenes del mes actual y anterior
+	    List<OrderEntity> currentMonthOrders = orderRepository.findByOrderDateBetween(startOfMonth, endOfMonth);
+	    List<OrderEntity> previousMonthOrders = orderRepository.findByOrderDateBetween(startOfPreviousMonth, endOfPreviousMonth);
+	    
+	    logger.info("Generando informe mensual para: {}/{} con {} órdenes", 
+	            reportYear, reportMonth, currentMonthOrders.size());
+	    
+	    // Estadísticas generales
+	    double totalSales = 0.0;
+	    double previousMonthTotalSales = 0.0;
+	    
+	    // Ventas por producto
+	    List<SalesReportItem> productSales = new ArrayList<>();
+	    Map<String, SalesReportItem> productMap = new HashMap<>();
+	    
+	    // Ventas por día (para gráfico de tendencia)
+	    Map<Integer, Double> salesByDay = new HashMap<>();
+	    // Inicializar todos los días del mes con 0
+	    for (int day = 1; day <= lastDayOfMonth.getDayOfMonth(); day++) {
+	        salesByDay.put(day, 0.0);
+	    }
+	    
+	    // Procesar órdenes del mes actual
+	    for (OrderEntity order : currentMonthOrders) {
+	        totalSales += order.getTotal();
+	        
+	        // Agregar a ventas por día
+	        int day = order.getOrderDate().getDayOfMonth();
+	        salesByDay.put(day, salesByDay.getOrDefault(day, 0.0) + order.getTotal());
+	        
+	        // Procesar productos
+	        for (OrderDetailsEntity detail : order.getOrderDetails()) {
+	            String productName = detail.getProduct().getName();
+	            double amount = detail.getSubTotal();
+	            int quantity = detail.getQuantity();
+	            
+	            SalesReportItem item = productMap.getOrDefault(
+	                    productName, new SalesReportItem(productName, 0, 0.0));
+	            item.addQuantity(quantity);
+	            item.addAmount(amount);
+	            
+	            productMap.put(productName, item);
+	        }
+	    }
+	    
+	    // Convertir mapa a lista y ordenar por importe
+	    productSales.addAll(productMap.values());
+	    productSales.sort(Comparator.comparing(SalesReportItem::getAmount).reversed());
+	    
+	    // Calcular ventas del mes anterior
+	    for (OrderEntity order : previousMonthOrders) {
+	        previousMonthTotalSales += order.getTotal();
+	    }
+	    
+	    // Calcular variación porcentual
+	    double salesVariation = 0.0;
+	    if (previousMonthTotalSales > 0) {
+	        salesVariation = ((totalSales - previousMonthTotalSales) / previousMonthTotalSales) * 100;
+	    }
+	    
+	    // Crear datos para gráfico de tendencia diaria
+	    List<DailySalesItem> dailyData = new ArrayList<>();
+	    for (int day = 1; day <= lastDayOfMonth.getDayOfMonth(); day++) {
+	        String dayLabel = String.valueOf(day);
+	        double amount = salesByDay.getOrDefault(day, 0.0);
+	        dailyData.add(new DailySalesItem(dayLabel, amount));
+	    }
+	    
+	    // Compilar informes
+	    JasperReport mainReport = reportCompiler.getCompiledReport("MonthlySalesReport");
+	    JasperReport productsSubreport = reportCompiler.getCompiledReport("ProductsSubreport");
+	    JasperReport dailySubreport = reportCompiler.getCompiledReport("DailyTrendSubreport");
+	    
+	    // Configurar parámetros
+	    Map<String, Object> parameters = new HashMap<>();
+	    parameters.put("ReportTitle", "Informe de Ventas Mensuales");
+	    parameters.put("ReportMonth", reportMonth);
+	    parameters.put("ReportYear", reportYear);
+	    parameters.put("TotalSales", totalSales);
+	    parameters.put("OrderCount", currentMonthOrders.size());
+	    parameters.put("AverageTicket", currentMonthOrders.size() > 0 ? totalSales / currentMonthOrders.size() : 0);
+	    parameters.put("PreviousMonthSales", previousMonthTotalSales);
+	    parameters.put("SalesVariation", salesVariation);
+	    
+	    // Configurar ruta de subinformes
+	    String reportFolder = "/reports/";
+	    parameters.put("SUBREPORT_DIR", reportFolder);
+	    
+	    // Asignar subinformes
+	    parameters.put("ProductsSubreport", productsSubreport);
+	    parameters.put("DailyTrendSubreport", dailySubreport);
+	    
+	    // Asignar fuentes de datos
+	    JRBeanCollectionDataSource productDataSource = new JRBeanCollectionDataSource(productSales);
+	    parameters.put("ProductDataSource", productDataSource);
+	    
+	    JRBeanCollectionDataSource dailyDataSource = new JRBeanCollectionDataSource(dailyData);
+	    parameters.put("DailyDataSource", dailyDataSource);
+	    
+	    // Generar informe
+	    try {
+	        return JasperFillManager.fillReport(mainReport, parameters, new JREmptyDataSource());
+	    } catch (Exception e) {
+	        logger.error("Error al generar el informe mensual: {}", e.getMessage());
+	        throw new Exception("Error al generar el informe mensual: " + e.getMessage(), e);
+	    }
+	}
+	
+	private JasperPrint createJasperPrint(LocalDate date) throws Exception {
+		// Si no le pasa fecha, usar la actual
 		LocalDate reportDate = (date != null) ? date : LocalDate.now();
+		LocalDate previousDate = reportDate.minusDays(1);
 
 		LocalDateTime startOfDay = reportDate.atStartOfDay();
 		LocalDateTime endOfDay = reportDate.atTime(23, 59, 59);
+		LocalDateTime startOfPreviousDay = previousDate.atStartOfDay();
+		LocalDateTime endOfPreviousDay = previousDate.atTime(23, 59, 59);
 
-		List<OrderEntity> orders = orderRepository.findByOrderDateBetween(startOfDay, endOfDay);
+		List<OrderEntity> currentDayOrders = orderRepository.findByOrderDateBetween(startOfDay, endOfDay);
+		List<OrderEntity> previousDayOrders = orderRepository.findByOrderDateBetween(startOfPreviousDay,
+				endOfPreviousDay);
 
-		logger.info("Generando informe de ventas para el día: {}", reportDate);
+		logger.info("Generando informe de ventas para la fecha: {} con {} órdenes", reportDate,
+				currentDayOrders.size());
 
-		Map<String, SalesReportItem> salesByProduct = new HashMap<String, SalesReportItem>();
+		List<SalesReportItem> productSales = new ArrayList<>();
+		Map<Integer, Double> salesByHour = new HashMap<>();
+
+		for (int i = 0; i < 24; i++) {
+			salesByHour.put(i, 0.0);
+		}
 
 		double totalSales = 0.0;
+		double previousDayTotalSales = 0.0;
 
-		for (OrderEntity order : orders) {
-
+		// Órdenes del día
+		Map<String, SalesReportItem> productMap = new HashMap<>();
+		for (OrderEntity order : currentDayOrders) {
 			totalSales += order.getTotal();
+
+			int hour = order.getOrderDate().getHour();
+			salesByHour.put(hour, salesByHour.getOrDefault(hour, 0.0) + order.getTotal());
 
 			for (OrderDetailsEntity detail : order.getOrderDetails()) {
 				String productName = detail.getProduct().getName();
 				double amount = detail.getSubTotal();
 				int quantity = detail.getQuantity();
 
-				SalesReportItem item = salesByProduct.getOrDefault(productName,
-						new SalesReportItem(productName, 0, 0.0));
-
+				SalesReportItem item = productMap.getOrDefault(productName, new SalesReportItem(productName, 0, 0.0));
 				item.addQuantity(quantity);
 				item.addAmount(amount);
-				salesByProduct.put(productName, item);
+
+				productMap.put(productName, item);
 			}
-
 		}
-		return createExcelWorkbook(salesByProduct.values(), totalSales, reportDate);
+
+		productSales.addAll(productMap.values());
+
+		productSales.sort(Comparator.comparing(SalesReportItem::getAmount).reversed());
+
+		for (OrderEntity order : previousDayOrders) {
+			previousDayTotalSales += order.getTotal();
+		}
+
+		double salesVariation = 0.0;
+		if (previousDayTotalSales > 0) {
+			salesVariation = ((totalSales - previousDayTotalSales) / previousDayTotalSales) * 100;
+		}
+
+		// Preparar lista de horas para el informe
+		List<HourlySalesItem> hourlyData = new ArrayList<>();
+		for (int hour = 0; hour < 24; hour++) {
+			String hourLabel = String.format("%02d:00 - %02d:59", hour, hour);
+			double amount = salesByHour.getOrDefault(hour, 0.0);
+			hourlyData.add(new HourlySalesItem(hourLabel, amount));
+		}
+
+		JasperReport mainReport = reportCompiler.getCompiledReport("SalesReport");
+		JasperReport productsSubreport = reportCompiler.getCompiledReport("ProductsSubreport");
+		JasperReport hourlySubreport = reportCompiler.getCompiledReport("HourlySubreport");
+
+		Map<String, Object> parameters = new HashMap<>();
+		parameters.put("ReportTitle", "Informe de Ventas Diarias");
+		parameters.put("ReportDate", java.sql.Date.valueOf(reportDate));
+		parameters.put("TotalSales", totalSales);
+		parameters.put("OrderCount", currentDayOrders.size());
+		parameters.put("AverageTicket", currentDayOrders.size() > 0 ? totalSales / currentDayOrders.size() : 0);
+		parameters.put("PreviousDaySales", previousDayTotalSales);
+		parameters.put("SalesVariation", salesVariation);
+
+		String reportFolder = "/reports/";
+		parameters.put("SUBREPORT_DIR", reportFolder);
+
+		parameters.put("ProductsSubreport", productsSubreport);
+		parameters.put("HourlySubreport", hourlySubreport);
+
+		JRBeanCollectionDataSource productDataSource = new JRBeanCollectionDataSource(productSales);
+		parameters.put("ProductDataSource", productDataSource);
+
+		JRBeanCollectionDataSource hourlyDataSource = new JRBeanCollectionDataSource(hourlyData);
+		parameters.put("HourlyDataSource", hourlyDataSource);
+
+		// Generar el informe
+		try {
+			return JasperFillManager.fillReport(mainReport, parameters, new JREmptyDataSource());
+		} catch (Exception e) {
+			logger.error("Error al generar el informe: {}", e.getMessage());
+			throw new Exception("Error al generar el informe: " + e.getMessage(), e);
+		}
 	}
 
-	private Workbook createExcelWorkbook(Collection<SalesReportItem> salesItems, double totalSales,
-			LocalDate reportDate) {
-		Workbook workbook = new HSSFWorkbook();
-		
-		Sheet sheet = workbook.createSheet("Informe de ventas");
-		
-	
-		CellStyle headerStyle = workbook.createCellStyle();
-		Font headerFont = workbook.createFont();
-		headerFont.setBold(true);
-		headerStyle.setFont(headerFont);
-		
-		CellStyle totalStyle = workbook.createCellStyle();
-        Font totalFont = workbook.createFont();
-        totalFont.setBold(true);
-        totalStyle.setFont(totalFont);
-        
-        Row titleRow = sheet.createRow(0);
-        Cell titleCell = titleRow.createCell(0);
-        titleCell.setCellValue("INFORME DE VENTAS - " + reportDate.format(DateTimeFormatter.ISO_LOCAL_DATE));
-        titleCell.setCellStyle(headerStyle);
-        
-        
-        Row headerRow = sheet.createRow(2);
-        String[] headers = {"Producto", "Cantidad Vendida", "Importe Total (€)"};
-        
-        for (int i = 0; i < headers.length; i++) {
-            Cell cell = headerRow.createCell(i);
-            cell.setCellValue(headers[i]);
-            cell.setCellStyle(headerStyle);
-        }
-        
-        
-        int rowNum = 3;
-        for (SalesReportItem item : salesItems) {
-            Row row = sheet.createRow(rowNum++);
-            row.createCell(0).setCellValue(item.getProductName());
-            row.createCell(1).setCellValue(item.getQuantity());
-            row.createCell(2).setCellValue(item.getAmount());
-        }
-        
-        
-        Row totalRow = sheet.createRow(rowNum + 1);
-        Cell labelCell = totalRow.createCell(0);
-        labelCell.setCellValue("TOTAL VENTAS:");
-        labelCell.setCellStyle(totalStyle);
-        
-        Cell totalCell = totalRow.createCell(2);
-        totalCell.setCellValue(totalSales);
-        totalCell.setCellStyle(totalStyle);
-        
-       
-        for (int i = 0; i < headers.length; i++) {
-            sheet.autoSizeColumn(i);
-        }
-        
-        return workbook;
-        
+	// datos de ventas por producto
+	public static class SalesReportItem {
+		private String productName;
+		private int quantity;
+		private double amount;
+
+		public SalesReportItem(String productName, int quantity, double amount) {
+			this.productName = productName;
+			this.quantity = quantity;
+			this.amount = amount;
+		}
+
+		public void addQuantity(int quantity) {
+			this.quantity += quantity;
+		}
+
+		public void addAmount(double amount) {
+			this.amount += amount;
+		}
+
+		public String getProductName() {
+			return productName;
+		}
+
+		public int getQuantity() {
+			return quantity;
+		}
+
+		public double getAmount() {
+			return amount;
+		}
+	}
+
+	// datos de ventas por hora
+	public static class HourlySalesItem {
+		private String hourRange;
+		private double sales;
+
+		public HourlySalesItem(String hourRange, double sales) {
+			this.hourRange = hourRange;
+			this.sales = sales;
+		}
+
+		public String getHourRange() {
+			return hourRange;
+		}
+
+		public double getSales() {
+			return sales;
+		}
 	}
 	
-	private static class SalesReportItem {
-        private String productName;
-        private int quantity;
-        private double amount;
-        
-        public SalesReportItem(String productName, int quantity, double amount) {
-            this.productName = productName;
-            this.quantity = quantity;
-            this.amount = amount;
-        }
-        
-        public void addQuantity(int quantity) {
-            this.quantity += quantity;
-        }
-        
-        public void addAmount(double amount) {
-            this.amount += amount;
-        }
-        
-        public String getProductName() {
-            return productName;
-        }
-        
-        public int getQuantity() {
-            return quantity;
-        }
-        
-        public double getAmount() {
-            return amount;
-        }
-    }
+	// Clase para los datos de ventas diarias (para el informe mensual)
+		public static class DailySalesItem {
+		    private String day;
+		    private double sales;
+
+		    public DailySalesItem(String day, double sales) {
+		        this.day = day;
+		        this.sales = sales;
+		    }
+
+		    public String getDay() {
+		        return day;
+		    }
+
+		    public double getSales() {
+		        return sales;
+		    }
+		}
 }
