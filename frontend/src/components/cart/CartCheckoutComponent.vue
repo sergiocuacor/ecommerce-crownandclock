@@ -80,9 +80,11 @@
     import { useRouter } from 'vue-router';
     import { useCartStore } from '../../store/cart.js';
     import apiClient from '../../services/api.js';
+    import { useAuthStore } from '../../services/auth.js';
 
     const router = useRouter();
     const cartStore = useCartStore();
+    const authStore = useAuthStore();
     const couponInput = ref('')
     const isSubmitting = ref(false);
 
@@ -114,9 +116,27 @@
 
     const validateCoupon = async () => {
 
+      await validateToken();
+
       await cartStore.couponValidation(couponInput.value);
 
     }
+
+    const validateToken = async () => {
+
+      if (!authStore.token) {
+        router.push('/login');
+      }
+
+      await authStore.tokenValidation();
+
+      if (!authStore.token) {
+
+        router.push('/login');
+
+      }
+
+    };
 
     const sendOrder = async (order) => {
 
@@ -133,6 +153,8 @@
     };
 
     const checkout = async () => {
+
+      await validateToken();
 
       if (isSubmitting.value) return;
 
