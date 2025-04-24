@@ -17,19 +17,19 @@
                         <strong>{{ 'Full name: ' }}</strong>{{ user.name }}                     
                     </li>
                     <li class="list-group-item tw-flex tw-items-center tw-justify-between tw-gap-2">
-                        <UserInformationInputGeneratorComponent :text="`First name: `" :inputType="`text`" :value="user.firstName" :validationId="`firstName`" :userId="user.id"/>
+                        <UserInformationInputGeneratorComponent @updatedField="fetchUserData" :text="`First name: `" :inputType="`text`" :value="user.firstName" :validationId="`firstName`" :userId="user.id" />
                     </li>    
                     <li class="list-group-item tw-flex tw-items-center tw-justify-between tw-gap-2">
-                        <UserInformationInputGeneratorComponent :text="`Last name: `" :inputType="`text`" :value="user.lastName" :validationId="`lastName`" :userId="user.id"/>
+                        <UserInformationInputGeneratorComponent @updatedField="fetchUserData" :text="`Last name: `" :inputType="`text`" :value="user.lastName" :validationId="`lastName`" :userId="user.id"/>
                     </li>
                     <li class="list-group-item">
                         <UserInformationPasswordInputComponent :userId="user.id"/>
                     </li>
                     <li class="list-group-item tw-flex tw-items-center tw-justify-between tw-gap-2">
-                        <UserInformationInputGeneratorComponent :text="`Email: `" :inputType="`email`" :value="user.email" :validationId="`email`" :userId="user.id"/>
+                        <UserInformationInputGeneratorComponent @updatedField="fetchUserData" :text="`Email: `" :inputType="`email`" :value="user.email" :validationId="`email`" :userId="user.id"/>
                     </li>
                     <li class="list-group-item tw-flex tw-items-center tw-justify-between tw-gap-2">
-                        <UserInformationInputGeneratorComponent :text="`Phone number: `" :inputType="`text`" :value="user.phoneNumber" :validationId="`phoneNumber`" :userId="user.id"/>
+                        <UserInformationInputGeneratorComponent @updatedField="fetchUserData" :text="`Phone number: `" :inputType="`text`" :value="user.phoneNumber" :validationId="`phoneNumber`" :userId="user.id"/>
                     </li>
                 </ul>
 
@@ -37,19 +37,19 @@
                 
                 <ul class="list-group list-group-flush">                    
                     <li class="list-group-item tw-flex tw-items-center tw-justify-between tw-gap-2">
-                        <UserInformationInputGeneratorComponent :text="`Address: `" :inputType="`text`" :value="user.address.streetAddress" :validationId="`streetAddress`" :userId="user.id"/>
+                        <UserInformationInputGeneratorComponent @updatedField="fetchUserData" :text="`Address: `" :inputType="`text`" :value="user.address.streetAddress" :validationId="`streetAddress`" :userId="user.id"/>
                     </li>
                     <li class="list-group-item tw-flex tw-items-center tw-justify-between tw-gap-2">
-                        <UserInformationInputGeneratorComponent :text="`City: `" :inputType="`text`" :value="user.address.city" :validationId="`city`" :userId="user.id"/>
+                        <UserInformationInputGeneratorComponent @updatedField="fetchUserData" :text="`City: `" :inputType="`text`" :value="user.address.city" :validationId="`city`" :userId="user.id"/>
                     </li>
                     <li class="list-group-item tw-flex tw-items-center tw-justify-between tw-gap-2">
-                        <UserInformationInputGeneratorComponent :text="`State: `" :inputType="`text`" :value="user.address.state" :validationId="`state`" :userId="user.id"/>
+                        <UserInformationInputGeneratorComponent @updatedField="fetchUserData" :text="`State: `" :inputType="`text`" :value="user.address.state" :validationId="`state`" :userId="user.id"/>
                     </li>
                     <li class="list-group-item tw-flex tw-items-center tw-justify-between tw-gap-2">
-                        <UserInformationInputGeneratorComponent :text="`Country: `" :inputType="`text`" :value="user.address.country" :validationId="`country`" :userId="user.id"/>
+                        <UserInformationInputGeneratorComponent @updatedField="fetchUserData" :text="`Country: `" :inputType="`text`" :value="user.address.country" :validationId="`country`" :userId="user.id"/>
                     </li>
                     <li class="list-group-item tw-flex tw-items-center tw-justify-between tw-gap-2">
-                        <UserInformationInputGeneratorComponent :text="`Postal code: `" :inputType="`text`" :value="user.address.postalCode" :validationId="`postalCode`" :userId="user.id"/>
+                        <UserInformationInputGeneratorComponent @updatedField="fetchUserData" :text="`Postal code: `" :inputType="`text`" :value="user.address.postalCode" :validationId="`postalCode`" :userId="user.id"/>
                     </li>
                 </ul>
             </div>
