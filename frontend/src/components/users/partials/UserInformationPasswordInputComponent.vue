@@ -1,7 +1,7 @@
 <template>
 
     <span v-if="!isEditing" class="tw-flex tw-items-center tw-justify-between tw-gap-2">
-        <strong>{{ 'Password: ' }}</strong>
+        <strong>{{ 'Change password: ' }}</strong>
         <button
             v-if="!isEditing"
             @click="isEditing = true"
