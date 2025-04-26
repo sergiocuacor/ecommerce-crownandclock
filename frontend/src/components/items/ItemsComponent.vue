@@ -14,13 +14,11 @@
 
         </div>
 
-        <div class="col-12 tw-space-x-2">
+        <div class="col-12 tw-pt-3 tw-space-x-2">
 
             <BrandBadgeComponent :selectedBrand="selectedBrand"/>
 
-            <span class="badge text-bg-primary">
-                {{ 'Cantidad por página: ' + pageSize }}
-            </span>
+            <SizeBadgeComponent :pageSize="pageSize"/>
 
         </div>
 
