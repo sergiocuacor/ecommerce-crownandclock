@@ -80,5 +80,8 @@ export default {
   },
   getReviewsByUserId(id) {
     return apiCall('get', `/reviews/user/${id}`);
+  },
+  postNewReview(userId, productId, data) {
+    return apiCall('post', `/reviews/${userId}/${productId}`, {}, data);
   }
 };
