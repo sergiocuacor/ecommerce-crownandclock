@@ -17,6 +17,7 @@ import com.ecommercevcs.entities.embeddable.Address;
 import com.ecommercevcs.repositories.RoleRepository;
 import com.ecommercevcs.repositories.UserRepository;
 import com.ecommercevcs.services.UserService;
+import com.ecommercevcs.utils.email.EmailUtil;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -35,7 +36,8 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	RoleRepository roleRepository;
 	
-	
+	@Autowired
+	EmailUtil emailUtil;
 
 	@Override
 	public List<UserEntity> findAll() {
