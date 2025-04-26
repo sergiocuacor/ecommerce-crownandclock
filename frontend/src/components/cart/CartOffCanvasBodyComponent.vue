@@ -3,7 +3,13 @@
     <!-- FULL -->
     <CartOffCanvasBodyItemsComponent v-if="cartStore.items.length > 0"/>
 
-    <CartCheckoutComponent v-if="cartStore.items.length > 0" class="tw-sticky tw-bottom-0 tw-py-2.5 tw-bg-white"/>
+    <div v-if="cartStore.items.length > 0" class="tw-sticky tw-bottom-0 tw-py-2.5 tw-bg-white">        
+        <router-link
+            :to="{ name: 'cart' }"
+            class="tw-bg-black tw-text-white tw-rounded-md tw-h-10 tw-flex tw-items-center tw-justify-center tw-px-1.5 tw-shadow-md hover:tw-bg-gray-800 tw-cursor-pointer tw-text-xl tw-transition tw-delay-150 tw-duration-300 tw-ease-in-out hover:tw--translate-y-1 hover:tw-scale-90">
+            {{ 'Checkout' }}
+        </router-link>
+    </div>
 
     <!-- EMPTY -->
     <div v-else class="tw-w-full tw-h-full tw-relative">

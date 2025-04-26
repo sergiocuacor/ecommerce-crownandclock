@@ -1,4 +1,4 @@
-package com.ecommercevcs.services;
+package com.ecommercevcs.services.impl;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,11 +18,12 @@ import com.ecommercevcs.repositories.OrderRepository;
 import com.ecommercevcs.repositories.ProductRepository;
 import com.ecommercevcs.repositories.ReviewRepository;
 import com.ecommercevcs.repositories.UserRepository;
+import com.ecommercevcs.services.ReviewService;
 
 import jakarta.persistence.EntityNotFoundException;
 
 @Service
-public class ReviewServiceImpl implements IReviewService {
+public class ReviewServiceImpl implements ReviewService {
 
     private static final Logger logger = LoggerFactory.getLogger(ReviewServiceImpl.class);
 

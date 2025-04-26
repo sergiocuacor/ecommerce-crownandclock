@@ -8,7 +8,7 @@ import com.ecommercevcs.dtos.DiscountDTO;
 import com.ecommercevcs.dtos.OrderCreateDTO;
 import com.ecommercevcs.entities.OrderEntity;
 
-public interface IOrderService {
+public interface OrderService {
 
 	public List<OrderEntity> findAll();
 	public OrderEntity findById(Long id);

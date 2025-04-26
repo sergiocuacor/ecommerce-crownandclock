@@ -278,10 +278,20 @@
 				{
 					"name": "Delete Brand",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJhdXRob3JpdGllcyI6W3siYXV0aG9yaXR5IjoiUk9MRV9BRE1JTiJ9LHsiYXV0aG9yaXR5IjoiUk9MRV9VU0VSIn1dLCJleHAiOjE3NDQ5OTY2ODcsImlhdCI6MTc0NDk5MzA4N30.a8cH-o7gm9JMjAOzhIG9VnisnmOkAk3RzhCLF1AHNn0",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/brands/1",
+							"raw": "http://localhost:8080/brands/21",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -289,7 +299,7 @@
 							"port": "8080",
 							"path": [
 								"brands",
-								"1"
+								"21"
 							]
 						}
 					},
@@ -349,7 +359,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqdWFuLnBlcmV6QGV4YW1wbGUuY29tIiwiYXV0aG9yaXRpZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfVVNFUiJ9XSwiZXhwIjoxNzQ0ODgyMjc2LCJpYXQiOjE3NDQ4Nzg2NzZ9.HKafiXrVTQ-INexR3nK7_NckynjdY4qXmZERNSjiirU",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqdWFuLnBlcmV6QGV4YW1wbGUuY29tIiwiYXV0aG9yaXRpZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfVVNFUiJ9XSwiZXhwIjoxNzQ0OTc0Njk2LCJpYXQiOjE3NDQ5NzEwOTZ9.AoPirl_f_tauSgMlmHSWooIGwm3xPgydIwjqU-rg77U",
 									"type": "string"
 								}
 							]
@@ -412,12 +422,21 @@
 					"response": []
 				},
 				{
-					"name": "Update Product",
+					"name": "Update User",
 					"request": {
 						"method": "PUT",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"email\": \"manuel1233.garcia@example.es\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "http://localhost:8080/users/1",
+							"raw": "http://localhost:8080/users/{userId}",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -425,11 +444,76 @@
 							"port": "8080",
 							"path": [
 								"users",
-								"1"
+								"{userId}"
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Update Email",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"email\": \"emailACTUALIZADO@example.es\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/users/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"users",
+										"1"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Update Street",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n     \"address\": {\r\n        \"streetAddress\": \"Valenzuela\",\r\n        \"city\": \"Madrid\",\r\n        \"state\": \"Comunidad de Madrid\",\r\n        \"country\": \"España\",\r\n        \"postalCode\": \"28001\"\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/users/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"users",
+										"2"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
 				},
 				{
 					"name": "Get All Users",
@@ -561,17 +645,35 @@
 				{
 					"name": "Login",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtaWd1ZWxmZXJzb3RvQGdtYWlsLmVzIiwiYXV0aG9yaXRpZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfVVNFUiJ9XSwiZXhwIjoxNzQyNjQ1NTg0LCJpYXQiOjE3NDI2NDE5ODR9.1g6x_AprHXeBtXbXQ7NG2golb2wEs6IjuJisPBLU8-U",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"admin@admin.com\",\r\n    \"password\": \"admin123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "http://localhost:8080/users/login",
+							"raw": "http://localhost:8080/login",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"users",
 								"login"
 							]
 						}
@@ -591,6 +693,37 @@
 								"body": {
 									"mode": "raw",
 									"raw": "{\r\n    \"email\": \"juan.perez@example.com\",\r\n    \"password\": \"SecurePassword123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"login"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Login Admin",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"admin@admin.com\",\r\n    \"password\": \"admin123\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -791,6 +924,52 @@
 							"body": null
 						}
 					]
+				},
+				{
+					"name": "Get Available Discounts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/orders/discounts/{userId}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"orders",
+								"discounts",
+								"{userId}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get Available Discounts",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/orders/discounts/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"orders",
+										"discounts",
+										"1"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
 				}
 			]
 		},
@@ -904,7 +1083,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/reviews/1/1",
+							"raw": "http://localhost:8080/reviews/{userId}/{productId}",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -912,8 +1091,8 @@
 							"port": "8080",
 							"path": [
 								"reviews",
-								"1",
-								"1"
+								"{userId}",
+								"{productId}"
 							]
 						}
 					},
@@ -933,7 +1112,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/reviews/1/45",
+									"raw": "http://localhost:8080/reviews/1/114",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -942,7 +1121,7 @@
 									"path": [
 										"reviews",
 										"1",
-										"45"
+										"114"
 									]
 								}
 							},
@@ -1102,6 +1281,530 @@
 							"body": null
 						}
 					]
+				}
+			]
+		},
+		{
+			"name": "Reports",
+			"item": [
+				{
+					"name": "Excel: Daily Sales",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/reports/daily-sales/excel",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"reports",
+								"daily-sales",
+								"excel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Excel: Daily Sales Specific Day",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/reports/daily-sales/excel/{date}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"reports",
+								"daily-sales",
+								"excel",
+								"{date}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Excel: Sales Report Specific Day",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/reports/daily-sales/excel/2025-04-06",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"reports",
+										"daily-sales",
+										"excel",
+										"2025-04-06"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "PDF: Daily Sales",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/reports/daily-sales/pdf",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"reports",
+								"daily-sales",
+								"pdf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PDF: Daily Sales Specific Day",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/reports/daily-sales/pdf/{date}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"reports",
+								"daily-sales",
+								"pdf",
+								"{date}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "PDF: Daily Sales Specific Day",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/reports/daily-sales/pdf/2025-04-21",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"reports",
+										"daily-sales",
+										"pdf",
+										"2025-04-21"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "PDF: Monthly Sales",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/reports/monthly-sales/pdf",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"reports",
+								"monthly-sales",
+								"pdf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Excel: Monthly Sales",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/reports/monthly-sales/excel",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"reports",
+								"monthly-sales",
+								"excel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Excel: Monthly Sales Specific Month",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/reports/monthly-sales/excel/{year}/{month}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"reports",
+								"monthly-sales",
+								"excel",
+								"{year}",
+								"{month}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Excel: Monthly Sales Specific Month",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/reports/monthly-sales/excel/2025/04",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"reports",
+										"monthly-sales",
+										"excel",
+										"2025",
+										"04"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "PDF: Monthly Sales Specific Month",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/reports/monthly-sales/pdf/{year}/{month}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"reports",
+								"monthly-sales",
+								"pdf",
+								"{year}",
+								"{month}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "PDF: Monthly Sales Specific Month",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/reports/monthly-sales/pdf/2025/04",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"reports",
+										"monthly-sales",
+										"pdf",
+										"2025",
+										"04"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/users/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"register"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Register",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"Juan Pérez\",\r\n  \"firstName\": \"Juan\",\r\n  \"lastName\": \"Pérez\",\r\n  \"email\": \"juan.perez@example.com\",\r\n  \"password\": \"SecurePassword123\",\r\n  \"phoneNumber\": \"+34612345678\",\r\n  \"address\": {\r\n    \"streetAddress\": \"Calle Gran Vía 123\",\r\n    \"city\": \"Madrid\",\r\n    \"state\": \"Madrid\",\r\n    \"country\": \"España\",\r\n    \"postalCode\": \"28013\"\r\n  },\r\n  \"admin\": false\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/users/register",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"users",
+										"register"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Register",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"Empresa ABC\",\r\n  \"firstName\": \"Representante\",\r\n  \"lastName\": \"Comercial\",\r\n  \"email\": \"contacto@empresaabc.com\",\r\n  \"password\": \"Business123\",\r\n  \"phoneNumber\": \"+34911234567\",\r\n  \"address\": {\r\n    \"streetAddress\": \"Avenida Negocio 42\",\r\n    \"city\": \"Valencia\",\r\n    \"state\": \"Comunidad Valenciana\",\r\n    \"country\": \"España\",\r\n    \"postalCode\": \"46001\"\r\n  },\r\n  \"admin\": false\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/users/register",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"users",
+										"register"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Login",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtaWd1ZWxmZXJzb3RvQGdtYWlsLmVzIiwiYXV0aG9yaXRpZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfVVNFUiJ9XSwiZXhwIjoxNzQyNjQ1NTg0LCJpYXQiOjE3NDI2NDE5ODR9.1g6x_AprHXeBtXbXQ7NG2golb2wEs6IjuJisPBLU8-U",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"admin@admin.com\",\r\n    \"password\": \"admin123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"juan.perez@example.com\",\r\n    \"password\": \"SecurePassword123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"login"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Login Admin",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"admin@admin.com\",\r\n    \"password\": \"admin123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"login"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Validate Token",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJhdXRob3JpdGllcyI6W3siYXV0aG9yaXR5IjoiUk9MRV9BRE1JTiJ9LHsiYXV0aG9yaXR5IjoiUk9MRV9VU0VSIn1dLCJleHAiOjE3NDUyNjA5MzUsImlhdCI6MTc0NTI1NzMzNX0.ChVm2ykwjgg_BKke1iXuPmWVWWl4DRy2T-Nm7BEc3gs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/auth/validate-token",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"validate-token"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}

@@ -1,4 +1,4 @@
-package com.ecommercevcs.services;
+package com.ecommercevcs.services.impl;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,9 +18,10 @@ import com.ecommercevcs.entities.BrandEntity;
 import com.ecommercevcs.entities.ProductEntity;
 import com.ecommercevcs.repositories.BrandRepository;
 import com.ecommercevcs.repositories.ProductRepository;
+import com.ecommercevcs.services.ProductService;
 
 @Service
-public class ProductServiceImpl implements IProductService {
+public class ProductServiceImpl implements ProductService {
 	
     private static final Logger logger = LoggerFactory.getLogger(ProductServiceImpl.class);
 

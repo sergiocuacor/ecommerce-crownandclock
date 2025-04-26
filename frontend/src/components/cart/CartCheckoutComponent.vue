@@ -1,7 +1,7 @@
 <template>
     <div class="tw-grid tw-grid-cols-1 tw-gap-0">
       <!-- Cart Card -->
-      <div class="tw-w-full tw-bg-[#FFFAEB] tw-shadow-[0px_187px_75px_rgba(0,0,0,0.01),0px_105px_63px_rgba(0,0,0,0.05),0px_47px_47px_rgba(0,0,0,0.09),0px_12px_26px_rgba(0,0,0,0.1),0px_0px_0px_rgba(0,0,0,0.1)] tw-rounded-t-[19px]">
+      <div class="tw-w-full tw-bg-[#FFFAEB] tw-rounded-t-[19px]">
         <label class="tw-w-full tw-h-10 tw-relative tw-flex tw-items-center tw-pl-5 tw-border-b tw-border-[rgba(16,86,82,0.75)] tw-font-bold tw-text-[11px] tw-text-black">
           {{ 'CHECKOUT' }}
         </label>
@@ -21,24 +21,38 @@
             <hr class="tw-h-px tw-bg-[rgba(16,86,82,0.75)] tw-border-0" />
             <div>
               <span class="tw-block tw-text-[13px] tw-font-semibold tw-text-black tw-mb-2">{{ 'HAVE A PROMO CODE?' }}</span>
-              <form @submit.prevent class="tw-grid tw-grid-cols-[1fr_80px] tw-gap-2">
-                <input v-model="coupon" type="text" placeholder="COUPON" class="tw-h-9 tw-px-3 tw-rounded tw-border tw-border-[rgb(16,86,82)] tw-bg-[#FBF3E4] tw-outline-none tw-transition-all tw-duration-300 tw-ease-[cubic-bezier(0.15,0.83,0.66,1)] focus:tw-border-transparent focus:tw-ring-2 focus:tw-ring-[#C9C1B2]"/>
-                <button @click="validateCoupon" type="button" class="tw-flex tw-justify-center tw-items-center tw-h-9 tw-w-full tw-bg-[rgba(16,86,82,0.75)] tw-shadow-[0px_0.5px_0.5px_#F3D2C9,0px_1px_0.5px_rgba(239,239,239,0.5)] tw-rounded tw-text-[12px] tw-font-semibold tw-text-black">
+              <form class="tw-grid tw-grid-cols-[1fr_80px] tw-gap-2">
+                <input v-if="cartStore.coupon == null" v-model="couponInput" type="text" placeholder="COUPON" class="tw-h-9 tw-px-3 tw-rounded tw-border tw-border-[rgb(16,86,82)] tw-bg-[#FBF3E4] tw-outline-none tw-transition-all tw-duration-300 tw-ease-[cubic-bezier(0.15,0.83,0.66,1)] focus:tw-border-transparent focus:tw-ring-2 focus:tw-ring-[#C9C1B2]"/>
+                <input v-else type="text" :placeholder="cartStore.coupon.name" disabled class="tw-h-9 tw-px-3 tw-rounded tw-border tw-border-[rgb(16,86,82)] tw-bg-[#FBF3E4] tw-outline-none tw-transition-all tw-duration-300 tw-ease-[cubic-bezier(0.15,0.83,0.66,1)] focus:tw-border-transparent focus:tw-ring-2 focus:tw-ring-[#C9C1B2]"/>
+                <button @click="validateCoupon" type="button" class="tw-flex tw-justify-center tw-items-center tw-h-9 tw-w-full tw-bg-[rgba(16,86,82,0.75)] tw-rounded tw-text-[12px] tw-font-semibold tw-text-black">
                   {{ 'Apply' }}
                 </button>
-                <p v-if="coupon && !isCouponValid" class="tw-text-[11px] tw-text-red-600">
-                  {{ 'Invalid coupon code.' }}
-                </p>
               </form>
             </div>
             <hr class="tw-h-px tw-bg-[rgba(16,86,82,0.75)] tw-border-0" />
             <div>
-              <span class="tw-block tw-text-[13px] tw-font-semibold tw-text-black tw-mb-2">{{ 'PAYMENT' }}</span>
+              <span class="tw-block tw-text-[13px] tw-font-semibold tw-text-black tw-mb-2">
+                {{ 'PAYMENT' }}
+              </span>
               <div class="tw-grid tw-grid-cols-[10fr_1fr] tw-gap-y-1">
-                <span class="tw-text-[12px] tw-font-semibold tw-text-black tw-text-left">{{ 'Subtotal:' }}</span>
-                <span class="tw-text-[13px] tw-font-semibold tw-text-black tw-text-right">{{ cartSubtotal + '€' }}</span>
-                <span class="tw-text-[12px] tw-font-semibold tw-text-black tw-text-left">{{ 'Taxes (21%): ' }}</span>
-                <span class="tw-text-[13px] tw-font-semibold tw-text-black tw-text-right">{{ cartTaxes + '€' }}</span>
+                <span class="tw-text-[12px] tw-font-semibold tw-text-black tw-text-left">
+                  {{ 'Subtotal:' }}
+                </span>
+                <span class="tw-text-[13px] tw-font-semibold tw-text-black tw-text-right">
+                  {{ cartSubtotal + '€' }}
+                </span>
+                <span class="tw-text-[12px] tw-font-semibold tw-text-black tw-text-left">
+                  {{ 'Taxes (21%): ' }}
+                </span>
+                <span class="tw-text-[13px] tw-font-semibold tw-text-black tw-text-right">
+                  {{ cartTaxes + '€' }}
+                </span>
+                <span v-if="cartStore.coupon != null" class="tw-text-[12px] tw-font-semibold tw-text-black tw-text-left">
+                  {{ 'Coupon ' + cartStore.coupon.name + ' (' + cartStore.coupon.discountPercentage + '%)' }}
+                </span>
+                <span v-if="cartStore.coupon != null" class="tw-text-[13px] tw-font-semibold tw-text-black tw-text-right">
+                  {{ '-' + cartDiscount + '€' }}
+                </span>
               </div>
             </div>
           </div>
@@ -46,10 +60,12 @@
       </div>
   
       <!-- Checkout Card -->
-      <div class="tw-w-full tw-bg-[#FFFAEB] tw-shadow-[0px_187px_75px_rgba(0,0,0,0.01),0px_105px_63px_rgba(0,0,0,0.05),0px_47px_47px_rgba(0,0,0,0.09),0px_12px_26px_rgba(0,0,0,0.1),0px_0px_0px_rgba(0,0,0,0.1)]">
+      <div class="tw-w-full tw-bg-[#FFFAEB]">
         <div class="tw-flex tw-items-center tw-justify-between tw-px-5 tw-py-2.5 tw-bg-[rgba(16,86,82,0.5)]">
-          <label class="tw-relative tw-text-[22px] tw-font-black tw-text-[#2B2B2F]">{{ 'Total: ' + cartTotal + '€'  }}</label>
-          <button class="tw-flex tw-justify-center tw-items-center tw-w-[150px] tw-h-9 tw-bg-[rgba(16,86,82,0.55)] tw-shadow-[0px_0.5px_0.5px_rgba(16,86,82,0.75),0px_1px_0.5px_rgba(16,86,82,0.75)] tw-border tw-border-[rgb(16,86,82)] tw-rounded-[7px] tw-text-[13px] tw-font-semibold tw-text-black tw-transition-all tw-duration-300 tw-ease-[cubic-bezier(0.15,0.83,0.66,1)]" @click="checkout">
+          <label class="tw-relative tw-text-[22px] tw-font-black tw-text-[#2B2B2F]">
+            {{ 'Total: ' }}{{ cartStore.coupon != null ? cartTotalDiscounted : cartTotal }}{{ '€'  }}
+          </label>
+          <button class="tw-flex tw-justify-center tw-items-center tw-w-[150px] tw-h-9 tw-bg-[rgba(16,86,82,0.55)] tw-border tw-border-[rgb(16,86,82)] tw-rounded-[7px] tw-text-[13px] tw-font-semibold tw-text-black tw-transition-all tw-duration-300 tw-ease-[cubic-bezier(0.15,0.83,0.66,1)]" @click="checkout">
             {{ 'Pagar' }}
           </button>
         </div>
@@ -64,32 +80,59 @@
     import { useRouter } from 'vue-router';
     import { useCartStore } from '../../store/cart.js';
     import apiClient from '../../services/api.js';
+    import { useAuthStore } from '../../services/auth.js';
 
     const router = useRouter();
     const cartStore = useCartStore();
-    const userId = ref(null);
-    const discounts = ref([]);
-    const coupon = ref('');
-    const isCouponValid = ref(false);
+    const authStore = useAuthStore();
+    const couponInput = ref('')
     const isSubmitting = ref(false);
 
-    const fetchDiscounts = async () => {
+    const rawTotal = computed(() =>
+      cartStore.items.reduce((total, item) => total + item.price * item.quantity, 0)
+    );
 
-      const response = await apiClient.getValidDiscountsForUser(userId.value);
-
-      if (response.success) {
-        discounts.value = response.data;
-      }
-
-    };
+    const cartTotal = computed(() => rawTotal.value.toFixed(2));
+    const cartSubtotal = computed(() => (rawTotal.value * 0.79).toFixed(2));
+    const cartTaxes = computed(() => (rawTotal.value * 0.21).toFixed(2));
+    const cartTotalDiscounted = computed(() => (rawTotal.value * (1 - (cartStore.coupon.discountPercentage / 100))).toFixed(2));
+    const cartDiscount = computed(() => (rawTotal.value * (cartStore.coupon.discountPercentage / 100)).toFixed(2));
 
     const fetchUserId = async () => {
 
       const response = await apiClient.getUserData();
 
+      let userId = null;
+
       if (response.success) {
 
-        userId.value = response.data.id;
+        userId = response.data.id;
+
+      }
+
+      return userId;
+
+    };
+
+    const validateCoupon = async () => {
+
+      await validateToken();
+
+      await cartStore.couponValidation(couponInput.value);
+
+    }
+
+    const validateToken = async () => {
+
+      if (!authStore.token) {
+        router.push('/login');
+      }
+
+      await authStore.tokenValidation();
+
+      if (!authStore.token) {
+
+        router.push('/login');
 
       }
 
@@ -102,64 +145,60 @@
       if (response.success) {
         console.log('Order sent successfully!');
         router.push('/profile');
+        cartStore.emptyCart();
       } else {
         console.error('Error sending order:', response.error);
       }
 
     };
 
-    const rawTotal = computed(() =>
-      cartStore.items.reduce((total, item) => total + item.price * item.quantity, 0)
-    );
-
-    const cartTotal = computed(() => rawTotal.value.toFixed(2));
-    const cartSubtotal = computed(() => (rawTotal.value * 0.79).toFixed(2));
-    const cartTaxes = computed(() => (rawTotal.value * 0.21).toFixed(2));
-        
-    const validateCoupon = async () => {
-
-      await fetchDiscounts();
-
-      isCouponValid.value = discounts.value.some(
-        code => code.toLowerCase() === coupon.value.toLowerCase()
-      );
-
-    };
-
     const checkout = async () => {
+
+      await validateToken();
 
       if (isSubmitting.value) return;
 
       isSubmitting.value = true;
 
-      await validateCoupon();
+      if(cartStore.coupon != null) {
+        await cartStore.couponValidation(cartStore.coupon.name);
+      }
+      
+      const userId = await fetchUserId();
 
-      const simplifiedArray = cartStore.items.map(item => ({
-        productId: item.id,
-        quantity: item.quantity,
-      }));
+      if(userId != null) {
 
-      const order = {
-        userId: userId.value,
-        items: simplifiedArray,
-        ...(isCouponValid.value && { discount: coupon.value }),
-      };
+        const simplifiedArray = cartStore.items.map(item => ({
+          productId: item.id,
+          quantity: item.quantity,
+        }));
 
-      await sendOrder(order);
+        const order = {
+          userId: userId,
+          items: simplifiedArray,
+        };
+
+        if (cartStore.coupon != null) {
+          await cartStore.couponValidation(cartStore.coupon.name);
+          order.discount = cartStore.coupon.name;
+        }
+
+        await sendOrder(order);
+
+      }
+
       isSubmitting.value = false;
 
     };
 
     onMounted(async () => {
-      
-      await fetchUserId();
 
-      if (userId.value != null) {
+      if(cartStore.coupon != null) {
 
-        await fetchDiscounts();
+        await cartStore.couponValidation(cartStore.coupon.name);
 
       }
-      
+
     });
 
 </script>

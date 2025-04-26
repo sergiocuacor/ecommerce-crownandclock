@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ecommercevcs.entities.ProductEntity;
-import com.ecommercevcs.services.IProductService;
+import com.ecommercevcs.services.ProductService;
 import com.ecommercevcs.validation.utils.ValidationUtils;
 
 import jakarta.validation.Valid;
@@ -34,7 +34,7 @@ public class ProductController {
 
 	
 	@Autowired
-	IProductService productService;
+	ProductService productService;
 	
 	@Autowired
 	ValidationUtils validation;

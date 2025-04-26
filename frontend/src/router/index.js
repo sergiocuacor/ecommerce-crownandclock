@@ -310,66 +310,61 @@ router.beforeEach(async (to, from, next) => {
   
   const auth = useAuthStore();
 
-  if (to.meta.requiresAuth && !auth.token) {
+  if (to.meta.requiresAuth) {
 
-    next('/login'); // 🔁 redirige a login si no hay token
+    if (!auth.token) {
+      return next('/login');
+    }
+
+    await auth.tokenValidation();
+
+    if (!auth.token) {
+      return next('/login');
+    }
 
   } else {
 
-    let defaultPageTitle = 'Crown & Clock';
-    let pageTitle = defaultPageTitle;
-
-    if (to.meta.label) {
-
-      pageTitle = defaultPageTitle + ' - ' + to.meta.label;
-      
-    }
-
-    if (to.meta.breadcrumb) {
-
-      let breadcrumbs = [...to.meta.breadcrumb];
-
-      if (to.params.mask) {
-
-        try {
-
-          const response = await apiClient.getItem(to.params.mask);
-          let item = response.data;
-
-          if (item) {
-
-            breadcrumbs.push({ label: item.title, path: to.path });
-            pageTitle = defaultPageTitle + ' - ' + item.title;
-
-          } else {
-
-            breadcrumbs.push({ label: 'Unknown Product', path: to.path });
-            pageTitle = defaultPageTitle + ' - ' + 'Unknown Product';
-
-          }
-
-        } catch (error) {
-
-          console.error('Error Fetching Item:', error);
-          breadcrumbs.push({ label: 'Error Loading Product', path: to.path });
-
-        }
-
-      } else {
-
-        breadcrumbs.push({ label: to.meta.label, path: to.path });
-
-      }
-
-      to.meta.breadcrumbs = breadcrumbs;
-      
-    }
-
-    document.title = pageTitle;
-
-    next(); // ✅ continúa
+    await auth.tokenValidation();
     
-  }  
+  }
+
+  let defaultPageTitle = 'Crown & Clock';
+  let pageTitle = defaultPageTitle;
+
+  if (to.meta.label) {
+    pageTitle = `${defaultPageTitle} - ${to.meta.label}`;
+  }
+
+  if (to.meta.breadcrumb) {
+    const breadcrumbs = [...to.meta.breadcrumb];
+
+    if (to.params.mask) {
+      try {
+        const response = await apiClient.getItem(to.params.mask);
+        const item = response.data;
+
+        if (item) {
+          breadcrumbs.push({ label: item.title, path: to.path });
+          pageTitle = `${defaultPageTitle} - ${item.title}`;
+        } else {
+          breadcrumbs.push({ label: 'Unknown Product', path: to.path });
+          pageTitle = `${defaultPageTitle} - Unknown Product`;
+        }
+      } catch (error) {
+        console.error('Error fetching item:', error);
+        breadcrumbs.push({ label: 'Error Loading Product', path: to.path });
+      }
+    } else {
+      if (!breadcrumbs.find(b => b.path === to.path)) {
+        breadcrumbs.push({ label: to.meta.label, path: to.path });
+      }
+    }
+
+    to.meta.breadcrumbs = breadcrumbs;
+  }
+
+  document.title = pageTitle;
+  next();
 
 });
 

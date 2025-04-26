@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.ecommercevcs.entities.ProductEntity;
 
-public interface IProductService {
+public interface ProductService {
 	
 	public List<ProductEntity> findAll();
 	public ProductEntity findById(Long id);

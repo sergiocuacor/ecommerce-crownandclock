@@ -1,9 +1,0 @@
-{
-  "version": "1",
-  "name": "ecommercePrueba",
-  "type": "collection",
-  "ignore": [
-    "node_modules",
-    ".git"
-  ]
-}

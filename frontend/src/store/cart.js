@@ -15,11 +15,44 @@ const fetchItemStock = async (item) => {
 
 };
 
+const fetchUserId = async () => {
+
+  const response = await apiClient.getUserData();
+
+  let userId = null;
+
+  if (response.success) {
+
+    userId = response.data.id;
+
+  }
+
+  return userId;
+
+};
+
+const fetchDiscounts = async (userId) => {
+
+  const response = await apiClient.getValidDiscountsForUser(userId);
+
+  let valid_discounts = [];
+
+  if (response.success) {
+
+    valid_discounts = response.data;
+
+  }
+
+  return valid_discounts;
+
+};
+
 export const useCartStore = defineStore('cart', {
 
   state: () => ({
 
     items: JSON.parse(localStorage.getItem('cartItems')) || [],
+    coupon: JSON.parse(localStorage.getItem('discountCoupon') || null)
 
   }),
 
@@ -98,6 +131,50 @@ export const useCartStore = defineStore('cart', {
       localStorage.setItem('cartItems', JSON.stringify(this.items));
 
     },
+    
+    async couponValidation(couponName) {
+
+      const userId = await fetchUserId();
+
+      if(userId != null) {
+
+        const valid_coupons = await fetchDiscounts(userId);
+
+        if(valid_coupons.length > 0) {
+
+          const foundCoupon = valid_coupons.find(
+            code => code.name.toLowerCase() === couponName.toLowerCase()
+          );
+          
+          if (foundCoupon) {
+            this.coupon = foundCoupon;
+            this.saveCoupon();
+            return;
+          }
+
+        }
+
+      }
+
+      this.coupon = null;
+      this.saveCoupon();
+
+    },
+
+    saveCoupon() {
+
+      localStorage.setItem('discountCoupon', JSON.stringify(this.coupon));
+
+    },
+
+    emptyCart() {
+
+      this.items = [];
+      this.saveCart();
+      this.coupon = null;
+      this.saveCoupon();
+
+    }
 
   },
   

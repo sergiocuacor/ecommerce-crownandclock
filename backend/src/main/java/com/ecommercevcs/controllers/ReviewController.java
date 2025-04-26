@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ecommercevcs.dtos.CreateReviewRequestDTO;
 import com.ecommercevcs.dtos.ReviewDTO;
-import com.ecommercevcs.services.IReviewService;
-import com.ecommercevcs.services.ReviewServiceImpl;
+import com.ecommercevcs.services.ReviewService;
+import com.ecommercevcs.services.impl.ReviewServiceImpl;
 
 
 
@@ -29,7 +29,7 @@ public class ReviewController {
     private static final Logger logger = LoggerFactory.getLogger(ReviewController.class);
 	
 	@Autowired
-	IReviewService reviewService;
+	ReviewService reviewService;
 	
 	@PostMapping("/{userId}/{productId}")
 	public ReviewDTO createReview(@RequestBody CreateReviewRequestDTO reviewRequest, @PathVariable Long userId, @PathVariable Long productId) throws Exception {
