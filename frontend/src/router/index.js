@@ -14,6 +14,7 @@ import CategoriesView from '../views/CategoriesView.vue';
 import CategoryView from '../views/CategoryView.vue';
 import SocialsView from '../views/SocialsView.vue';
 import UserProfileView from '../views/UserProfileView.vue';
+import UserReviewsView from '../views/UserReviewsView.vue';
 
 const routes = [
   // Error/Unknown
@@ -78,6 +79,25 @@ const routes = [
   { 
     path: '/users',
     redirect: { name: 'profile' }
+  },
+  // User Reviews
+  { 
+    path: '/profile/reviews',
+    name: 'reviews',
+    component: UserReviewsView,
+    meta: {
+      label: 'Reviews',
+      breadcrumb: [{ label: 'Home', path: { name: 'home' } }],
+      requiresAuth: true
+    } 
+  },
+  { 
+    path: '/review',
+    redirect: { name: 'reviews' }
+  },
+  { 
+    path: '/reviews',
+    redirect: { name: 'reviews' }
   },
   // Cart
   { 
