@@ -99,9 +99,6 @@ public class ProductEntity {
 		this.calculateAverageRating();
 	}
 	
-	
-	
-	
 	public void addStock(Integer quantity) {
 		this.stock += quantity;
 	}

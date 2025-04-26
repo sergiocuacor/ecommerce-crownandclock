@@ -37,9 +37,6 @@ public class ReviewEntity {
 	@JsonBackReference(value = "user-review")
 	private UserEntity user;
 	
-
-	
-	
 	@Max(5)
 	private Integer rating;
 	

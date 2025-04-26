@@ -34,15 +34,7 @@ import jakarta.validation.constraints.Email;
 @Table(name = "users")
 public class UserEntity {
 
-//	id
-//	nombre
-//	apellidos
-//	email
-//	password
-//	direccion
-//	telefono
-//	fechaRegistro
-//	lista de pedidos
+
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -59,22 +51,22 @@ public class UserEntity {
 	private String email;
 	
 	
-	private String password; //Encriptada
+	private String password; 
 	
 	private String phoneNumber;
 	
 	
-	@Embedded // Para incrustar las propiedades de address en la tabla users.
+	@Embedded 
 	private Address address;
 
-	@JsonManagedReference(value="user-order") // JsonManaged nos permitirá ver la orderList en el JSON cuando hagamos peticiones GET
+	@JsonManagedReference(value="user-order") 
 	@OneToMany(mappedBy = "user",
 			cascade = CascadeType.ALL,
-			fetch = FetchType.LAZY) // para que solo cargue orders cuando accedamos a ellos (mejora el rendimiento).
+			fetch = FetchType.LAZY) 
 	private List<OrderEntity> orderList = new ArrayList<OrderEntity>();
 	
-	 //Esto sirve para el many to many que no se cree el bucle infinito MITICO
-	@JsonIgnoreProperties({"users"}) //Esto sirve para el many to many que no se cree el bucle infinito MITICO
+	 
+	@JsonIgnoreProperties({"users"}) 
 	@ManyToMany
 	@JoinTable(
 			name = "users_roles",
@@ -91,7 +83,7 @@ public class UserEntity {
         enabled = true;
     }
 	
-	@Transient  // No se maneja en bddd
+	@Transient  
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private boolean admin;
 	
@@ -112,15 +104,13 @@ public class UserEntity {
 		review.setUser(null);
 	}
 	
-	
-	// addOrder y removeOrder son helpers methods que ayudan a mantener la consistencia de la relación
 	public void addOrder(OrderEntity order) {
-		orderList.add(order);// Actualiza el lado del User
-		order.setUser(this);// Actualiza el lado del Order
+		orderList.add(order);
+		order.setUser(this);
 	}
 	public void removeOrder(OrderEntity order) {
-		orderList.remove(order);// Actualiza el lado del User
-		order.setUser(null);// Actualiza el lado del Order
+		orderList.remove(order);
+		order.setUser(null);
 	}
 	public UserEntity(Long id, String name, String firstName, String lastName, String email, String phoneNumber,
 			Address address, List<OrderEntity> orderList) {
@@ -237,15 +227,5 @@ public class UserEntity {
 	public void setReviews(List<ReviewEntity> reviews) {
 		this.reviews = reviews;
 	}
-	
-	
-	
-	
-	
-//	private UserRole role; // Administrador, cliente..
-	
-	
-	
-	
-	
+		
 }
