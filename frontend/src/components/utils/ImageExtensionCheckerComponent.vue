@@ -15,14 +15,16 @@
     const changeImageExtension = (event) => {
 
         const imgElement = event.target;
-
+        console.log("EVENT TARGET SRC");
+        console.log(event.target.src);
         if (attemptIndex < extensions.length) {
             
             imgElement.src = imgElement.src.replace(/\.\w+$/, extensions[attemptIndex]);
             attemptIndex++;
 
         } else {
-
+            
+            
             imgElement.src = '/no_image.png';
 
         }

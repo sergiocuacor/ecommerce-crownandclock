@@ -1,7 +1,8 @@
 import axios from 'axios';
 
+const baseURL_ENV = import.meta.env.VITE_API_URL;
 const apiClient = axios.create({
-  baseURL: 'http://localhost:8080',
+  baseURL: baseURL_ENV,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -26,6 +27,8 @@ async function apiCall(method, url, params = {}, data = {}) {
 
 export default {
   getApiBaseURL() {
+    console.log("URL");
+    console.log(apiClient.defaults.baseURL);
     return apiClient.defaults.baseURL;
   },
   getItem(mask) {

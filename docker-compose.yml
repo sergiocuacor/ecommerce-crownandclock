@@ -10,12 +10,12 @@ services:
       MYSQL_ROOT_PASSWORD: PracticaRoot
       MYSQL_DATABASE: clockdb
     ports:
-      - "3305:3306"
+     - "3305:3306"
     volumes:
       - mysql_data:/var/lib/mysql
       - ./init-scripts:/docker-entrypoint-initdb.d
     networks:
-      - backend-network
+      - clock-network
 
   # Aplicación Spring Boot usando .jar pre-compilado
   backend:
@@ -33,11 +33,25 @@ services:
       - ./backend/target/backend-0.0.1-SNAPSHOT.jar:/app.jar
     command: ["java", "-jar", "/app.jar"]
     networks:
-      - backend-network
+      - clock-network
+
+  # Frontend service (Vue.js with Vite, served via Nginx)
+  frontend:
+    image: nginx:alpine
+    container_name: vue-frontend
+    ports:
+     - "80:80"
+    volumes:
+      - ./frontend/dist:/usr/share/nginx/html  # Mount your built Vite output (dist folder)
+      - ./frontend/nginx.conf:/etc/nginx/conf.d/default.conf  # Custom nginx config for Vue routing
+    depends_on:
+      - backend
+    networks:
+      - clock-network
 
 volumes:
   mysql_data:
 
 networks:
-  backend-network:
+  clock-network:
     driver: bridge
