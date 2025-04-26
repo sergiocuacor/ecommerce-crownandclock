@@ -20,9 +20,21 @@
         </div>
         <div class="tw-absolute tw-bottom-0 tw-right-0 tw-font-bold tw-my-2">
             {{ 'Total: ' }}<strong>{{ (props.item.unitPrice * props.item.quantity) + '&#8364' }}</strong>
+        </div>        
+    </li>
+    <li class="tw-flex tw-flex-col tw-items-center tw-py-2.5">
+        <div class="tw-w-11/12 tw-space-y-2.5">
+            <button
+                @click="showReviewForm = !showReviewForm"
+                type="button" 
+                class="tw-flex tw-justify-center tw-w-full tw-gap-2 tw-bg-black tw-text-white tw-px-3 tw-py-1.5 tw-rounded-md tw-text-medium tw-font-medium hover:tw-bg-gray-700 focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-gray-500 active:tw-scale-95 tw-transition"
+            >
+                <i class="bi bi-pen-fill"></i>
+                <span class="tw-text-center">{{ 'Review' }}</span>
+            </button>
+            <ReviewFormComponent v-if="showReviewForm" :productId="item.productInfo.productId"/>
         </div>
     </li>
-    
 </template>
 
 <script setup>
@@ -38,5 +50,7 @@
             required: true
         }
     });
+
+    const showReviewForm = ref(false);
 
 </script>
