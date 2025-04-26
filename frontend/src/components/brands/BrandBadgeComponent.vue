@@ -1,7 +1,7 @@
 <template>
 
-    <span v-if="!loading" class="badge text-bg-primary">
-        {{ 'Marca: ' + selectedBrandName }}
+    <span v-if="!loading" class="tw-bg-black tw-text-white tw-py-0.5 tw-px-3 tw-rounded-full tw-font-semibold tw-text-sm">
+        {{ 'Brand: ' + selectedBrandName }}
     </span>
 
 </template>
@@ -19,7 +19,7 @@
     });
 
     const selectedBrand = ref(props.selectedBrand);
-    const selectedBrandName = ref('TODAS');    
+    const selectedBrandName = ref('ALL');    
     const loading = ref(true);
     const error = ref(null);
 
@@ -38,14 +38,14 @@
 
             } else {
 
-                selectedBrandName.value = 'Desconocida';                
+                selectedBrandName.value = 'Unknown';                
                 error.value = response.error;
 
             }
 
         } else {
             
-            selectedBrandName.value = 'TODAS';
+            selectedBrandName.value = 'ALL';
 
         }
 
