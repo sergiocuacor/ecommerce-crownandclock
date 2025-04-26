@@ -2,7 +2,7 @@
 
     <article v-if="currentPage <= 0 || currentPage > totalPages" class="tw-flex tw-items-center tw-justify-center tw-border-t tw-border-gray-200 tw-bg-white tw-py-3 sm:tw-px-4">
         <p class="tw-text-sm tw-text-gray-700 tw-bg-gray-100 tw-p-2 tw-rounded-md">
-            {{ 'No hay resultados para mostrar o página no válida.' }}
+            {{ 'No results to display or invalid page.' }}
         </p>
     </article>
 
@@ -10,19 +10,19 @@
 
         <!-- MOBILE -->
         <div class="tw-flex tw-flex-1 tw-justify-between sm:tw-hidden">
-            <button @click="firstPage" class="tw-relative tw-inline-flex tw-items-center tw-rounded-l-md tw-border-2 tw-border-gray-300 tw-bg-white tw-px-4 tw-py-2 tw-text-sm tw-font-medium tw-text-gray-700 hover:tw-bg-gray-50">
+            <button @click="firstPage" class="tw-relative tw-inline-flex tw-items-center tw-rounded-l-md tw-border-2 tw-border-gray-300 tw-bg-white tw-px-4 tw-py-2 tw-text-sm tw-font-medium tw-text-gray-700 hover:tw-bg-gray-200">
                 <i class="bi bi-chevron-double-left"></i>
             </button>
-            <button @click="prevPage" class="tw-relative tw-inline-flex tw-items-center tw-border-y-2 tw-border-gray-300 tw-bg-white tw-px-4 tw-py-2 tw-text-sm tw-font-medium tw-text-gray-700 hover:tw-bg-gray-50">
+            <button @click="prevPage" class="tw-relative tw-inline-flex tw-items-center tw-border-y-2 tw-border-gray-300 tw-bg-white tw-px-4 tw-py-2 tw-text-sm tw-font-medium tw-text-gray-700 hover:tw-bg-gray-200">
                 <i class="bi bi-chevron-left"></i>
             </button>
-            <div class="tw-relative tw-inline-flex tw-flex-1 tw-items-center tw-justify-center tw-border-2 tw-border-gray-300 tw-bg-white tw-px-4 tw-py-2 tw-text-sm tw-font-medium tw-text-gray-700 hover:tw-bg-gray-50">
+            <div class="tw-relative tw-inline-flex tw-flex-1 tw-items-center tw-justify-center tw-border-2 tw-border-gray-300 tw-bg-white tw-px-4 tw-py-2 tw-text-sm tw-font-medium tw-text-gray-700">
                 {{ currentPage + ' - ' + totalPages }}
             </div>
-            <button @click="nextPage" class="tw-relative tw-inline-flex tw-items-center tw-border-y-2 tw-border-gray-300 tw-bg-white tw-px-4 tw-py-2 tw-text-sm tw-font-medium tw-text-gray-700 hover:tw-bg-gray-50">
+            <button @click="nextPage" class="tw-relative tw-inline-flex tw-items-center tw-border-y-2 tw-border-gray-300 tw-bg-white tw-px-4 tw-py-2 tw-text-sm tw-font-medium tw-text-gray-700 hover:tw-bg-gray-200">
                 <i class="bi bi-chevron-right"></i>
             </button>
-            <button @click="lastPage" class="tw-relative tw-inline-flex tw-items-center tw-rounded-r-md tw-border-2 tw-border-gray-300 tw-bg-white tw-px-4 tw-py-2 tw-text-sm tw-font-medium tw-text-gray-700 hover:tw-bg-gray-50">
+            <button @click="lastPage" class="tw-relative tw-inline-flex tw-items-center tw-rounded-r-md tw-border-2 tw-border-gray-300 tw-bg-white tw-px-4 tw-py-2 tw-text-sm tw-font-medium tw-text-gray-700 hover:tw-bg-gray-200">
                 <i class="bi bi-chevron-double-right"></i>
             </button>         
         </div>
@@ -44,11 +44,11 @@
                 <nav class="tw-isolate tw-inline-flex -tw-space-x-px tw-rounded-md tw-shadow-xs" aria-label="Pagination">
 
                     <!-- FIRST & PREVIOUS -->
-                    <button @click="firstPage" :disabled="currentPage <= 1" class="tw-relative tw-inline-flex tw-items-center tw-rounded-l-md tw-px-2 tw-py-2 tw-text-gray-400 tw-ring-1 tw-ring-gray-300 tw-ring-inset hover:tw-bg-gray-50 focus:tw-z-20 focus:tw-outline-offset-0">
+                    <button @click="firstPage" :disabled="currentPage <= 1" class="tw-relative tw-inline-flex tw-items-center tw-rounded-l-md tw-px-2 tw-py-2 tw-text-gray-400 tw-ring-1 tw-ring-gray-300 tw-ring-inset hover:tw-bg-gray-200 focus:tw-z-20 focus:tw-outline-offset-0">
                         <span class="tw-sr-only">{{ 'Primera Página' }}</span>
                         <i class="bi bi-chevron-double-left"></i>
                     </button>
-                    <button @click="prevPage" :disabled="currentPage <= 1" class="tw-relative tw-inline-flex tw-items-center tw-px-2 tw-py-2 tw-text-gray-400 tw-ring-1 tw-ring-gray-300 tw-ring-inset hover:tw-bg-gray-50 focus:tw-z-20 focus:tw-outline-offset-0">
+                    <button @click="prevPage" :disabled="currentPage <= 1" class="tw-relative tw-inline-flex tw-items-center tw-px-2 tw-py-2 tw-text-gray-400 tw-ring-1 tw-ring-gray-300 tw-ring-inset hover:tw-bg-gray-200 focus:tw-z-20 focus:tw-outline-offset-0">
                         <span class="tw-sr-only">{{ 'Anterior' }}</span>
                         <i class="bi bi-chevron-left"></i>
                     </button>
@@ -78,11 +78,11 @@
                     </button>
                     
                     <!-- NEXT & LAST -->
-                    <button @click="nextPage" :disabled="currentPage >= totalPages" class="tw-relative tw-inline-flex tw-items-center tw-px-2 tw-py-2 tw-text-gray-400 tw-ring-1 tw-ring-gray-300 tw-ring-inset hover:tw-bg-gray-50 focus:tw-z-20 focus:tw-outline-offset-0">
+                    <button @click="nextPage" :disabled="currentPage >= totalPages" class="tw-relative tw-inline-flex tw-items-center tw-px-2 tw-py-2 tw-text-gray-400 tw-ring-1 tw-ring-gray-300 tw-ring-inset hover:tw-bg-gray-200 focus:tw-z-20 focus:tw-outline-offset-0">
                         <span class="tw-sr-only">{{ 'Siguiente' }}</span>
                         <i class="bi bi-chevron-right"></i>
                     </button>
-                    <button @click="lastPage" :disabled="currentPage >= totalPages" class="tw-relative tw-inline-flex tw-items-center tw-rounded-r-md tw-px-2 tw-py-2 tw-text-gray-400 tw-ring-1 tw-ring-gray-300 tw-ring-inset hover:tw-bg-gray-50 focus:tw-z-20 focus:tw-outline-offset-0">
+                    <button @click="lastPage" :disabled="currentPage >= totalPages" class="tw-relative tw-inline-flex tw-items-center tw-rounded-r-md tw-px-2 tw-py-2 tw-text-gray-400 tw-ring-1 tw-ring-gray-300 tw-ring-inset hover:tw-bg-gray-200 focus:tw-z-20 focus:tw-outline-offset-0">
                         <span class="tw-sr-only">{{ 'Última' }}</span>
                         <i class="bi bi-chevron-double-right"></i>
                     </button>
@@ -132,8 +132,8 @@
     const pageNumberButtons = computed(() => {
         return {
             commonClasses: "tw-relative tw-inline-flex tw-items-center tw-px-4 tw-py-2 tw-text-sm tw-font-semibold focus:tw-z-20",
-            currentPageClass: "tw-text-white tw-z-10 tw-bg-indigo-600 focus-visible:tw-outline-2 focus-visible:tw-outline-offset-2 focus-visible:tw-outline-indigo-600",
-            notCurrentPageClass: "tw-text-gray-900 tw-ring-1 tw-ring-gray-300 tw-ring-inset hover:tw-bg-gray-50 focus:tw-outline-offset-0",
+            currentPageClass: "tw-text-white tw-z-10 tw-bg-black hover:tw-bg-gray-800 focus-visible:tw-outline-2 focus-visible:tw-outline-offset-2 focus-visible:tw-outline-gray-100",
+            notCurrentPageClass: "tw-text-gray-900 tw-ring-1 tw-ring-gray-300 tw-ring-inset hover:tw-bg-gray-300/75 focus:tw-outline-offset-0",
             buttons: [
                 { condition: totalPages.value >= 1, number: (currentPage.value <= 3 || (currentPage.value <= 6 && totalPages.value <= 6)) ? 1 : (currentPage.value >= totalPages.value - 3) ? totalPages.value - 5 : currentPage.value - 2 },
                 { condition: totalPages.value >= 2, number: (currentPage.value <= 3 || (currentPage.value <= 6 && totalPages.value <= 6)) ? 2 : (currentPage.value >= totalPages.value - 3) ? totalPages.value - 4 : currentPage.value - 1 },
