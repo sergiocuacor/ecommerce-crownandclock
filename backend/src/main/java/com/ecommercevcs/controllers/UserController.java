@@ -58,19 +58,19 @@ public class UserController {
 	}
 
 	@PostMapping("/register")
-	public ResponseEntity<UserEntity> add(@RequestBody UserEntity user) throws MessagingException {
-		try {
-			DiscountDTO discount = this.configDiscounts.getDiscounts().get(1);
-			this.emailUtil.sendHtmlEmail(user.getName(), discount.getName(), user.getEmail(),
-					EmailConstantsUtil.SUBJECT_NAME, EmailConstantsUtil.TEMPLATEHTML_NAME);
-		} catch (MessagingException e) {
+    public ResponseEntity<UserEntity> add(@RequestBody UserEntity user) throws MessagingException {
+        try {
+            DiscountDTO discount = this.configDiscounts.getDiscounts().get(1);
+            this.emailUtil.sendHtmlEmailWelcome(user.getName(), discount.getName(), user.getEmail(),
+                    EmailConstantsUtil.SUBJECT_WELCOME, EmailConstantsUtil.TEMPLATEHTML_WELCOME);
+        } catch (MessagingException e) {
 
-			System.err.println("Error enviando correo: " + e.getMessage());
+            System.err.println("Error enviando correo: " + e.getMessage());
 
-		}
+        }
 
-		return ResponseEntity.ok(userService.add(user));
-	}
+        return ResponseEntity.ok(userService.add(user));
+    }
 
 	@PutMapping("/{id}")
 	public ResponseEntity<UserEntity> update(@RequestBody UserEntity user, @PathVariable Long id) {

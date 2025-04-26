@@ -20,6 +20,8 @@ import com.ecommercevcs.dtos.OrderCreateDTO;
 import com.ecommercevcs.entities.OrderEntity;
 import com.ecommercevcs.services.OrderService;
 
+import jakarta.mail.MessagingException;
+
 
 @RestController
 @RequestMapping("/orders")
@@ -43,10 +45,11 @@ public class OrderController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<OrderCreateDTO> add(@RequestBody OrderCreateDTO order){
-		orderService.add(order);
-		return ResponseEntity.ok(order);
-	}
+    public ResponseEntity<OrderCreateDTO> add(@RequestBody OrderCreateDTO order) throws MessagingException{
+        this.sendEmailToUser(order);
+        orderService.add(order);
+        return ResponseEntity.ok(order);
+    }
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<OrderEntity> update(@RequestBody OrderEntity order, @PathVariable Long id){
@@ -62,5 +65,11 @@ public class OrderController {
 	public List<?> findAllDiscountsAvailable(@PathVariable Long userId){
 		return this.orderService.findAllDiscountNamesAppliedByUser(userId);
 	}
+	
+	public void sendEmailToUser(OrderCreateDTO order) throws MessagingException{
+
+        this.orderService.sendMailToUser(order);
+
+    }
 	
 }
