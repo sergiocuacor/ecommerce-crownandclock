@@ -1,7 +1,9 @@
 package com.ecommercevcs.entities;
 
+import com.ecommercevcs.dtos.ProductSimpleDTO;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -99,6 +101,15 @@ public class OrderDetailsEntity {
 	public void setUnitPrice(Double unitPrice) {
 		this.unitPrice = unitPrice;
 	}
+	
+	public ProductSimpleDTO getProductInfo() {
+		ProductSimpleDTO productSimple = new ProductSimpleDTO(this.product.getId(), 
+				this.product.getMask(), this.product.getName());
+		return productSimple;
+		
+	}
+	
+	
 
 
 	

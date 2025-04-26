@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ecommercevcs.dtos.DiscountDTO;
 import com.ecommercevcs.dtos.OrderCreateDTO;
 import com.ecommercevcs.entities.OrderEntity;
-import com.ecommercevcs.services.IOrderService;
+import com.ecommercevcs.services.OrderService;
+
+import jakarta.mail.MessagingException;
 
 
 @RestController
@@ -28,7 +30,7 @@ public class OrderController {
     private static final Logger logger = LoggerFactory.getLogger(OrderController.class);
 	
 	@Autowired
-	IOrderService orderService;
+	OrderService orderService;
 	
 	
 	@GetMapping("/all")
@@ -43,10 +45,11 @@ public class OrderController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<OrderCreateDTO> add(@RequestBody OrderCreateDTO order){
-		orderService.add(order);
-		return ResponseEntity.ok(order);
-	}
+    public ResponseEntity<OrderCreateDTO> add(@RequestBody OrderCreateDTO order) throws MessagingException{
+        this.sendEmailToUser(order);
+        orderService.add(order);
+        return ResponseEntity.ok(order);
+    }
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<OrderEntity> update(@RequestBody OrderEntity order, @PathVariable Long id){
@@ -59,8 +62,14 @@ public class OrderController {
 	}
 	
 	@GetMapping("/discounts/{userId}")
-	public List<String> findAllDiscountsAvailable(@PathVariable Long userId){
+	public List<?> findAllDiscountsAvailable(@PathVariable Long userId){
 		return this.orderService.findAllDiscountNamesAppliedByUser(userId);
 	}
+	
+	public void sendEmailToUser(OrderCreateDTO order) throws MessagingException{
+
+        this.orderService.sendMailToUser(order);
+
+    }
 	
 }

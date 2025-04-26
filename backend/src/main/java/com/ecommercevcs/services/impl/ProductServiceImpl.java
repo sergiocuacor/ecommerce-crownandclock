@@ -1,4 +1,4 @@
-package com.ecommercevcs.services;
+package com.ecommercevcs.services.impl;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,9 +18,10 @@ import com.ecommercevcs.entities.BrandEntity;
 import com.ecommercevcs.entities.ProductEntity;
 import com.ecommercevcs.repositories.BrandRepository;
 import com.ecommercevcs.repositories.ProductRepository;
+import com.ecommercevcs.services.ProductService;
 
 @Service
-public class ProductServiceImpl implements IProductService {
+public class ProductServiceImpl implements ProductService {
 	
     private static final Logger logger = LoggerFactory.getLogger(ProductServiceImpl.class);
 
@@ -54,7 +55,11 @@ public class ProductServiceImpl implements IProductService {
 		Optional<ProductEntity> productUpdated = this.productRepository.findById(id);
 		if(productUpdated.isPresent()) {
 			productUpdated.get().setName(product.getName());
+			productUpdated.get().setDescription(product.getDescription());
+			productUpdated.get().setPrice(product.getPrice());
+			productUpdated.get().setStock(product.getStock());
 		}
+		
 		
 		return this.productRepository.save(productUpdated.get());
 	}

@@ -10,7 +10,7 @@ import com.ecommercevcs.entities.BrandEntity;
 import com.ecommercevcs.entities.ProductEntity;
 
 
-public interface IBrandService {
+public interface BrandService {
 	
 	public List<BrandEntity> findAll();
 	public BrandEntity findById(Long id);

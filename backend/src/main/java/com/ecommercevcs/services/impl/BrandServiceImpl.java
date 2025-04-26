@@ -1,4 +1,4 @@
-package com.ecommercevcs.services;
+package com.ecommercevcs.services.impl;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,11 +16,12 @@ import com.ecommercevcs.entities.BrandEntity;
 import com.ecommercevcs.entities.ProductEntity;
 import com.ecommercevcs.repositories.BrandRepository;
 import com.ecommercevcs.repositories.ProductRepository;
+import com.ecommercevcs.services.BrandService;
 
 import jakarta.persistence.EntityNotFoundException;
 
 @Service
-public class BrandServiceImpl implements IBrandService {
+public class BrandServiceImpl implements BrandService {
 	
     private static final Logger logger = LoggerFactory.getLogger(BrandServiceImpl.class);
 

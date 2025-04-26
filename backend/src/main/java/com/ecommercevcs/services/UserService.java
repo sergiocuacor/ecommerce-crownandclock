@@ -6,7 +6,7 @@ import java.util.Optional;
 import com.ecommercevcs.dtos.DiscountDTO;
 import com.ecommercevcs.entities.UserEntity;
 
-public interface IUserService{
+public interface UserService{
 
 	public List<UserEntity> findAll();
 //	public List<DiscountDTO> getAvailableDiscounts(Long id);

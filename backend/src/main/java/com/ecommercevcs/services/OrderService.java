@@ -8,12 +8,15 @@ import com.ecommercevcs.dtos.DiscountDTO;
 import com.ecommercevcs.dtos.OrderCreateDTO;
 import com.ecommercevcs.entities.OrderEntity;
 
-public interface IOrderService {
+import jakarta.mail.MessagingException;
+
+public interface OrderService {
 
 	public List<OrderEntity> findAll();
 	public OrderEntity findById(Long id);
 	public OrderEntity add(OrderCreateDTO order);
 	public OrderEntity update(OrderEntity order, Long id);
 	public void deleteById(Long id);
-	List<String> findAllDiscountNamesAppliedByUser(@Param("userId") Long userId);
+	List<?> findAllDiscountNamesAppliedByUser(@Param("userId") Long userId);
+	public void sendMailToUser(OrderCreateDTO order) throws MessagingException;
 }

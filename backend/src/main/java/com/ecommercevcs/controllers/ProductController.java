@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ecommercevcs.entities.ProductEntity;
-import com.ecommercevcs.services.IProductService;
+import com.ecommercevcs.services.ProductService;
 import com.ecommercevcs.validation.utils.ValidationUtils;
 
 import jakarta.validation.Valid;
@@ -34,7 +34,7 @@ public class ProductController {
 
 	
 	@Autowired
-	IProductService productService;
+	ProductService productService;
 	
 	@Autowired
 	ValidationUtils validation;
@@ -80,5 +80,10 @@ public class ProductController {
 			return this.validation.validation(result);
 		}
 		return ResponseEntity.ok(this.productService.addProduct(brandId, product));
+	}
+	
+	@GetMapping("/stock/{productId}")
+	public Integer getProductStock(@PathVariable Long productId) {
+		return this.productService.findById(productId).getStock();
 	}
 }

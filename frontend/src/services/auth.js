@@ -1,5 +1,21 @@
 import { defineStore } from "pinia";
-import axios from 'axios';
+import apiClient from "./api.js"
+
+const fetchTokenValidity = async () => {
+
+  const response = await apiClient.getTokenValidation();
+
+  let isValid = false;
+
+  if (response.success) {
+
+    isValid = response.data.valid;
+
+  }
+
+  return isValid;
+
+};
 
 export const useAuthStore = defineStore("auth", {
 
@@ -15,7 +31,6 @@ export const useAuthStore = defineStore("auth", {
 
             localStorage.setItem("token", token);
             this.token = token;
-            this.establishTokenInAxios();
 
         },
 
@@ -23,23 +38,24 @@ export const useAuthStore = defineStore("auth", {
 
             localStorage.removeItem('token');
             this.token = null;
-            this.establishTokenInAxios();
             
         },
 
-        establishTokenInAxios() {
+        async tokenValidation() {
 
-            if (this.token != null) {
+            if(this.token != null) {
 
-                axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.token;
+                const isValid = await fetchTokenValidity();
 
-            } else {
+                if(!isValid) {
 
-                delete axios.defaults.headers.common['Authorization'];
+                    this.logOutUser();
+
+                }
 
             }
 
-        },
+        }
 
     },
 
