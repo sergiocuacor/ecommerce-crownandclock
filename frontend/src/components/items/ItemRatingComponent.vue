@@ -2,10 +2,14 @@
 
     <figure
         v-if="itemRating > 0"
-        class="tw-flex tw-align-items-center tw-text-white tw-justify-center tw-py-1.5 tw-px-2 tw-m-1 tw-bg-black/80 tw-rounded-lg"
+        class="tw-flex tw-align-items-center tw-text-white tw-justify-center tw-py-1.5 tw-px-2 tw-bg-black/80 tw-rounded-lg"
+        :title="`${itemRating} / 5 in ${ratingCount} reviews`"
     >
         <div class="tw-font-bold tw-mr-1.5 tw-text-gray-400">
-            {{ ratingCount + ' reviews' }}
+            {{ ratingCount }}
+            <span class="tw-hidden lg:tw-inline tw-truncate">
+                {{ ' reviews' }}
+            </span>
         </div>
 
         <template v-for="index in 5" :key="index">
