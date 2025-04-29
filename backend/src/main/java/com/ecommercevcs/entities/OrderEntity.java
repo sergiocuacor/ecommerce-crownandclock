@@ -145,5 +145,9 @@ public class OrderEntity {
 		public void setDiscountPercentage(Integer discountPercentage) {
 			this.discountPercentage = discountPercentage;
 		}
+		
+		public Long getUserId() {
+			return this.user.getId();
+		}
 	    
 }
