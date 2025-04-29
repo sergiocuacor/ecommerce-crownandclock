@@ -14,6 +14,7 @@ import CategoriesView from '../views/CategoriesView.vue';
 import CategoryView from '../views/CategoryView.vue';
 import SocialsView from '../views/SocialsView.vue';
 import UserProfileView from '../views/UserProfileView.vue';
+import UserOrdersView from '../views/UserOrdersView.vue';
 import UserReviewsView from '../views/UserReviewsView.vue';
 
 const routes = [
@@ -79,6 +80,25 @@ const routes = [
   { 
     path: '/users',
     redirect: { name: 'profile' }
+  },
+  // User Orders With filter
+  { 
+    path: '/profile/orders/:filter?',
+    name: 'orders',
+    component: UserOrdersView,
+    meta: {
+      label: 'Orders',
+      breadcrumb: [{ label: 'Home', path: { name: 'home' } }],
+      requiresAuth: true
+    } 
+  },
+  { 
+    path: '/order',
+    redirect: { name: 'orders' }
+  },
+  { 
+    path: '/orders',
+    redirect: { name: 'orders' }
   },
   // User Reviews
   { 
