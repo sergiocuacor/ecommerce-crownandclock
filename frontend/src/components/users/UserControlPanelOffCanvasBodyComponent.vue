@@ -61,22 +61,22 @@
                         </router-link>
                     </li>
                     <li>
-                        <router-link :to="{ name: 'orders', params: { mask: 'completed' } }" class="link-body-emphasis d-inline-flex text-decoration-none rounded">
+                        <router-link :to="{ name: 'orders', params: { filter: 'completed' } }" class="link-body-emphasis d-inline-flex text-decoration-none rounded">
                             {{ 'Completed' }}
                         </router-link>
                     </li>
                     <li>
-                        <router-link :to="{ name: 'orders', params: { mask: 'shipped' } }" class="link-body-emphasis d-inline-flex text-decoration-none rounded">
+                        <router-link :to="{ name: 'orders', params: { filter: 'shipped' } }" class="link-body-emphasis d-inline-flex text-decoration-none rounded">
                             {{ 'Shipped' }}
                         </router-link>
                     </li>
                     <li>
-                        <router-link :to="{ name: 'orders', params: { mask: 'pending' } }" class="link-body-emphasis d-inline-flex text-decoration-none rounded">
+                        <router-link :to="{ name: 'orders', params: { filter: 'pending' } }" class="link-body-emphasis d-inline-flex text-decoration-none rounded">
                             {{ 'Pending' }}
                         </router-link>
                     </li>
                     <li>
-                        <router-link :to="{ name: 'orders', params: { mask: 'cancelled' } }" class="link-body-emphasis d-inline-flex text-decoration-none rounded">
+                        <router-link :to="{ name: 'orders', params: { filter: 'cancelled' } }" class="link-body-emphasis d-inline-flex text-decoration-none rounded">
                             {{ 'Cancelled' }}
                         </router-link>
                     </li>
