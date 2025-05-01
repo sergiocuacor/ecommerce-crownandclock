@@ -68,7 +68,7 @@
         <div class="tw-absolute tw-top-1/2 tw-left-1/2 tw-transform tw--translate-x-1/2 tw--translate-y-1/2 tw-bg-gray-200 tw-p-2.5 border border-3 rounded">
             <div class="flex flex-col tw-text-center tw-font-semibold tw-rounded-lg">
                 <div class="tw-text-xl md:tw-text-6xl"><i class="bi bi-exclamation-circle-fill tw-text-red-500"></i></div>
-                <div class="tw-text-xs md:tw-text-2xl">{{ 'Error al cargar los productos' }}</div>
+                <div class="tw-text-xs md:tw-text-xl">{{ 'Error loading products' }}</div>
             </div>     
         </div>
     </section>
@@ -97,6 +97,7 @@
     const fetchItems = async () => {
 
         loading.value = true;
+        error.value = null;
 
         const response = await apiClient.getItemsPageable(currentPage.value - 1, pageSize.value, sortBy.value, selectedBrand.value);
         
