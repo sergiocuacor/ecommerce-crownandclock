@@ -143,7 +143,7 @@
                     :disabled="!canSubmit || loading"
                     class="tw-bg-black tw-text-white tw-rounded-md tw-h-10 tw-flex tw-items-center tw-justify-center tw-px-1.5 tw-shadow-md hover:tw-bg-gray-800 tw-cursor-pointer tw-text-xl tw-transition tw-delay-150 tw-duration-300 tw-ease-in-out hover:tw--translate-y-1 hover:tw-scale-90 disabled:tw-bg-gray-700 mt-3"
                 >
-                    <span v-if="loading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                    <span v-if="loading" class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
                     {{ loading ? 'Signing up...' : 'Sign up' }}
                 </button>
             </div>

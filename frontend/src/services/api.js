@@ -31,8 +31,12 @@ export default {
     console.log(apiClient.defaults.baseURL);
     return apiClient.defaults.baseURL;
   },
-  getItem(mask) {
-    return apiCall('get', `/products/${mask}`);
+  // Items
+  getItemById(id) {
+    return apiCall('get', `/products/${id}`);
+  },
+  getItemByMask(mask) {
+    return apiCall('get', `/products/mask/${mask}`);
   },
   getItems() {
     return apiCall('get', '/products/all');
@@ -43,18 +47,14 @@ export default {
   getItemStock(id) {
     return apiCall('get', `/products/stock/${id}`);
   },
+  // Brands
   getBrandById(id) {
     return apiCall('get', `/brands/${id}`);
   },
   getBrands() {
     return apiCall('get', '/brands/all');
   },
-  postOrder(data) {
-    return apiCall('post', '/orders', {}, data);
-  },
-  getValidDiscountsForUser(id) {
-    return apiCall('get', `/orders/discounts/${id}`);
-  },
+  // Users 
   postLoginUser(data) {
     return apiCall('post', '/login', {}, data);
   },
@@ -69,5 +69,22 @@ export default {
   },
   getTokenValidation() {
     return apiCall('get', '/auth/validate-token');
-  }  
+  },
+  // Orders & Cart
+  getValidDiscountsForUser(id) {
+    return apiCall('get', `/orders/discounts/${id}`);
+  },  
+  postOrder(data) {
+    return apiCall('post', '/orders', {}, data);
+  },
+  //Reviews
+  getReviewsByItemId(id) {
+    return apiCall('get', `/reviews/product/${id}`);
+  },
+  getReviewsByUserId(id) {
+    return apiCall('get', `/reviews/user/${id}`);
+  },
+  postNewReview(userId, productId, data) {
+    return apiCall('post', `/reviews/${userId}/${productId}`, {}, data);
+  }
 };

@@ -37,7 +37,7 @@
     export function validateName(fieldName = 'Field', str) {
 
         str = str.trim();
-        const nameRegex = /^[\p{L}.'`]+$/u;
+        const nameRegex = /^[\p{L}.'`\s]+$/u;
         const isValid = nameRegex.test(str);
     
         if (isValid) {
@@ -129,6 +129,75 @@
             return {
                 valid: false,
                 message: `${fieldName} must be 3–10 characters and may include letters, numbers, spaces, or hyphens.`
+            };
+        }
+
+    }
+
+    export function validateCreditCardNumber(str, fieldName = 'Credit card number') {
+
+        const trimmed = str.replace(/\s+/g, '');
+
+        if (!/^\d+$/.test(trimmed) || trimmed.length !== 16) {
+            return {
+                valid: false,
+                message: `${fieldName} must contain only numbers and must be exactly 16 digits.`
+            };
+        } else {    
+            return {
+                valid: true,
+                message: `${fieldName} is valid.`
+            };
+        }
+
+    }
+    
+    export function validateCreditCardExpiryDate(str, fieldName = 'Credit card expiry date') {
+
+        str = str.trim();    
+        const dateRegex = /^(0?[1-9]|1[0-2])\/\d{2}$/;
+    
+        if (!dateRegex.test(str)) {
+            return {
+                valid: false,
+                message: `${fieldName} must be in MM/YY format.`
+            };
+        }
+    
+        const [monthStr, yearStr] = str.split('/');
+        const month = parseInt(monthStr, 10);
+        const year = parseInt(yearStr, 10);
+    
+        const today = new Date();
+        const currentMonth = today.getMonth() + 1;
+        const currentYear = today.getFullYear() % 100;
+    
+        if (year > currentYear || (year === currentYear && month >= currentMonth)) {
+            return {
+                valid: true,
+                message: `${fieldName} is valid.`
+            };
+        } else {
+            return {
+                valid: false,
+                message: `${fieldName} must be a future date (MM/YY).`
+            };
+        }
+    }
+    
+    export function validateCreditCardCVV(str, fieldName = 'Credit card CVV') {
+
+        const trimmed = str.trim();
+        
+        if (!/^\d+$/.test(trimmed) || trimmed.length !== 3) {
+            return {
+                valid: false,
+                message: `${fieldName} must contain only numbers and must be exactly 3 digits.`
+            };
+        } else {
+            return {
+                valid: true,
+                message: `${fieldName} is valid.`
             };
         }
 

@@ -14,6 +14,9 @@ import CategoriesView from '../views/CategoriesView.vue';
 import CategoryView from '../views/CategoryView.vue';
 import SocialsView from '../views/SocialsView.vue';
 import UserProfileView from '../views/UserProfileView.vue';
+import UserOrdersView from '../views/UserOrdersView.vue';
+import UserReviewsView from '../views/UserReviewsView.vue';
+import UserCheckoutView from '../views/UserCheckoutView.vue';
 
 const routes = [
   // Error/Unknown
@@ -78,6 +81,55 @@ const routes = [
   { 
     path: '/users',
     redirect: { name: 'profile' }
+  },
+  // User Orders With filter
+  { 
+    path: '/profile/orders/:filter?',
+    name: 'orders',
+    component: UserOrdersView,
+    meta: {
+      label: 'Orders',
+      breadcrumb: [{ label: 'Home', path: { name: 'home' } }],
+      requiresAuth: true
+    } 
+  },
+  { 
+    path: '/order',
+    redirect: { name: 'orders' }
+  },
+  { 
+    path: '/orders',
+    redirect: { name: 'orders' }
+  },
+  // User Reviews
+  { 
+    path: '/profile/reviews',
+    name: 'reviews',
+    component: UserReviewsView,
+    meta: {
+      label: 'Reviews',
+      breadcrumb: [{ label: 'Home', path: { name: 'home' } }],
+      requiresAuth: true
+    } 
+  },
+  { 
+    path: '/review',
+    redirect: { name: 'reviews' }
+  },
+  { 
+    path: '/reviews',
+    redirect: { name: 'reviews' }
+  },
+  //User Checkout
+  { 
+    path: '/checkout/:filter?',
+    name: 'checkout',
+    component: UserCheckoutView,
+    meta: {
+      label: 'Checkout',
+      breadcrumb: [{ label: 'Home', path: { name: 'home' } }],
+      requiresAuth: true
+    } 
   },
   // Cart
   { 
@@ -339,21 +391,41 @@ router.beforeEach(async (to, from, next) => {
     const breadcrumbs = [...to.meta.breadcrumb];
 
     if (to.params.mask) {
-      try {
-        const response = await apiClient.getItem(to.params.mask);
-        const item = response.data;
 
-        if (item) {
-          breadcrumbs.push({ label: item.title, path: to.path });
-          pageTitle = `${defaultPageTitle} - ${item.title}`;
-        } else {
-          breadcrumbs.push({ label: 'Unknown Product', path: to.path });
-          pageTitle = `${defaultPageTitle} - Unknown Product`;
+      if (to.name === 'product') {
+        try {
+          const response = await apiClient.getItemByMask(to.params.mask);
+          const item = response.data;
+          if (item) {
+            breadcrumbs.push({ label: item.name, path: to.path });
+            pageTitle = `${defaultPageTitle} - ${item.name}`;
+          } else {
+            breadcrumbs.push({ label: 'Unknown Product', path: to.path });
+            pageTitle = `${defaultPageTitle} - Unknown Product`;
+          }
+        } catch (error) {
+          console.error('Error fetching product:', error);
+          breadcrumbs.push({ label: 'Error Loading Product', path: to.path });
         }
-      } catch (error) {
-        console.error('Error fetching item:', error);
-        breadcrumbs.push({ label: 'Error Loading Product', path: to.path });
       }
+      
+      if (to.name === 'brand') {
+        try {
+          const response = await apiClient.getBrandById(to.params.mask);
+          const brand = response.data;
+          if (brand) {
+            breadcrumbs.push({ label: brand.name, path: to.path });
+            pageTitle = `${defaultPageTitle} - ${brand.name}`;
+          } else {
+            breadcrumbs.push({ label: 'Unknown Brand', path: to.path });
+            pageTitle = `${defaultPageTitle} - Unknown Brand`;
+          }
+        } catch (error) {
+          console.error('Error fetching brand:', error);
+          breadcrumbs.push({ label: 'Error Loading Brand', path: to.path });
+        }
+      }
+
     } else {
       if (!breadcrumbs.find(b => b.path === to.path)) {
         breadcrumbs.push({ label: to.meta.label, path: to.path });

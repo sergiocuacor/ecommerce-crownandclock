@@ -1,6 +1,9 @@
 <template>
 
-    <ElementComponent :toRoute="{ name: 'product', params: { mask: props.item.id } }" :imgSrc="apiBaseURL + `/images/` + props.item.mask + `/image.png`" :imgAlt="`${props.item.mask}`">
+    <ElementComponent :toRoute="{ name: 'product', params: { mask: props.item.mask } }" :imgSrc="apiBaseURL + `/images/` + props.item.mask + `/image.png`" :imgAlt="`${props.item.mask}`">
+        <template #top-right>
+            <ItemRatingComponent :averageRating="props.item.averageRating" :ratingCount="props.item.ratingCount" :class="`tw-m-2`"/>
+        </template>
         <template #bottom-right>
             <CartActionsButtonComponent :item="props.item" :class="'m-1'"/>
         </template>
@@ -29,7 +32,7 @@
     const props = defineProps({
         item: {
             type: Object,
-            default: [],
+            default: {},
             required: true
         }
     });

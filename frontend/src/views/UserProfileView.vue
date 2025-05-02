@@ -1,6 +1,6 @@
 <template>
 
-    <main class="container-sm tw-pt-16 lg:tw-pt-14 tw-font-serif" v-if="!loading">
+    <main class="container-sm tw-pt-16 lg:tw-pt-14 tw-font-serif" v-if="!loading && !error">
 
         <div class="card">
 
@@ -16,19 +16,19 @@
                     <li class="list-group-item">
                         <strong>{{ 'Full name: ' }}</strong>{{ user.name }}                     
                     </li>
-                    <li class="list-group-item tw-flex tw-items-center tw-justify-between tw-gap-2">
+                    <li class="list-group-item tw-flex tw-flex-col sm:tw-flex-row tw-items-center tw-justify-between tw-gap-2">
                         <UserInformationInputGeneratorComponent @updatedField="fetchUserData" :text="`First name: `" :inputType="`text`" :value="user.firstName" :validationId="`firstName`" :userId="user.id" />
                     </li>    
-                    <li class="list-group-item tw-flex tw-items-center tw-justify-between tw-gap-2">
+                    <li class="list-group-item tw-flex tw-flex-col sm:tw-flex-row tw-items-center tw-justify-between tw-gap-2">
                         <UserInformationInputGeneratorComponent @updatedField="fetchUserData" :text="`Last name: `" :inputType="`text`" :value="user.lastName" :validationId="`lastName`" :userId="user.id"/>
                     </li>
                     <li class="list-group-item">
                         <UserInformationPasswordInputComponent :userId="user.id"/>
                     </li>
-                    <li class="list-group-item tw-flex tw-items-center tw-justify-between tw-gap-2">
+                    <li class="list-group-item tw-flex tw-flex-col sm:tw-flex-row tw-items-center tw-justify-between tw-gap-2">
                         <UserInformationInputGeneratorComponent @updatedField="fetchUserData" :text="`Email: `" :inputType="`email`" :value="user.email" :validationId="`email`" :userId="user.id"/>
                     </li>
-                    <li class="list-group-item tw-flex tw-items-center tw-justify-between tw-gap-2">
+                    <li class="list-group-item tw-flex tw-flex-col sm:tw-flex-row tw-items-center tw-justify-between tw-gap-2">
                         <UserInformationInputGeneratorComponent @updatedField="fetchUserData" :text="`Phone number: `" :inputType="`text`" :value="user.phoneNumber" :validationId="`phoneNumber`" :userId="user.id"/>
                     </li>
                 </ul>
@@ -36,19 +36,19 @@
                 <h5 class="card-title fw-semibold tw-uppercase">{{ 'Full Address' }}</h5>
                 
                 <ul class="list-group list-group-flush">                    
-                    <li class="list-group-item tw-flex tw-items-center tw-justify-between tw-gap-2">
+                    <li class="list-group-item tw-flex tw-flex-col sm:tw-flex-row tw-items-center tw-justify-between tw-gap-2">
                         <UserInformationInputGeneratorComponent @updatedField="fetchUserData" :text="`Address: `" :inputType="`text`" :value="user.address.streetAddress" :validationId="`streetAddress`" :userId="user.id"/>
                     </li>
-                    <li class="list-group-item tw-flex tw-items-center tw-justify-between tw-gap-2">
+                    <li class="list-group-item tw-flex tw-flex-col sm:tw-flex-row tw-items-center tw-justify-between tw-gap-2">
                         <UserInformationInputGeneratorComponent @updatedField="fetchUserData" :text="`City: `" :inputType="`text`" :value="user.address.city" :validationId="`city`" :userId="user.id"/>
                     </li>
-                    <li class="list-group-item tw-flex tw-items-center tw-justify-between tw-gap-2">
+                    <li class="list-group-item tw-flex tw-flex-col sm:tw-flex-row tw-items-center tw-justify-between tw-gap-2">
                         <UserInformationInputGeneratorComponent @updatedField="fetchUserData" :text="`State: `" :inputType="`text`" :value="user.address.state" :validationId="`state`" :userId="user.id"/>
                     </li>
-                    <li class="list-group-item tw-flex tw-items-center tw-justify-between tw-gap-2">
+                    <li class="list-group-item tw-flex tw-flex-col sm:tw-flex-row tw-items-center tw-justify-between tw-gap-2">
                         <UserInformationInputGeneratorComponent @updatedField="fetchUserData" :text="`Country: `" :inputType="`text`" :value="user.address.country" :validationId="`country`" :userId="user.id"/>
                     </li>
-                    <li class="list-group-item tw-flex tw-items-center tw-justify-between tw-gap-2">
+                    <li class="list-group-item tw-flex tw-flex-col sm:tw-flex-row tw-items-center tw-justify-between tw-gap-2">
                         <UserInformationInputGeneratorComponent @updatedField="fetchUserData" :text="`Postal code: `" :inputType="`text`" :value="user.address.postalCode" :validationId="`postalCode`" :userId="user.id"/>
                     </li>
                 </ul>
@@ -66,9 +66,9 @@
 
             <article v-if="user.orderList.length > 0" class="accordion" id="ordersAccordion">
 
-                <div v-for="order, index in user.orderList" :key="index" class="accordion-item">
+                <div v-for="order, index in user.orderList" :key="order.id" class="accordion-item">
                     <h2 class="accordion-header">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" :data-bs-target="`#productPanel-` + index" aria-expanded="true" :aria-controls="`#productPanel-` + index">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" :data-bs-target="`#productPanel-` + order.id" aria-expanded="true" :aria-controls="`productPanel-` + order.id">
                             {{ 'Order ' + new Date(order.orderDate).toLocaleString() }}
                             <span v-if="order.status == 'PENDING'" class="ms-2 badge tw-bg-yellow-700">{{ order.status }}</span>
                             <span v-if="order.status == 'CANCELLED'" class="ms-2 badge tw-bg-red-800">{{ order.status }}</span>
@@ -76,7 +76,7 @@
                             <span v-if="order.status == 'SHIPPED'" class="ms-2 badge tw-bg-blue-800">{{ order.status }}</span>
                         </button>
                     </h2>
-                    <div :id="`productPanel-` + index" class="accordion-collapse collapse" :class="index == 0 ? 'show' : ''">
+                    <div :id="`productPanel-` + order.id" class="accordion-collapse collapse" :class="index == 0 ? 'show' : ''">
                         <div class="accordion-body">
 
                             <OrderItemsComponent :orderItems="order.orderDetails"/>
@@ -104,7 +104,7 @@
     import { onMounted, ref } from 'vue';
     import apiClient from '../services/api.js';
     
-    const user = ref([]);
+    const user = ref({});
     const loading = ref(true);
     const error = ref(null);
 
@@ -116,6 +116,7 @@
 
         if (response.success) {
 
+            error.value = null;
             user.value = response.data;
 
         } else {
@@ -128,6 +129,6 @@
 
     };
 
-    onMounted(fetchUserData)
+    onMounted(fetchUserData);
 
 </script>

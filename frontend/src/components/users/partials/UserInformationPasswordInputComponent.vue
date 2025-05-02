@@ -1,12 +1,12 @@
 <template>
 
-    <span v-if="!isEditing" class="tw-flex tw-items-center tw-justify-between tw-gap-2">
+    <span v-if="!isEditing" class="tw-flex tw-flex-col sm:tw-flex-row tw-items-center tw-justify-between tw-gap-2">
         <strong>{{ 'Change password: ' }}</strong>
         <button
             v-if="!isEditing"
             @click="isEditing = true"
             type="submit"
-            class="tw-flex tw-items-center tw-gap-2 tw-bg-black tw-text-white tw-px-3 tw-py-1.5 tw-rounded-md tw-text-sm tw-font-medium hover:tw-bg-gray-700 focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-gray-500 active:tw-scale-95 tw-transition"
+            class="tw-flex tw-items-center tw-justify-center tw-w-full sm:tw-w-auto tw-gap-2 tw-bg-black tw-text-white tw-px-3 tw-py-1.5 tw-rounded-md tw-text-sm tw-font-medium hover:tw-bg-gray-700 focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-gray-500 active:tw-scale-95 tw-transition"
         >
             <i class="bi bi-pen-fill"></i>
             {{ 'Edit' }}
@@ -54,7 +54,7 @@
                 <button
                     :disabled="!canSubmit || !loading"
                     type="submit" 
-                    class="tw-flex tw-items-center tw-gap-2 tw-bg-black disabled:tw-bg-gray-500 tw-text-white tw-px-3 tw-py-1.5 tw-rounded-md tw-text-sm tw-font-medium hover:tw-bg-gray-700 focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-gray-500 active:tw-scale-95 tw-transition"
+                    class="tw-flex tw-items-center tw-justify-center tw-w-full tw-gap-2 tw-bg-black disabled:tw-bg-gray-500 tw-text-white tw-px-3 tw-py-1.5 tw-rounded-md tw-text-sm tw-font-medium hover:tw-bg-gray-700 focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-gray-500 active:tw-scale-95 tw-transition"
                 >
                     <i class="bi bi-check-square-fill"></i>
                     {{ 'Confirm' }}
@@ -63,7 +63,7 @@
                     :disabled="!loading"
                     @click="isEditing = false"
                     type="button" 
-                    class="tw-flex tw-items-center tw-gap-2 tw-bg-black disabled:tw-bg-gray-400 tw-text-white tw-px-3 tw-py-1.5 tw-rounded-md tw-text-sm tw-font-medium hover:tw-bg-gray-700 focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-gray-500 active:tw-scale-95 tw-transition"
+                    class="tw-flex tw-items-center tw-justify-center tw-w-full tw-gap-2 tw-bg-black disabled:tw-bg-gray-400 tw-text-white tw-px-3 tw-py-1.5 tw-rounded-md tw-text-sm tw-font-medium hover:tw-bg-gray-700 focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-gray-500 active:tw-scale-95 tw-transition"
                 >
                     <i class="bi bi-x-square-fill"></i>
                     {{ 'Cancel' }}

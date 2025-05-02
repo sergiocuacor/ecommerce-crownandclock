@@ -4,25 +4,29 @@
 
             <div class="p-4 rounded tw-bg-gray-200/75 border border-2 tw-border-gray-300/50 tw-space-y-2.5 w-100">
 
-                <div class="text-center">
-                    {{ 'Login' }}
+                <div class="tw-text-md">
+                    <strong>{{ 'Your credentials' }}</strong>
                 </div>
 
-                <div class="">
-                    <label for="emailInput" class="form-label">{{ 'Email' }}</label>
+                <div class="form-floating">
                     <input v-model="emailInput" type="email" placeholder="example@example.com" required class="form-control" />
+                    <label>{{ 'Email' }}</label>
                 </div>
 
-                <div class="">
-                    <label for="passwordInput" class="form-label">{{ 'Contraseña' }}</label>
-                    <input v-model="passwordInput" type="password" placeholder="Contraseña" required class="form-control" />
+                <div class="form-floating">         
+                    <input v-model="passwordInput" type="password" required class="form-control" />
+                    <label>{{ 'Password' }}</label>
                 </div>
 
                 <p v-if="error != null">{{ error }}</p>
 
                 <div class="d-flex flex-column align-items-center justify-content-center">
-                    <button type="submit" class="btn btn-primary mt-3">
-                        {{ 'Iniciar sesión' }}
+                    <button
+                        type="submit"
+                        :disabled="loading"
+                        class="tw-bg-black tw-text-white tw-rounded-md tw-h-10 tw-flex tw-items-center tw-justify-center tw-px-1.5 tw-shadow-md hover:tw-bg-gray-800 tw-cursor-pointer tw-text-xl tw-transition tw-delay-150 tw-duration-300 tw-ease-in-out hover:tw--translate-y-1 hover:tw-scale-90 disabled:tw-bg-gray-700 mt-3">
+                            <span v-if="loading" class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
+                            {{ loading ? 'Signing in...' : 'Sign in' }}
                     </button>
                 </div>
                 
@@ -44,7 +48,7 @@
     
     const emailInput = ref('');
     const passwordInput = ref('');
-    const loading = ref(true);
+    const loading = ref(false);
     const error = ref(null);
 
     const validateUserCredentials = async () => {
@@ -55,18 +59,18 @@
         };
 
         loading.value = true;
+        error.value = null;
 
         const response = await apiClient.postLoginUser(userCredentials);
 
         if (response.success) {
 
-            authStore.logInUser(response.data.token);
-            error.value = null;
+            authStore.logInUser(response.data.token);            
             router.push('/home');
 
         } else {
 
-            error.value = response.error.error;
+            error.value = response.error.message;
 
         }
 

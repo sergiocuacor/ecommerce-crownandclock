@@ -37,7 +37,7 @@
         </div>
         <div class="tw-absolute tw-bottom-0 tw-right-0 tw-my-2">
             <button class="tw-bg-black tw-text-white tw-rounded-md tw-h-8 tw-flex tw-items-center tw-justify-center tw-px-1.5 tw-shadow-md hover:tw-bg-gray-800 disabled:tw-opacity-50 tw-cursor-pointer tw-text-xl tw-transition tw-delay-150 tw-duration-300 tw-ease-in-out hover:tw--translate-y-1 hover:tw-scale-110" @click="removeFromCart(item.id)">
-                {{ 'Quitar' }}
+                {{ 'Remove' }}
             </button>
         </div>           
     </li>
