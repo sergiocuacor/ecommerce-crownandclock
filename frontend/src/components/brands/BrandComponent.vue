@@ -7,9 +7,9 @@
             </div>
         </template>
         <template #middle-center>
-            <div class="tw-font-bold tw-text-2xl tw-uppercase tw-text-center">
+            <router-link :to="{ name: 'brand', params: { mask: props.brand.id } }" class="tw-block tw-font-bold tw-text-2xl tw-uppercase tw-text-center">
                 {{ props.brand.name }}
-            </div>
+            </router-link>
         </template>      
     </ElementComponent>
 
