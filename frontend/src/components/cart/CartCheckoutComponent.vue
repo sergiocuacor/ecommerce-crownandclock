@@ -1,4 +1,5 @@
 <template>
+  
     <div class="tw-grid tw-grid-cols-1 tw-gap-0">
       <!-- Cart Card -->
       <div class="tw-w-full tw-bg-gray-200 tw-rounded-t-[10px]">
@@ -161,10 +162,11 @@
 
       if (response.success) {
         console.log('Order sent successfully!');
-        router.push('/profile');
+        router.push('/checkout/success');
         cartStore.emptyCart();
       } else {
         console.error('Error sending order:', response.error);
+        router.push('/checkout/error');
       }
 
     };
