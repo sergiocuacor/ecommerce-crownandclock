@@ -16,6 +16,7 @@ import SocialsView from '../views/SocialsView.vue';
 import UserProfileView from '../views/UserProfileView.vue';
 import UserOrdersView from '../views/UserOrdersView.vue';
 import UserReviewsView from '../views/UserReviewsView.vue';
+import UserCheckoutView from '../views/UserCheckoutView.vue';
 
 const routes = [
   // Error/Unknown
@@ -118,6 +119,17 @@ const routes = [
   { 
     path: '/reviews',
     redirect: { name: 'reviews' }
+  },
+  //User Checkout
+  { 
+    path: '/checkout/:filter?',
+    name: 'checkout',
+    component: UserCheckoutView,
+    meta: {
+      label: 'Checkout',
+      breadcrumb: [{ label: 'Home', path: { name: 'home' } }],
+      requiresAuth: true
+    } 
   },
   // Cart
   { 
