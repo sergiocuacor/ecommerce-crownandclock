@@ -12,16 +12,9 @@
 
 <script setup>
 
-    import { defineEmits, ref } from 'vue';
+    import { defineEmits } from 'vue';
 
     const emit = defineEmits(['validatedPaymentMethod']);
-
-    const creditCardInformation = ref({
-        holderName: null,
-        number: null,       
-        expiryDate: null,
-        cvv: null,
-    });
 
     const validatePaymentMethod = (isValid) => {
         emit('validatedPaymentMethod', isValid);
