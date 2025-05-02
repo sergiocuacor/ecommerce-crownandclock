@@ -4,11 +4,19 @@
 
         <div class="col-12 col-md-6 col-lg-4">
 
+            <SortSelectorComponent :sortBy="sortBy"/>
+
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-4">
+
             <SizeSelectorComponent :pageSize="pageSize"/>
 
         </div>
 
         <div class="col-12 tw-pt-3 tw-space-x-2">
+
+            <SortBadgeComponent :sortBy="sortBy"/>
 
             <SizeBadgeComponent :pageSize="pageSize"/>
 
