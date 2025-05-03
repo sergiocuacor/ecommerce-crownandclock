@@ -48,7 +48,7 @@ public class SecurityConfig {
 	SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception {
 	    return http
 	        .csrf(csrf -> csrf.disable()) // Deshabilitar CSRF si usas JWT
-	    //    .cors(cors -> cors.configurationSource(corsConfigurationSource())) CONFIGURACIÓN DEL CORS, TODOS LOS MÉTODOS DE ABAJO
+	       .cors(cors -> cors.configurationSource(corsConfigurationSource())) // CONFIGURACIÓN DEL CORS, TODOS LOS MÉTODOS DE ABAJO
 	        .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Sin sesiones
 	        .authorizeHttpRequests(auth -> auth
 	            .requestMatchers(
@@ -75,30 +75,30 @@ public class SecurityConfig {
 	    
 	}
 	
-//	@Bean
-//	CorsConfigurationSource corsConfigurationSource() {
-//		CorsConfiguration config = new CorsConfiguration();
-//		config.setAllowedOriginPatterns(Arrays.asList("*"));
-//		config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
-//		config.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
-//		config.setAllowCredentials(true);
-//		
-//		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//		source.registerCorsConfiguration("/**", config);
-//		
-//		return source;
-//		
-//	}
-//	
-//	@Bean
-//	FilterRegistrationBean<CorsFilter> corsFilter(){
-//		FilterRegistrationBean<CorsFilter> corsBean = new FilterRegistrationBean<>(new CorsFilter(corsConfigurationSource()));
-//		
-//		corsBean.setOrder(Ordered.HIGHEST_PRECEDENCE);
-//		
-//		return corsBean;
-//	}
-//	
+	@Bean
+	CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration config = new CorsConfiguration();
+		config.setAllowedOriginPatterns(Arrays.asList("*"));
+		config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
+		config.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
+		config.setAllowCredentials(true);
+		
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", config);
+		
+		return source;
+		
+	}
+	
+	@Bean
+	FilterRegistrationBean<CorsFilter> corsFilter(){
+		FilterRegistrationBean<CorsFilter> corsBean = new FilterRegistrationBean<>(new CorsFilter(corsConfigurationSource()));
+		
+		corsBean.setOrder(Ordered.HIGHEST_PRECEDENCE);
+		
+		return corsBean;
+	}
+	
 	
 
 
