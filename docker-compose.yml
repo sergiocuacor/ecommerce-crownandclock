@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   db:
     image: mysql:8.0
@@ -8,6 +6,12 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: PracticaRoot
       MYSQL_DATABASE: clockdb
+      MYSQL_CHARSET: utf8mb4
+      MYSQL_COLLATION: utf8mb4_unicode_ci
+    command: 
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --skip-character-set-client-handshake
     ports:
       - "3305:3306"
     volumes:
@@ -15,6 +19,11 @@ services:
       - ./init-scripts:/docker-entrypoint-initdb.d
     networks:
       - clock-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$$MYSQL_ROOT_PASSWORD"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
 
   backend:
     build:
@@ -22,11 +31,12 @@ services:
       dockerfile: backend/Dockerfile
     container_name: spring-backend
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     ports:
       - "8085:8080"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/clockdb
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/clockdb?useSSL=false&allowPublicKeyRetrieval=true
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: PracticaRoot
     networks:
