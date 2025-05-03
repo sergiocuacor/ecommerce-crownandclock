@@ -62,7 +62,7 @@ public class OrderController {
 	}
 	
 	@GetMapping("/discounts/{userId}")
-	public List<?> findAllDiscountsAvailable(@PathVariable Long userId){
+	public List<?> findAllDiscountsAvailable(@PathVariable("userId") Long userId){
 		return this.orderService.findAllDiscountNamesAppliedByUser(userId);
 	}
 	
