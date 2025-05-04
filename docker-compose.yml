@@ -25,11 +25,11 @@ services:
       timeout: 5s
       retries: 20
 
-  backend:
+  clock-backend:  
     build:
       context: ./backend
       dockerfile: Dockerfile
-    container_name: spring-backend
+    container_name: clock-backend  
     depends_on:
       db:
         condition: service_healthy
@@ -42,15 +42,15 @@ services:
     networks:
       - clock-network
 
-  frontend:
+  clock-frontend:  
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    container_name: vue-frontend
+    container_name: clock-frontend 
     ports:
       - "80:80"
     depends_on:
-      - backend
+      - clock-backend  
     networks:
       - clock-network
 
