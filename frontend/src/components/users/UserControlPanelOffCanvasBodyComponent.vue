@@ -106,20 +106,77 @@
                 </ul>
             </div>
         </li>
+
+        <li v-if="userRole == 2" class="border-top my-3"></li>
+        <li v-if="userRole == 2" class="mb-1">
+            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#admin-collapse" aria-expanded="false">
+                <i class="bi bi-gear-fill fs-6 fw-semibold me-1"></i>
+                <span class="fs-6 fw-semibold">
+                    {{ 'Administration' }}
+                </span>
+            </button>
+            <div class="collapse" id="admin-collapse">
+                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li>
+                        <router-link :to="{ name: 'admin-panel' }" class="link-body-emphasis d-inline-flex text-decoration-none rounded">
+                            <i class="bi bi-shield-lock-fill me-1"></i>{{ 'Administration panel' }}
+                        </router-link>
+                    </li>
+                    <li>
+                        <router-link :to="{ name: 'admin-users' }" class="link-body-emphasis d-inline-flex text-decoration-none rounded">
+                            <i class="bi bi-people-fill me-1"></i>{{ 'User management' }}
+                        </router-link>
+                    </li>
+                    <li>
+                        <router-link :to="{ name: 'admin-products' }" class="link-body-emphasis d-inline-flex text-decoration-none rounded">
+                            <i class="bi bi-watch me-1"></i>{{ 'Products management' }}
+                        </router-link>
+                    </li>
+                    <li>
+                        <router-link :to="{ name: 'admin-orders' }" class="link-body-emphasis d-inline-flex text-decoration-none rounded">
+                            <i class="bi bi-box-seam-fill me-1"></i>{{ 'Orders management' }}
+                        </router-link>
+                    </li>
+                    <li>
+                        <router-link :to="{ name: 'admin-sales-reports' }" class="link-body-emphasis d-inline-flex text-decoration-none rounded">
+                            <i class="bi bi-graph-up me-1"></i>{{ 'Sales reports' }}
+                        </router-link>
+                    </li>
+                </ul>
+            </div>
+        </li>
     </ul>
 </template>
 
 <script setup>
 
-    import { useAuthStore } from '../../services/auth.js';   
+    import { onMounted, ref } from 'vue';
     import { useRouter } from 'vue-router';
-
+    import { useAuthStore } from '../../services/auth.js';  
+    import apiClient from '../../services/api.js' 
+    
+    const router = useRouter();
     const authStore = useAuthStore();
-    const router = useRouter();    
+    const userRole = ref(1);    
 
-    function logOut() {
+    const fetchUserRole = async () => {
+
+        const response = await apiClient.getUserData();
+
+        if (response.success) {
+
+            const hasAdminRole = response.data.roles.some(role => role.name === "ROLE_ADMIN");
+            userRole.value = hasAdminRole ? 2 : 1;
+
+        }
+
+    };
+
+    const logOut = () => {
         authStore.logOutUser();
         router.push('/login');
     }
+
+    onMounted(fetchUserRole);
 
 </script>
