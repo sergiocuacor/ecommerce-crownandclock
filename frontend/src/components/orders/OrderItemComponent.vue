@@ -22,7 +22,7 @@
             {{ 'Total: ' }}<strong>{{ (props.item.unitPrice * props.item.quantity) + '&#8364' }}</strong>
         </div>        
     </li>
-    <li class="tw-flex tw-flex-col tw-items-center tw-py-2.5">
+    <li v-if="!props.adminMode" class="tw-flex tw-flex-col tw-items-center tw-py-2.5">
         <div class="tw-w-11/12 tw-space-y-2.5">
             <button
                 @click="showReviewForm = !showReviewForm"
@@ -48,6 +48,10 @@
         item: {
             type: Object,
             required: true
+        },
+        adminMode: {
+            type: Boolean,
+            default: false,
         }
     });
 
