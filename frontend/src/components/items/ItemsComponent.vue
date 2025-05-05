@@ -20,13 +20,17 @@
 
         </div>
 
-        <div class="col-12 tw-pt-3 tw-space-x-2">
+        <div class="col-12">
 
-            <BrandBadgeComponent :selectedBrand="selectedBrand"/>
-            
-            <SortBadgeComponent :sortBy="sortBy"/>
+            <div class="tw-pt-3 tw-flex tw-flex-wrap tw-gap-1">
 
-            <SizeBadgeComponent :pageSize="pageSize"/>
+                <BrandBadgeComponent :selectedBrand="selectedBrand"/>
+                
+                <SortBadgeComponent :sortBy="sortBy"/>
+
+                <SizeBadgeComponent :pageSize="pageSize"/>
+                
+            </div>
 
         </div>
 
@@ -36,9 +40,15 @@
 
     <!-- SUCCESS -->
     <section v-if="!loading && !error">
-        <div class="tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-3 lg:tw-grid-cols-4 xl:tw-grid-cols-4 tw-gap-2">
-            <ItemComponent v-for="item, index in items.content" :key="index" :item="item"/>
+        <div v-if="itemDeleted != null" class="tw-p-3 tw-my-3 tw-mx-1 tw-bg-red-400 tw-rounded-md tw-text-[17px] tw-font-semibold">
+            {{ 'Removed watch ' }}<strong>{{ itemDeleted.name }}</strong>{{ ' with ID ' }}<strong>{{ itemDeleted.id }}</strong>{{ ' from brand ' }}<strong>{{ itemDeleted.nameBrand }}</strong>
         </div>
+        <div v-if="!props.adminMode" class="tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-3 lg:tw-grid-cols-4 xl:tw-grid-cols-4 tw-gap-2">
+            <ItemComponent v-for="item, index in items.content" :key="item.id" :item="item"/>
+        </div>
+        <ul v-else class="tw-px-2.5 tw-divide-y-2 tw-divide-slate-400/25 tw-bg-gray-200 tw-border-2 tw-rounded-b-lg">
+            <ItemComponent :adminMode="true" @deletedItem="manageDeletedItem" v-for="item, index in items.content" :key="item.id" :item="item"/>
+        </ul>
     </section>    
     
     <!-- LOADING -->
@@ -91,9 +101,18 @@
 
     const route = useRoute();
 
+    const props = defineProps({
+        adminMode: {
+            type: Boolean,
+            default: false,
+        },
+    });
+
     const items = ref([]);
     const loading = ref(true);
     const error = ref(null);
+
+    const itemDeleted = ref(null);
     
     const currentPage = ref(Number(route.query.page) || 1);
     const pageSize = ref(Number(route.query.size) || 12);
@@ -133,6 +152,13 @@
         },
         { deep: true }
     );
+
+    const manageDeletedItem = async (item) => {
+
+        itemDeleted.value = item;
+        await fetchItems();
+
+    };
 
     onMounted(fetchItems);
 
