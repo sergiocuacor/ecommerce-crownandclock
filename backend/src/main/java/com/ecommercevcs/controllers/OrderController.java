@@ -2,6 +2,8 @@ package com.ecommercevcs.controllers;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,20 +15,25 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ecommercevcs.dtos.DiscountDTO;
 import com.ecommercevcs.dtos.OrderCreateDTO;
 import com.ecommercevcs.entities.OrderEntity;
-import com.ecommercevcs.services.IOrderService;
+import com.ecommercevcs.services.OrderService;
+
+import jakarta.mail.MessagingException;
 
 
 @RestController
-@RequestMapping("/order")
+@RequestMapping("/orders")
 public class OrderController {
 
+    private static final Logger logger = LoggerFactory.getLogger(OrderController.class);
+	
 	@Autowired
-	IOrderService orderService;
+	OrderService orderService;
 	
 	
-	@GetMapping
+	@GetMapping("/all")
 	public ResponseEntity<List<OrderEntity>> findAll(){
 		
 		return ResponseEntity.ok(orderService.findAll());
@@ -38,10 +45,11 @@ public class OrderController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<OrderCreateDTO> add(@RequestBody OrderCreateDTO order){
-		orderService.add(order);
-		return ResponseEntity.ok(order);
-	}
+    public ResponseEntity<OrderCreateDTO> add(@RequestBody OrderCreateDTO order) throws MessagingException{
+        this.sendEmailToUser(order);
+        orderService.add(order);
+        return ResponseEntity.ok(order);
+    }
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<OrderEntity> update(@RequestBody OrderEntity order, @PathVariable Long id){
@@ -53,5 +61,15 @@ public class OrderController {
 		orderService.deleteById(id);
 	}
 	
+	@GetMapping("/discounts/{userId}")
+	public List<?> findAllDiscountsAvailable(@PathVariable("userId") Long userId){
+		return this.orderService.findAllDiscountNamesAppliedByUser(userId);
+	}
+	
+	public void sendEmailToUser(OrderCreateDTO order) throws MessagingException{
+
+        this.orderService.sendMailToUser(order);
+
+    }
 	
 }

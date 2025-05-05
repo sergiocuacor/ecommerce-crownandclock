@@ -34,7 +34,7 @@ public class OrderEntity {
 	    @ManyToOne(optional = false, fetch = FetchType.LAZY)
 	    @JoinColumn(name = "user_id", nullable = false)
 	    @NotNull
-	    @JsonBackReference
+	    @JsonBackReference(value="user-order")
 	    private UserEntity user;
 	    private LocalDateTime orderDate;
 	    
@@ -46,8 +46,14 @@ public class OrderEntity {
 	    private Double total;
 	    
 	    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	    @JsonManagedReference
+	    @JsonManagedReference(value="order-orderdetails")
 		private List<OrderDetailsEntity> orderDetails = new ArrayList<OrderDetailsEntity>();
+	    
+		@Column(name = "discount_applied")
+		private String discountApplied;
+		
+		@Column(name = "discount_percentage")
+		private Integer discountPercentage;
 	    
 	    @PrePersist
 	    public void prePersist() {
@@ -124,6 +130,24 @@ public class OrderEntity {
 			orderDetail.setOrder(this);
 		}
 	
-	    
+		public String getDiscountApplied() {
+			return discountApplied;
+		}
+
+		public void setDiscountApplied(String discountApplied) {
+			this.discountApplied = discountApplied;
+		}
+
+		public Integer getDiscountPercentage() {
+			return discountPercentage;
+		}
+
+		public void setDiscountPercentage(Integer discountPercentage) {
+			this.discountPercentage = discountPercentage;
+		}
+		
+		public Long getUserId() {
+			return this.user.getId();
+		}
 	    
 }

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" 
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" 
+              name="HourlySubreport" 
+              pageWidth="555" 
+              pageHeight="842"
+              columnWidth="555"
+              leftMargin="0"
+              rightMargin="0"
+              topMargin="0"
+              bottomMargin="0"
+              uuid="34567890-3456-3456-3456-345678901234">
+    
+    <field name="hourRange" class="java.lang.String"/>
+    <field name="sales" class="java.lang.Double"/>
+    
+    <columnHeader>
+        <band height="30">
+            <staticText>
+                <reportElement x="0" y="0" width="280" height="30" uuid="34567890-3456-3456-3456-345678901235"/>
+                <textElement verticalAlignment="Middle">
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[Franja Horaria]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="280" y="0" width="275" height="30" uuid="34567890-3456-3456-3456-345678901236"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[Ventas]]></text>
+            </staticText>
+        </band>
+    </columnHeader>
+    
+    <detail>
+        <band height="20" splitType="Stretch">
+            <textField>
+                <reportElement x="0" y="0" width="280" height="20" uuid="34567890-3456-3456-3456-345678901237"/>
+                <textFieldExpression><![CDATA[$F{hourRange}]]></textFieldExpression>
+            </textField>
+            <textField pattern="#,##0.00 €">
+                <reportElement x="280" y="0" width="275" height="20" uuid="34567890-3456-3456-3456-345678901238"/>
+                <textElement textAlignment="Right"/>
+                <textFieldExpression><![CDATA[$F{sales}]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+</jasperReport>
