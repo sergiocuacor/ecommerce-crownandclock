@@ -47,8 +47,8 @@ public class SecurityConfig {
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception {
     return http
-        .csrf(csrf -> csrf.disable()) // Deshabilitar CSRF si usas JWT
-       	// .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+        .csrf(csrf -> csrf.disable()) 
+       	 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Sin sesiones
         .authorizeHttpRequests(auth -> auth
 				//Recursos media
@@ -110,15 +110,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.DELETE, "/reviews/{reviewId}/user/{userId}").hasAnyRole("ADMIN", "USER")
                 
                 // Endpoints para generar informes de venta, accesibles únicamente para ADMIN
-                .requestMatchers(HttpMethod.GET, "/reports/monthly-sales/pdf").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.GET, "/reports/monthly-sales/pdf/{year}/{month}").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.GET, "/reports/monthly-sales/excel").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.GET, "/reports/monthly-sales/excel/{year}/{month}").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.GET, "/reports/daily-sales/pdf").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.GET, "/reports/daily-sales/pdf/{date}").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.GET, "/reports/daily-sales/excel").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.GET, "/reports/daily-sales/excel/{date}").hasRole("ADMIN")
-                
+                .requestMatchers(HttpMethod.GET, "/reports/**").permitAll()            
                 // Por defecto, cualquier otra solicitud requiere autenticación
                 .anyRequest().authenticated()
         )
@@ -133,6 +125,7 @@ public class SecurityConfig {
 		config.setAllowedOriginPatterns(Arrays.asList("*"));
 		config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
 		config.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
+		config.setExposedHeaders(Arrays.asList("Content-Disposition"));
 		config.setAllowCredentials(true);
 		
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
