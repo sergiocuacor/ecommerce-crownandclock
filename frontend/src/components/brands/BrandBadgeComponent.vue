@@ -1,6 +1,6 @@
 <template>
 
-    <span v-if="!loading" class="tw-bg-black tw-text-white tw-py-0.5 tw-px-3 tw-rounded-full tw-font-semibold tw-text-sm">
+    <span v-if="!loading" class="tw-inline-block tw-bg-black tw-text-white tw-py-0.5 tw-px-3 tw-rounded-full tw-font-semibold tw-text-sm">
         {{ 'Brand: ' + selectedBrandName }}
     </span>
 
