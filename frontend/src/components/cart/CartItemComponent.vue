@@ -1,7 +1,7 @@
 <template>
 
     <li class="tw-flex tw-flex-col md:tw-flex-row md:tw-items-center tw-relative tw-py-2.5">
-        <router-link :to="{ name: 'product', params: { mask: props.item.id } }" class="ratio ratio-1x1 tw-w-full md:tw-w-2/12 tw-bg-gray-100 tw-rounded">
+        <router-link :to="{ name: 'product', params: { mask: props.item.mask } }" class="ratio ratio-1x1 tw-w-full md:tw-w-2/12 tw-bg-gray-100 tw-rounded">
             <ImageExtensionCheckerComponent :class="`tw-object-contain tw-p-3`" :src="apiBaseURL + `/images/` + props.item.mask + `/image.png`" :alt="props.item.name"/>
         </router-link>
         <div class="tw-absolute tw-top-0 tw-right-0 tw-me-2.5 md:tw-me-0 tw-mt-5 md:tw-mt-2.5">
