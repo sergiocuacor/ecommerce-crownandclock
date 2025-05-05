@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseURL_ENV = import.meta.env.VITE_API_URL;
+const baseURL_ENV = import.meta.env.VITE_API_URL || "http://localhost:8080";
 const apiClient = axios.create({
   baseURL: baseURL_ENV,
   headers: {
@@ -21,14 +21,12 @@ async function apiCall(method, url, params = {}, data = {}) {
     const response = await apiClient({ method, url, params, data });
     return { success: true, data: response.data };
   } catch (err) {
-    return { success: false, error: err.response?.data || 'Error desconocido' };
+    return { success: false, error: err.response?.data || 'Unknown error' };
   }
 };
 
 export default {
   getApiBaseURL() {
-    console.log("URL");
-    console.log(apiClient.defaults.baseURL);
     return apiClient.defaults.baseURL;
   },
   // Items
@@ -46,6 +44,12 @@ export default {
   },
   getItemStock(id) {
     return apiCall('get', `/products/stock/${id}`);
+  },
+  putItemData(id, data) {
+    return apiCall('put', `/products/${id}`, {}, data);
+  },
+  deleteItemById(id) {
+    return apiCall('delete', `/products/${id}`);
   },
   // Brands
   getBrandById(id) {
@@ -65,7 +69,10 @@ export default {
     return apiCall('get', '/users/me');
   },
   putUserData(id, data) {
-    return apiCall('put', `users/${id}`, {}, data);
+    return apiCall('put', `/users/${id}`, {}, data);
+  },
+  getAllUsers() {
+    return apiCall('get', '/users/all');
   },
   getTokenValidation() {
     return apiCall('get', '/auth/validate-token');
@@ -77,6 +84,12 @@ export default {
   postOrder(data) {
     return apiCall('post', '/orders', {}, data);
   },
+  putOrderData(id, data) {
+    return apiCall('put', `/orders/${id}`, {}, data);
+  },
+  getAllOrders() {
+    return apiCall('get', '/orders/all');
+  },
   //Reviews
   getReviewsByItemId(id) {
     return apiCall('get', `/reviews/product/${id}`);
@@ -86,5 +99,18 @@ export default {
   },
   postNewReview(userId, productId, data) {
     return apiCall('post', `/reviews/${userId}/${productId}`, {}, data);
+  },
+  //Reports
+  getDailySalesReportsXLS() {
+    return getSalesReports(`/reports/daily-sales/excel`);
+  },
+  getDailySalesReportsPDF() {
+    return getSalesReports(`/reports/daily-sales/pdf`);
+  },
+  getMonthlySalesReportsXLS() {
+    return getSalesReports(`/reports/monthly-sales/excel`);
+  },
+  getMonthlySalesReportsPDF() {
+    return getSalesReports(`/reports/monthly-sales/pdf`);
   }
 };
