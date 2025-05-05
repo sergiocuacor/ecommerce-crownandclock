@@ -16,9 +16,15 @@
 
         <div class="col-12 tw-pt-3 tw-space-x-2">
 
-            <SortBadgeComponent :sortBy="sortBy"/>
+            <div class="tw-pt-3 tw-flex tw-flex-wrap tw-gap-1">
 
-            <SizeBadgeComponent :pageSize="pageSize"/>
+                <BrandBadgeComponent :selectedBrand="selectedBrand"/>
+
+                <SortBadgeComponent :sortBy="sortBy"/>
+
+                <SizeBadgeComponent :pageSize="pageSize"/>
+
+            </div>
 
         </div>
 
