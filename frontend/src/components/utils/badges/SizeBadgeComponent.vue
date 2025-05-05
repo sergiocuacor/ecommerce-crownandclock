@@ -1,6 +1,6 @@
 <template>
 
-    <span class="tw-bg-black tw-text-white tw-py-0.5 tw-px-3 tw-rounded-full tw-font-semibold tw-text-sm">
+    <span class="tw-inline-block tw-bg-black tw-text-white tw-py-0.5 tw-px-3 tw-rounded-full tw-font-semibold tw-text-sm">
         {{ 'Watches per page: ' + props.pageSize }}
     </span>
 
