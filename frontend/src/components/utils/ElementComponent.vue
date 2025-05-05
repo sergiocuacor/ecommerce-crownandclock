@@ -1,6 +1,6 @@
 <template>
 
-    <article class="border border-3 rounded">
+    <article class="border border-3 rounded overflow-hidden">
 
         <div class="position-relative bg-white">
 
@@ -63,8 +63,8 @@
         </div>
 
         <!-- Footer Section -->
-        <div v-if="hasSlotContent('footer')" class="d-block bg-primary-subtle">
-            <div class="row p-2">
+        <div v-if="hasSlotContent('footer')" class="d-block">
+            <div class="row p-2 tw-bg-gray-300/50">
                 <slot name="footer"></slot>
             </div>
         </div>
