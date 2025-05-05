@@ -10,13 +10,16 @@ import ItemsView from '../views/ItemsView.vue';
 import ItemView from '../views/ItemView.vue';
 import BrandsView from '../views/BrandsView.vue';
 import BrandView from '../views/BrandView.vue';
-import CategoriesView from '../views/CategoriesView.vue';
-import CategoryView from '../views/CategoryView.vue';
 import SocialsView from '../views/SocialsView.vue';
 import UserProfileView from '../views/UserProfileView.vue';
 import UserOrdersView from '../views/UserOrdersView.vue';
 import UserReviewsView from '../views/UserReviewsView.vue';
 import UserCheckoutView from '../views/UserCheckoutView.vue';
+import AdminPanelView from '../views/admin/AdminPanelView.vue';
+import AdminUsersManagementView from '../views/admin/AdminUsersManagementView.vue';
+import AdminItemsManagementView from '../views/admin/AdminItemsManagementView.vue';
+import AdminOrdersManagementView from '../views/admin/AdminOrdersManagementView.vue';
+import AdminSalesReportsView from '../views/admin/AdminSalesReportsView.vue';
 
 const routes = [
   // Error/Unknown
@@ -217,53 +220,6 @@ const routes = [
     path: '/products/brand/:mask',
     redirect: { name: 'brand' }
   },
-  // Categories
-  { 
-    path: '/categories',
-    name: 'categories',
-    component: CategoriesView,
-    meta: { 
-      label: 'Categories', 
-      breadcrumb: [{ label: 'Home', path: { name: 'home' } }] 
-    } 
-  },
-  {
-    path: '/category',
-    redirect: { name: 'categories' }
-  },
-  {
-    path: '/products/categories',
-    redirect: { name: 'categories' }
-  },
-  {
-    path: '/products/category',
-    redirect: { name: 'categories' }
-  },
-  // Category
-  { 
-    path: '/categories/:mask',
-    name: 'category',
-    component: CategoryView, 
-    meta: { 
-      label: 'Category', 
-      breadcrumb: [
-        { label: 'Home', path: { name: 'home' } },
-        { label: 'Categories', path: { name: 'categories' } }
-      ] 
-    } 
-  },
-  {
-    path: '/category/:mask',
-    redirect: { name: 'category' }
-  },
-  {
-    path: '/products/categories/:mask',
-    redirect: { name: 'category' }
-  },
-  {
-    path: '/products/category/:mask',
-    redirect: { name: 'category' }
-  },
   // Socials
   { 
     path: '/socials',
@@ -350,6 +306,115 @@ const routes = [
   {
     path: '/facebook',
     redirect: { name: 'facebook'}
+  },
+  // ADMIN - Admin Panel
+  { 
+    path: '/admin-panel',
+    name: 'admin-panel',
+    component: AdminPanelView,
+    meta: { 
+      label: 'Admin Panel', 
+      breadcrumb: [
+        { label: 'Home', path: { name: 'home' } }
+      ],
+      requiresAuth: true 
+    } 
+  },
+  {
+    path: '/admin',
+    redirect: { name: 'admin-panel'}
+  },
+  {
+    path: '/administration',
+    redirect: { name: 'admin-panel'}
+  },
+  // ADMIN - Admin Users Management
+  { 
+    path: '/admin-panel/users',
+    name: 'admin-users',
+    component: AdminUsersManagementView,
+    meta: { 
+      label: 'User Management', 
+      breadcrumb: [
+        { label: 'Home', path: { name: 'home' } },
+        { label: 'Admin Panel', path: { name: 'admin-panel' } }
+      ],
+      requiresAuth: true 
+    } 
+  },
+  {
+    path: '/admin/users',
+    redirect: { name: 'admin-users'}
+  },
+  {
+    path: '/administration/users',
+    redirect: { name: 'admin-users'}
+  },
+  // ADMIN - Admin Products Management
+  { 
+    path: '/admin-panel/products',
+    name: 'admin-products',
+    component: AdminItemsManagementView,
+    meta: { 
+      label: 'Products Management', 
+      breadcrumb: [
+        { label: 'Home', path: { name: 'home' } },
+        { label: 'Admin Panel', path: { name: 'admin-panel' } }
+      ],
+      requiresAuth: true 
+    } 
+  },
+  {
+    path: '/admin/products',
+    redirect: { name: 'admin-products'}
+  },
+  {
+    path: '/administration/products',
+    redirect: { name: 'admin-products'}
+  },
+  // ADMIN - Admin Orders Management
+  { 
+    path: '/admin-panel/orders',
+    name: 'admin-orders',
+    component: AdminOrdersManagementView,
+    meta: { 
+      label: 'Orders Management', 
+      breadcrumb: [
+        { label: 'Home', path: { name: 'home' } },
+        { label: 'Admin Panel', path: { name: 'admin-panel' } }
+      ],
+      requiresAuth: true 
+    } 
+  },
+  {
+    path: '/admin/orders',
+    redirect: { name: 'admin-orders'}
+  },
+  {
+    path: '/administration/orders',
+    redirect: { name: 'admin-orders'}
+  },
+  // ADMIN - Admin Sales Reports
+  { 
+    path: '/admin-panel/sales_reports',
+    name: 'admin-sales-reports',
+    component: AdminSalesReportsView,
+    meta: { 
+      label: 'Sales Reports', 
+      breadcrumb: [
+        { label: 'Home', path: { name: 'home' } },
+        { label: 'Admin Panel', path: { name: 'admin-panel' } }
+      ],
+      requiresAuth: true 
+    } 
+  },
+  {
+    path: '/admin/sales_reports',
+    redirect: { name: 'admin-sales-reports'}
+  },
+  {
+    path: '/administration/sales_reports',
+    redirect: { name: 'admin-sales-reports'}
   },
 ];
 
