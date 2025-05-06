@@ -100,6 +100,8 @@ public class UserServiceImpl implements UserService {
 		}
 		if(updatedUser.isEnabled() != true) {
 			existingUser.setEnabled(false);
+		} else {
+			existingUser.setEnabled(true);
 		}
 
 		if (updatedUser.getAddress() != null) {
