@@ -167,12 +167,18 @@ export const useCartStore = defineStore('cart', {
 
     },
 
+    removeCoupon() {
+      
+      localStorage.removeItem('discountCoupon');
+      this.coupon = null;
+
+    },
+
     emptyCart() {
 
       this.items = [];
       this.saveCart();
-      this.coupon = null;
-      this.saveCoupon();
+      this.removeCoupon();
 
     }
 
