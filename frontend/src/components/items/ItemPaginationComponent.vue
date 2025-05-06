@@ -31,59 +31,115 @@
         <div class="tw-hidden sm:tw-flex sm:tw-flex-1 sm:tw-flex-col md:tw-flex-row sm:tw-items-center sm:tw-justify-between sm:tw-gap-2">
             <div>
                 <p class="tw-text-sm tw-text-gray-700">
-                    {{ 'Mostrando de' }}
+                    {{ 'Displaying results ' }}
                     <span class="tw-font-medium">{{ firstElement }}</span>
-                    {{ ' a ' }}
+                    {{ ' to ' }}
                     <span class="tw-font-medium">{{ lastElement }}</span>
-                    {{ ' en ' }}
-                    <span class="tw-font-medium">{{ totalElements }}</span>
-                    {{ ' resultados.' }}                    
+                    {{ ' of ' }}
+                    <span class="tw-font-medium">{{ totalElements }}</span>                  
                 </p>
             </div>
             <div>
                 <nav class="tw-isolate tw-inline-flex -tw-space-x-px tw-rounded-md tw-shadow-xs" aria-label="Pagination">
 
                     <!-- FIRST & PREVIOUS -->
-                    <button @click="firstPage" :disabled="currentPage <= 1" class="tw-relative tw-inline-flex tw-items-center tw-rounded-l-md tw-px-2 tw-py-2 tw-text-gray-400 tw-ring-1 tw-ring-gray-300 tw-ring-inset hover:tw-bg-gray-200 focus:tw-z-20 focus:tw-outline-offset-0">
-                        <span class="tw-sr-only">{{ 'Primera Página' }}</span>
+                    <button
+                        @click="firstPage"
+                        :disabled="currentPage <= 1"
+                        class="tw-relative tw-inline-flex tw-items-center tw-rounded-l-md tw-px-2 tw-py-2 tw-text-gray-400 tw-ring-1 tw-ring-gray-300 tw-ring-inset hover:tw-bg-gray-200 focus:tw-z-20 focus:tw-outline-offset-0"
+                    >
+                        <span class="tw-sr-only">
+                            {{ 'First' }}
+                        </span>
                         <i class="bi bi-chevron-double-left"></i>
                     </button>
-                    <button @click="prevPage" :disabled="currentPage <= 1" class="tw-relative tw-inline-flex tw-items-center tw-px-2 tw-py-2 tw-text-gray-400 tw-ring-1 tw-ring-gray-300 tw-ring-inset hover:tw-bg-gray-200 focus:tw-z-20 focus:tw-outline-offset-0">
-                        <span class="tw-sr-only">{{ 'Anterior' }}</span>
+
+                    <button
+                        @click="prevPage"
+                        :disabled="currentPage <= 1"
+                        class="tw-relative tw-inline-flex tw-items-center tw-px-2 tw-py-2 tw-text-gray-400 tw-ring-1 tw-ring-gray-300 tw-ring-inset hover:tw-bg-gray-200 focus:tw-z-20 focus:tw-outline-offset-0"
+                    >
+                        <span class="tw-sr-only">
+                            {{ 'Previous' }}
+                        </span>
                         <i class="bi bi-chevron-left"></i>
                     </button>
 
-                    <button v-if="pageNumberButtons.buttons[0]?.condition" @click="goToAnyPage(pageNumberButtons.buttons[0]?.number)" :class="[pageNumberButtons.commonClasses, (currentPage == pageNumberButtons.buttons[0]?.number) ? pageNumberButtons.currentPageClass : pageNumberButtons.notCurrentPageClass]">
+                    <button
+                        v-if="pageNumberButtons.buttons[0]?.condition"
+                        @click="goToAnyPage(pageNumberButtons.buttons[0]?.number)"
+                        :class="[pageNumberButtons.commonClasses, (currentPage == pageNumberButtons.buttons[0]?.number) ? pageNumberButtons.currentPageClass : pageNumberButtons.notCurrentPageClass]"
+                    >
                         {{ pageNumberButtons.buttons[0]?.number }}
                     </button>
-                    <button v-if="pageNumberButtons.buttons[1]?.condition" @click="goToAnyPage(pageNumberButtons.buttons[1]?.number)" :class="[pageNumberButtons.commonClasses, (currentPage == pageNumberButtons.buttons[1]?.number) ? pageNumberButtons.currentPageClass : pageNumberButtons.notCurrentPageClass]">
+
+                    <button
+                        v-if="pageNumberButtons.buttons[1]?.condition"
+                        @click="goToAnyPage(pageNumberButtons.buttons[1]?.number)"
+                        :class="[pageNumberButtons.commonClasses, (currentPage == pageNumberButtons.buttons[1]?.number) ? pageNumberButtons.currentPageClass : pageNumberButtons.notCurrentPageClass]"
+                    >
                         {{ pageNumberButtons.buttons[1]?.number }}
                     </button>
-                    <button v-if="pageNumberButtons.buttons[2]?.condition" @click="goToAnyPage(pageNumberButtons.buttons[2]?.number)" :class="[pageNumberButtons.commonClasses, (currentPage == pageNumberButtons.buttons[2]?.number) ? pageNumberButtons.currentPageClass : pageNumberButtons.notCurrentPageClass]">
+
+                    <button
+                        v-if="pageNumberButtons.buttons[2]?.condition"
+                        @click="goToAnyPage(pageNumberButtons.buttons[2]?.number)"
+                        :class="[pageNumberButtons.commonClasses, (currentPage == pageNumberButtons.buttons[2]?.number) ? pageNumberButtons.currentPageClass : pageNumberButtons.notCurrentPageClass]"
+                    >
                         {{ pageNumberButtons.buttons[2]?.number }}
                     </button>
 
-                    <span v-if="totalPages >= 7 && (currentPage < (totalPages - 3))" class="tw-relative tw-inline-flex tw-items-center tw-px-4 tw-py-2 tw-text-sm tw-font-semibold tw-text-gray-700 tw-ring-1 tw-ring-gray-300 tw-ring-inset focus:tw-outline-offset-0">
+                    <span
+                        v-if="totalPages >= 7 && (currentPage < (totalPages - 3))"
+                        class="tw-relative tw-inline-flex tw-items-center tw-px-4 tw-py-2 tw-text-sm tw-font-semibold tw-text-gray-700 tw-ring-1 tw-ring-gray-300 tw-ring-inset focus:tw-outline-offset-0"
+                    >
                         {{ '...' }}
                     </span>
 
-                    <button v-if="pageNumberButtons.buttons[3]?.condition" @click="goToAnyPage(pageNumberButtons.buttons[3]?.number)" :class="[pageNumberButtons.commonClasses, (currentPage == pageNumberButtons.buttons[3]?.number) ? pageNumberButtons.currentPageClass : pageNumberButtons.notCurrentPageClass]">
+                    <button
+                        v-if="pageNumberButtons.buttons[3]?.condition"
+                        @click="goToAnyPage(pageNumberButtons.buttons[3]?.number)"
+                        :class="[pageNumberButtons.commonClasses, (currentPage == pageNumberButtons.buttons[3]?.number) ? pageNumberButtons.currentPageClass : pageNumberButtons.notCurrentPageClass]"
+                    >
                         {{ pageNumberButtons.buttons[3]?.number }}
                     </button>
-                    <button v-if="pageNumberButtons.buttons[4]?.condition" @click="goToAnyPage(pageNumberButtons.buttons[4]?.number)" :class="[pageNumberButtons.commonClasses, (currentPage == pageNumberButtons.buttons[4]?.number) ? pageNumberButtons.currentPageClass : pageNumberButtons.notCurrentPageClass]">
+
+                    <button
+                        v-if="pageNumberButtons.buttons[4]?.condition"
+                        @click="goToAnyPage(pageNumberButtons.buttons[4]?.number)"
+                        :class="[pageNumberButtons.commonClasses, (currentPage == pageNumberButtons.buttons[4]?.number) ? pageNumberButtons.currentPageClass : pageNumberButtons.notCurrentPageClass]"
+                    >
                         {{ pageNumberButtons.buttons[4]?.number }}
                     </button>
-                    <button v-if="pageNumberButtons.buttons[5]?.condition" @click="goToAnyPage(pageNumberButtons.buttons[5]?.number)" :class="[pageNumberButtons.commonClasses, (currentPage == pageNumberButtons.buttons[5]?.number) ? pageNumberButtons.currentPageClass : pageNumberButtons.notCurrentPageClass]">
+
+                    <button
+                        v-if="pageNumberButtons.buttons[5]?.condition"
+                        @click="goToAnyPage(pageNumberButtons.buttons[5]?.number)"
+                        :class="[pageNumberButtons.commonClasses, (currentPage == pageNumberButtons.buttons[5]?.number) ? pageNumberButtons.currentPageClass : pageNumberButtons.notCurrentPageClass]"
+                    >
                         {{ pageNumberButtons.buttons[5]?.number }}
                     </button>
                     
                     <!-- NEXT & LAST -->
-                    <button @click="nextPage" :disabled="currentPage >= totalPages" class="tw-relative tw-inline-flex tw-items-center tw-px-2 tw-py-2 tw-text-gray-400 tw-ring-1 tw-ring-gray-300 tw-ring-inset hover:tw-bg-gray-200 focus:tw-z-20 focus:tw-outline-offset-0">
-                        <span class="tw-sr-only">{{ 'Siguiente' }}</span>
+                    <button
+                        @click="nextPage"
+                        :disabled="currentPage >= totalPages"
+                        class="tw-relative tw-inline-flex tw-items-center tw-px-2 tw-py-2 tw-text-gray-400 tw-ring-1 tw-ring-gray-300 tw-ring-inset hover:tw-bg-gray-200 focus:tw-z-20 focus:tw-outline-offset-0"
+                    >
+                        <span class="tw-sr-only">
+                            {{ 'Next' }}
+                        </span>
                         <i class="bi bi-chevron-right"></i>
                     </button>
-                    <button @click="lastPage" :disabled="currentPage >= totalPages" class="tw-relative tw-inline-flex tw-items-center tw-rounded-r-md tw-px-2 tw-py-2 tw-text-gray-400 tw-ring-1 tw-ring-gray-300 tw-ring-inset hover:tw-bg-gray-200 focus:tw-z-20 focus:tw-outline-offset-0">
-                        <span class="tw-sr-only">{{ 'Última' }}</span>
+
+                    <button
+                        @click="lastPage"
+                        :disabled="currentPage >= totalPages"
+                        class="tw-relative tw-inline-flex tw-items-center tw-rounded-r-md tw-px-2 tw-py-2 tw-text-gray-400 tw-ring-1 tw-ring-gray-300 tw-ring-inset hover:tw-bg-gray-200 focus:tw-z-20 focus:tw-outline-offset-0"
+                    >
+                        <span class="tw-sr-only">
+                            {{ 'Last' }}
+                        </span>
                         <i class="bi bi-chevron-double-right"></i>
                     </button>
                     
