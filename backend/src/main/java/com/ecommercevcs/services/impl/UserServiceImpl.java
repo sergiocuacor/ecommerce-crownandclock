@@ -98,6 +98,9 @@ public class UserServiceImpl implements UserService {
 		if (updatedUser.getPhoneNumber() != null) {
 			existingUser.setPhoneNumber(updatedUser.getPhoneNumber());
 		}
+		if(updatedUser.isEnabled() != true) {
+			existingUser.setEnabled(false);
+		}
 
 		if (updatedUser.getAddress() != null) {
 			Address existingAddress = existingUser.getAddress();
