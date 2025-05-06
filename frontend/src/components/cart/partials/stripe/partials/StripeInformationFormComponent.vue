@@ -43,7 +43,7 @@
     import { defineEmits, ref } from 'vue';
     import { validateEmail, validateStringLength } from "../../../../../utils/validators.js";
 
-    const emit = defineEmits(['validatedCreditCardInformation']);
+    const emit = defineEmits(['validatedStripeInformation']);
 
     const isAllValid = ref(false);
 
