@@ -38,10 +38,11 @@
 
 <script setup>
 
-    import { ref } from 'vue';
+    import { getCurrentInstance, ref } from 'vue';
     import { useRouter } from 'vue-router';
     import apiClient from '../../services/api.js';
     import { useAuthStore } from '../../services/auth.js';
+    const { proxy } = getCurrentInstance();
 
     const router = useRouter();
     const authStore = useAuthStore();
@@ -65,12 +66,14 @@
 
         if (response.success) {
 
-            authStore.logInUser(response.data.token);            
+            authStore.logInUser(response.data.token);    
+            proxy.$toast(`Successfully logged in`);        
             router.push('/home');
 
         } else {
 
             error.value = response.error.message;
+            proxy.$toast(`Bad credentials, try again`, { bgColor: 'tw-bg-red-200/75' });
 
         }
 
