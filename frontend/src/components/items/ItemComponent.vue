@@ -89,9 +89,6 @@
             </button>
         </div>         
     </li>
-    <li v-if="error">
-        <div class="tw-text-red-500">{{ error }}</div>   
-    </li>
 
 </template>
 
@@ -134,13 +131,14 @@
 
             setTimeout(() => {
                 
-                proxy.$toast(`Removed watch ${props.item.name} with ID ${props.item.id} from brand ${props.item.nameBrand}`, { bgColor: 'tw-bg-red-200/75' })
+                proxy.$toast(`Removed watch ${props.item.name} with ID ${props.item.id} from brand ${props.item.nameBrand}`);
                 emit('deletedItem', props.item);
 
             }, 500);
 
         } else {
 
+            proxy.$toast(`Error removing watch ${props.item.name} with ID ${props.item.id}`, { bgColor: 'tw-bg-red-200/75' });
             error.value = response.error.message;
 
         }
@@ -163,9 +161,14 @@
         const response = await apiClient.putItemData(id, { ...props.item, stock: newStock });
 
         if (response.success) {
+
+            proxy.$toast(`Changed ${props.item.name} stock to ${newStock}`);
             itemStock.value = newStock;
             error.value = null;
+
         } else {
+
+            proxy.$toast(`Error changing watch ${props.item.name} with ID ${props.item.id}`, { bgColor: 'tw-bg-red-200/75' });
             error.value = response.error.message;
         }
 
