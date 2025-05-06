@@ -152,11 +152,13 @@
 
     import { onMounted, ref } from 'vue';
     import { useRouter } from 'vue-router';
-    import { useAuthStore } from '../../services/auth.js';  
+    import { useAuthStore } from '../../services/auth.js';
+    import { useCartStore } from '../../store/cart.js';  
     import apiClient from '../../services/api.js' 
     
     const router = useRouter();
     const authStore = useAuthStore();
+    const cartStore = useCartStore();
     const userRole = ref(1);    
 
     const fetchUserRole = async () => {
@@ -174,6 +176,7 @@
 
     const logOut = () => {
         authStore.logOutUser();
+        cartStore.removeCoupon();
         router.push('/login');
     }
 
