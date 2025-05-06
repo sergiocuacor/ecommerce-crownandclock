@@ -63,8 +63,12 @@
 
 <script setup>
 
-    import { ref } from 'vue';
+    import { getCurrentInstance, ref } from 'vue';
     import apiClient from '../../services/api.js';
+    import { useRouter } from 'vue-router';
+
+    const router = useRouter();
+    const { proxy } = getCurrentInstance();
 
     const props = defineProps({
         productId: {
@@ -111,14 +115,19 @@
 
             const response = await apiClient.postNewReview(userId, props.productId, data);
 
+            console.log(response)
+
             if (response.success) {
 
                 error.value = null;
+                router.push('/profile/reviews');
+                proxy.$toast(`Added review`);
 
             } else {
 
-                error.value = response.error.message;
-
+                error.value = response.error;
+                router.push('/profile/reviews');
+                proxy.$toast(`Can't save review`);
             }
 
         }
