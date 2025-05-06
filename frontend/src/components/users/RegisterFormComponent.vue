@@ -156,12 +156,13 @@
 
 <script setup>
 
-    import { reactive, ref, computed } from 'vue';
+    import {  computed, getCurrentInstance, reactive, ref } from 'vue';
     import { useRouter } from 'vue-router';
     import apiClient from '../../services/api.js';
     import { validateStringLength, validateName, validateEmail, validatePhoneNumber, validateStreetAddress, validatePostalCode } from "../../utils/validators.js";
 
-    const router = useRouter();    
+    const router = useRouter();   
+    const { proxy } = getCurrentInstance(); 
     
     const form = reactive({
         firstName: '',
@@ -234,7 +235,7 @@
 
         return data;
 
-        };
+    };
 
     const validateLastNameInput = (input) => {
 
@@ -525,11 +526,13 @@
             if (response.success) {
 
                 error.value = null;
+                proxy.$toast(`Registration success`);
                 router.push('/login');
 
             } else {
 
                 error.value = response.error.error;
+                proxy.$toast(`Error registering user, try again later`, { bgColor: 'tw-bg-red-200/75' });
 
             }
 
