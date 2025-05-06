@@ -1,6 +1,6 @@
 <template>
 
-    <div ref="toastEl" :class="[props.textColor, props.bgColor]" class="toast align-items-center border-0" role="alert"
+    <div ref="toastEl" :class="[props.textColor, props.bgColor, 'tw-border-2 tw-border-gray-400']" class="toast align-items-center" role="alert"
         aria-live="assertive" aria-atomic="true">
         <div class="d-flex">
             <div class="toast-body">
