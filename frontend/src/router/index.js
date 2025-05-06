@@ -20,6 +20,9 @@ import AdminUsersManagementView from '../views/admin/AdminUsersManagementView.vu
 import AdminItemsManagementView from '../views/admin/AdminItemsManagementView.vue';
 import AdminOrdersManagementView from '../views/admin/AdminOrdersManagementView.vue';
 import AdminSalesReportsView from '../views/admin/AdminSalesReportsView.vue';
+import PricingView from '../views/PricingView.vue';
+import FaqView from '../views/FaqView.vue';
+import AboutView from '../views/AboutView.vue';
 
 const routes = [
   // Error/Unknown
@@ -415,6 +418,50 @@ const routes = [
   {
     path: '/administration/sales_reports',
     redirect: { name: 'admin-sales-reports'}
+  },
+  // Pricing
+  { 
+    path: '/pricing',
+    name: 'pricing',
+    component: PricingView,
+    meta: {
+      label: 'Pricing',
+      breadcrumb: [
+        { label: 'Home', path: { name: 'home' } }
+      ]
+    } 
+  },
+  // FAQ
+  { 
+    path: '/faq',
+    name: 'faq',
+    component: FaqView,
+    meta: {
+      label: 'FAQ',
+      breadcrumb: [
+        { label: 'Home', path: { name: 'home' } }
+      ]
+    } 
+  },
+  // About
+  { 
+    path: '/about',
+    name: 'about',
+    component: AboutView,
+    meta: {
+      label: 'About us',
+      breadcrumb: [
+        { label: 'Home', path: { name: 'home' } }
+      ]
+    } 
+  },
+  { 
+    path: '/about-us',
+    redirect: { name: 'about' }
+  },
+  { 
+    path: '/about_us',
+    redirect: { name: 'about' }
   },
 ];
 
