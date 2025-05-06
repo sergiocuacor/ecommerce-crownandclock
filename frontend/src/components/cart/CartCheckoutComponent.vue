@@ -89,7 +89,7 @@
 
 <script setup>
 
-    import { computed, onMounted, ref } from 'vue';
+    import { computed, getCurrentInstance, onMounted, ref } from 'vue';
     import { useRouter } from 'vue-router';
     import { useCartStore } from '../../store/cart.js';
     import apiClient from '../../services/api.js';
@@ -98,6 +98,7 @@
     const router = useRouter();
     const cartStore = useCartStore();
     const authStore = useAuthStore();
+    const { proxy } = getCurrentInstance();
     const couponInput = ref('')
     const isSubmitting = ref(false);
     const isValidPaymentMethod = ref(false);
@@ -138,6 +139,12 @@
 
       await cartStore.couponValidation(couponInput.value);
 
+      if(cartStore.coupon != null) {
+        proxy.$toast(`Coupon applied successfully`);
+      } else {
+        proxy.$toast(`Coupon not valid or already used`, { bgColor: 'tw-bg-red-200/75' });
+      }
+
     }
 
     const validateToken = async () => {
@@ -161,11 +168,11 @@
       const response = await apiClient.postOrder(order);
 
       if (response.success) {
-        console.log('Order sent successfully!');
+        proxy.$toast(`Order sent successfully!`);
         router.push('/checkout/success');
         cartStore.emptyCart();
       } else {
-        console.error('Error sending order:', response.error);
+        proxy.$toast(`Error sending order!`, { bgColor: 'tw-bg-red-200/75' });
         router.push('/checkout/error');
       }
 
@@ -176,7 +183,7 @@
       await validateToken();
 
       if (!isValidPaymentMethod.value) {
-        alert('Please select a payment method.');
+        proxy.$toast(`Please select a payment method!`, { bgColor: 'tw-bg-red-200/75' });
         return;
       }
 
