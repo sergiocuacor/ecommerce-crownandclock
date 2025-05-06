@@ -87,7 +87,7 @@
 
         loading.value = true;
 
-        const response = await apiClient.putUserData(props.userId, input);
+        const response = await apiClient.putUserData(props.userId, { ...input, enabled: true });
 
         if(response.success) {
 
