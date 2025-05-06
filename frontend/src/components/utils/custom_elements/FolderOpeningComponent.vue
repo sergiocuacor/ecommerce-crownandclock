@@ -37,7 +37,7 @@
         align-items: center;
         justify-content: flex-end;
         padding: 10px;
-        background: linear-gradient(135deg, #6dd5ed, #2193b0);
+        background: linear-gradient(135deg, #2e2e2e, #131313);
         border-radius: 15px;
         box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
         height: calc(var(--folder-H) * 1.7);
