@@ -22,7 +22,7 @@
                 class="tw-bg-white tw-border tw-rounded-2xl tw-shadow-md tw-py-4 tw-px-5 tw-mb-3 hover:tw-shadow-lg transition-shadow"
             >
             
-                <div class="tw-flex tw-flex-col lg:tw-flex-row lg:tw-justify-between lg:tw-items-center tw-mb-2">
+                <div class="tw-flex tw-flex-col lg:tw-flex-row lg:tw-justify-between lg:tw-items-center">
                     <h3 class="tw-text-xl tw-font-bold tw-text-gray-900">
                         {{ user.firstName + ' ' + user.lastName }}
                     </h3>
@@ -42,12 +42,15 @@
                         </div>
                     </div>
 
-                    <div class="tw-pt-3 tw-flex tw-item-center">
+                    <div v-if="!user.roles.some(role => role.name === 'ROLE_ADMIN')" class="tw-pt-3 tw-flex">
                         <span class="tw-me-1">
                             {{ 'Active:' }}
                         </span>
                         <LockCheckboxInput :target="user.id" :isChecked="user.enabled" @inputChanged="updateUserState"/>
-                    </div>                    
+                    </div>
+                    <div v-else class="tw-pt-3 tw-flex">
+                        <span class="badge bg-dark">{{ 'Admin' }}</span>
+                    </div>                  
 
                 </div>
                 
@@ -63,13 +66,10 @@
 
 <script setup>
 
-    import { onMounted, ref } from 'vue';
-    import { useRouter } from 'vue-router';
-    import { useAuthStore } from '../../services/auth.js';
+    import { getCurrentInstance, onMounted, ref } from 'vue';
     import apiClient from '../../services/api.js';
-    
-    const router = useRouter();
-    const authStore = useAuthStore();
+
+    const { proxy } = getCurrentInstance();
     
     const userRole = ref(null);
     const loading = ref(false);
@@ -115,16 +115,20 @@
     };
 
     const updateUserState = async (id, data) => {
-
+        
         const response = await apiClient.putUserData(id, data);
 
         if (response.success) {
 
-            console.log(response.data);
+            if(response.data.enabled == true) {
+                proxy.$toast(`Enabled login for ${response.data.firstName} ${response.data.lastName}`);
+            } else {
+                proxy.$toast(`Disabled login for ${response.data.firstName} ${response.data.lastName}`);
+            }            
 
         } else {
 
-            console.log(response.error.message);
+            proxy.$toast(`Error updating user state`);
 
         }
 
