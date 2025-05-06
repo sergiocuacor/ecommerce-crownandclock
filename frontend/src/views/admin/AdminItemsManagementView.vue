@@ -29,18 +29,11 @@
 <script setup>
 
     import { onMounted, ref } from 'vue';
-    import { useRouter } from 'vue-router';
-    import { useAuthStore } from '../../services/auth.js';
     import apiClient from '../../services/api.js';
-    
-    const router = useRouter();
-    const authStore = useAuthStore();
     
     const userRole = ref(null);
     const loading = ref(false);
     const error = ref(null);
-    
-    const items = ref([]);
 
     const fetchUserRole = async () => {
 
