@@ -14,7 +14,7 @@
 
                 <ul class="list-group list-group-flush mb-3">
                     <li class="list-group-item">
-                        <strong>{{ 'Full name: ' }}</strong>{{ user.name }}                     
+                        <strong>{{ 'Full name: ' }}</strong>{{ user.firstName + " " + user.lastName }}                     
                     </li>
                     <li class="list-group-item tw-flex tw-flex-col sm:tw-flex-row tw-items-center tw-justify-between tw-gap-2">
                         <UserInformationInputGeneratorComponent @updatedField="fetchUserData" :text="`First name: `" :inputType="`text`" :value="user.firstName" :validationId="`firstName`" :userId="user.id" />
