@@ -8,31 +8,26 @@
 
             <div class="col-6 col-md-2 mb-3">
                 <p class="fs-6 fw-semibold">
-                    {{ `Section` }}
+                    {{ `Information` }}
                 </p>
                 <ul class="nav flex-column pt-2">
                     <li class="nav-item mb-2">
-                        <router-link :to="{ name: '' }" class="nav-link p-0 text-body-secondary">
+                        <router-link :to="{ name: 'home' }" class="nav-link p-0 text-body-secondary">
                             {{ `Home` }}
                         </router-link>
                     </li>
                     <li class="nav-item mb-2">
-                        <router-link :to="{ name: '' }" class="nav-link p-0 text-body-secondary">
-                            {{ `Features` }}
-                        </router-link>
-                    </li>
-                    <li class="nav-item mb-2">
-                        <router-link :to="{ name: '' }" class="nav-link p-0 text-body-secondary">
+                        <router-link :to="{ name: 'pricing' }" class="nav-link p-0 text-body-secondary">
                             {{ `Pricing` }}
                         </router-link>
                     </li>
                     <li class="nav-item mb-2">
-                        <router-link :to="{ name: '' }" class="nav-link p-0 text-body-secondary">
-                            {{ `FAQs` }}
+                        <router-link :to="{ name: 'faq' }" class="nav-link p-0 text-body-secondary">
+                            {{ `FAQ` }}
                         </router-link>
                     </li>
                     <li class="nav-item mb-2">
-                        <router-link :to="{ name: '' }" class="nav-link p-0 text-body-secondary">
+                        <router-link :to="{ name: 'about' }" class="nav-link p-0 text-body-secondary">
                             {{ `About` }}
                         </router-link>
                     </li>
@@ -41,32 +36,22 @@
 
             <div class="col-6 col-md-2 mb-3">
                 <p class="fs-6 fw-semibold">
-                    {{ `Section` }}
+                    {{ `Our selection` }}
                 </p>
                 <ul class="nav flex-column pt-2">
                     <li class="nav-item mb-2">
-                        <router-link :to="{ name: '' }" class="nav-link p-0 text-body-secondary">
-                            {{ `Home` }}
+                        <router-link :to="{ name: 'products' }" class="nav-link p-0 text-body-secondary">
+                            {{ `Watches` }}
                         </router-link>
                     </li>
                     <li class="nav-item mb-2">
-                        <router-link :to="{ name: '' }" class="nav-link p-0 text-body-secondary">
-                            {{ `Features` }}
+                        <router-link :to="{ name: 'brands' }" class="nav-link p-0 text-body-secondary">
+                            {{ `Brands` }}
                         </router-link>
                     </li>
                     <li class="nav-item mb-2">
-                        <router-link :to="{ name: '' }" class="nav-link p-0 text-body-secondary">
-                            {{ `Pricing` }}
-                        </router-link>
-                    </li>
-                    <li class="nav-item mb-2">
-                        <router-link :to="{ name: '' }" class="nav-link p-0 text-body-secondary">
-                            {{ `FAQs` }}
-                        </router-link>
-                    </li>
-                    <li class="nav-item mb-2">
-                        <router-link :to="{ name: '' }" class="nav-link p-0 text-body-secondary">
-                            {{ `About` }}
+                        <router-link :to="{ name: 'cart' }" class="nav-link p-0 text-body-secondary">
+                            {{ `Cart` }}
                         </router-link>
                     </li>
                 </ul>
@@ -74,32 +59,22 @@
 
             <div class="col-6 col-md-2 mb-3">
                 <p class="fs-6 fw-semibold">
-                    {{ `Section` }}
+                    {{ `Most purchased brands` }}
                 </p>
                 <ul class="nav flex-column pt-2">
                     <li class="nav-item mb-2">
-                        <router-link :to="{ name: '' }" class="nav-link p-0 text-body-secondary">
-                            {{ `Home` }}
+                        <router-link :to="{ name: 'brand', params: { mask: 8 } }" class="nav-link p-0 text-body-secondary">
+                            {{ `Rolex` }}
                         </router-link>
                     </li>
                     <li class="nav-item mb-2">
-                        <router-link :to="{ name: '' }" class="nav-link p-0 text-body-secondary">
-                            {{ `Features` }}
+                        <router-link :to="{ name: 'brand', params: { mask: 3 } }" class="nav-link p-0 text-body-secondary">
+                            {{ `Casio` }}
                         </router-link>
                     </li>
                     <li class="nav-item mb-2">
-                        <router-link :to="{ name: '' }" class="nav-link p-0 text-body-secondary">
-                            {{ `Pricing` }}
-                        </router-link>
-                    </li>
-                    <li class="nav-item mb-2">
-                        <router-link :to="{ name: '' }" class="nav-link p-0 text-body-secondary">
-                            {{ `FAQs` }}
-                        </router-link>
-                    </li>
-                    <li class="nav-item mb-2">
-                        <router-link :to="{ name: '' }" class="nav-link p-0 text-body-secondary">
-                            {{ `About` }}
+                        <router-link :to="{ name: 'brand', params: { mask: 2 } }" class="nav-link p-0 text-body-secondary">
+                            {{ `Cartier` }}
                         </router-link>
                     </li>
                 </ul>
@@ -118,7 +93,7 @@
                             {{ `Email address` }}
                         </label>
                         <input id="newsletter1" type="text" class="form-control" placeholder="Email address">
-                        <button class="btn btn-primary" type="button">
+                        <button class="btn btn-dark" type="button">
                             {{ `Subscribe` }}
                         </button>
                     </div>
