@@ -92,6 +92,7 @@
 
     function logOut() {
         authStore.logOutUser();
+        cartStore.removeCoupon();
         router.push('/login');
     }
     
