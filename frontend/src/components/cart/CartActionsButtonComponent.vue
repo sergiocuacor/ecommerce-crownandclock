@@ -31,9 +31,11 @@
 
 <script setup>
 
-    import { computed } from 'vue';
+    import { computed, getCurrentInstance } from 'vue';
     import { useCartStore } from '../../store/cart.js';
     import { useUtilsStore } from '../../services/utils.js';
+
+    const { proxy } = getCurrentInstance();
 
     const props = defineProps({
         item: {
@@ -58,11 +60,13 @@
     const addToCart = () => {
         cartStore.addToCart(props.item);
         utilsStore.setOffCanvasContent('cart');
+        proxy.$toast(`Added ${props.item.name} from cart`);
     };
 
     const removeFromCart = () => {
         cartStore.removeFromCart(props.item.id);
         utilsStore.setOffCanvasContent('cart');
+        proxy.$toast(`Removed ${props.item.name} from cart`);
     };
 
 </script>
