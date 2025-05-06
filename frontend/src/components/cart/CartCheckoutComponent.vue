@@ -180,6 +180,11 @@
 
     const checkout = async () => {
 
+      if(cartStore.items.length <= 0) {
+        proxy.$toast(`At least one product must be added in the cart`, { bgColor: 'tw-bg-red-200/75' });
+        return;
+      }
+
       await validateToken();
 
       if (!isValidPaymentMethod.value) {
