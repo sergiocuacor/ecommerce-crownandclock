@@ -24,7 +24,7 @@
             <div class="col">
                 <div class="tw-max-w-min tw-bg-gray-500/25 tw-flex tw-p-1 tw-space-x-1.5 tw-rounded-full">
                     <button
-                        class="tw-bg-white tw-text-black tw-rounded-full tw-w-7 tw-h-7 tw-flex tw-items-center tw-justify-center tw-shadow-md hover:tw-bg-gray-100 disabled:tw-opacity-50 tw-cursor-pointer tw-text-xl tw-transition tw-delay-150 tw-duration-300 tw-ease-in-out hover:tw--translate-y-1 hover:tw-scale-110"
+                        class="tw-bg-white tw-text-black tw-rounded-full tw-w-7 tw-h-7 tw-flex tw-items-center tw-justify-center tw-shadow-md hover:tw-bg-gray-100 disabled:tw-opacity-50 tw-cursor-pointer tw-text-xl tw-transition tw-delay-150 tw-duration-300 tw-ease-in-out hover:tw--translate-y-1 hover:tw-scale-110 disabled:hover:tw-scale-90 disabled:hover:tw--translate-y-0 disabled:tw-cursor-not-allowed"
                         :disabled="isDisabledAdd"
                         @click="increaseQuantity(props.item)"
                     >
