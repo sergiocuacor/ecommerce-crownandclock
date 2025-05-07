@@ -67,7 +67,7 @@
 <script setup>
   
   import { ref, onMounted } from 'vue';
-  import apiClient from '../services/api.js';
+  import apiClient from '../../services/api.js';
 
   const apiBaseURL = ref(apiClient.getApiBaseURL());
   
